@@ -1,0 +1,43 @@
+\chapter{Homological algebra}
+\label{chap_homological}
+% {
+%     \setlength{\epigraphwidth}{0.52 \textwidth}
+%     \epigraph{
+%         \itshape
+%         It is less than four years since cohomological methods
+% (i.e. methods of homological algebra) were introduced into
+% algebraic geometry in Serre's fundamental paper, and it seems
+% certain that they are to overflow the part of mathematics in the
+% coming years, from the foundations up to the most advanced parts.
+%     }{Alexander Grothendieck \cite{grothendeick_ha_quote}}
+% }
+
+As we have attempted to communicate in
+\cref{chap_abelian_categories}, abelian categories are such a
+bountiful abstraction because they grant a category the power of
+exact sequences.
+At the same time, exactness is not a foregone conclusion for any
+sequence of morphisms arising in practice, and a mathematically
+interesting problem in its own right is to attempt to understand `how
+far' from exactness a sequence is.
+This is the fundamental problem studied in \emph{homological
+algebra}, which has proved to be an irreplaceable technical tool in
+the modern practice of algebraic geometry, algebraic topology and a
+whole host of branches of mathematics.
+
+The goal of this chapter is to develop the required background in
+this area needed to delve into the derived category of an abelian
+category in \cref{chap_derived_categories}, following \cite{weibel}.
+Homological algebra is a topic best served with a more tangible
+motivating application in mind, and this is traditionally sourced
+from algebraic topology.
+Since such material is outside of the scope of this thesis, we will
+continue to tether our intuitions to $\Mod{R}$.
+
+In all that follows, $\abcat{A}$ and $\abcat{B}$ are always abelian categories.
+
+\input{content/homological_algebra/category_of_complexes}
+\input{content/homological_algebra/cohomology_and_homotopy}
+\input{content/homological_algebra/operations}
+\input{content/homological_algebra/resolutions}
+\input{content/homological_algebra/classical_derived_functors}

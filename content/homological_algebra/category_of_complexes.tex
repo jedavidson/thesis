@@ -1,0 +1,261 @@
+\section{The category of complexes}
+\label{sect_complexes}
+
+Homological algebra can be interpreted as the study of a certain
+category, so our first task of this chapter is to define it.
+We start with its objects.
+
+\begin{definition}
+  \label{def_complexes}
+  A \emph{chain complex} in $\abcat{A}$ is a collection of objects
+  $\cochaincomp{C} = \{C_i\}_{i \in \bb{Z}}$, called the
+  \emph{chains}, and morphisms $\chaincomp{d} = \{d_i: C_i \to C_{i -
+  1}\}_{i \in \bb{Z}}$, called the \emph{differentials}, such that
+  $d_i d_{i + 1} = 0$ for each $i \in \bb{Z}$:
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & C_{i + 1} \arrow[r, "d_{i + 1}"]
+      & C_i \arrow[r, "d_i"]
+      & C_{i - 1} \arrow[r]
+      & \cdots.
+    \end{tikzcd}
+  \]
+  Dually, a \emph{cochain complex} in $\abcat{A}$ is a collection of
+  objects $\cochaincomp{C} = \{C^i\}_{i \in \bb{Z}}$, called the
+  \emph{cochains}, and morphisms $\cochaincomp{d} = \{d^i: C^i \to
+  C^{i + 1}\}_{i \in \bb{Z}}$, also called the \emph{differentials},
+  such that $d^{i} d^{i - 1} = 0$ for each $i \in \bb{Z}$:
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & C^{i - 1} \arrow[r, "d^{i - 1}"]
+      & C^i \arrow[r, "d^i"]
+      & C^{i + 1} \arrow[r]
+      & \cdots.
+    \end{tikzcd}
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+A common topological slogan for the conditions imposed on
+differentials is that ``the boundary of the boundary of a sphere is trivial''.
+The subscripts and superscripts are often suppressed so that in
+either case the condition can be interpreted informally as saying $d^2 = 0$.
+Similar informalities within homological algebra abound.
+
+The index $i$ of an individual chain $C_i$ or cochain $C^i$ is called
+its \emph{degree}.
+With this, we see that the key difference between chain and cochain
+complexes is that chain differentials lower degree while cochain
+differentials raise it.
+For the most part, we will emphasise cochain complexes in this thesis
+in order to reflect the historical origins of derived categories and
+the preferences that have developed in the literature as a result.
+There is no loss of generality in this choice, since to a certain
+extent the decision to work with either type of complex over the
+other is an aesthetic one.
+The following proposition makes this more formal.
+
+\begin{proposition}[Chain-cochain duality]
+  Any chain complex $\chaincomp{C}$ may be regarded as a cochain
+  complex $\cochaincomp{C}$ by inverting degrees, i.e. by setting
+  $C^i = C_{-i}$ and $d^i = d_{-i}$.
+\end{proposition}
+
+In practice, the easiest complexes to work with are those which
+satisfy some boundedness condition.
+This will be a key theme in this thesis, since the theory of derived
+categories without such assumptions in place becomes much more involved.
+
+\begin{definition}
+  \label{def_bounded_cochain_complexes}
+  A complex $\cochaincomp{C}$ is said to be
+  \begin{itemize}
+    \item
+      \emph{bounded above} (resp. \emph{bounded below}) if $C^i = 0$
+      for all sufficiently large (resp. sufficiently small) degrees $i$;
+
+    \item
+      \emph{bounded} if it is both bounded above and bounded below;
+
+    \item
+      \emph{positively} (resp. \emph{negatively}) \emph{graded} if
+      $C^i = 0$ for all $i < 0$ (resp. $i > 0$).
+  \end{itemize}
+\end{definition}
+
+For a cochain complex $\cochaincomp{C}$, we call
+$Z^i(\cochaincomp{C}) := \ker(d^i)$ and $B^i(\cochaincomp{C}) :=
+\im(d^{i - 1})$ the $i$th \emph{cocycle} and \emph{coboundary} objects.
+It is not difficult to show that the condition $d^2 = 0$ implies that
+$B^i(\cochaincomp{C}) \leq Z^i(\cochaincomp{C})$, and so we may form
+the $i$th \emph{cohomology} object
+\[
+  H^i(\cochaincomp{C})
+  := \quot{Z^i(\cochaincomp{C})}{B^i(\cochaincomp{C})}.
+\]
+The same considerations naturally apply to any chain complex
+$\chaincomp{C}$, and we call
+\[
+  Z_i(\chaincomp{C}) := \ker(d_i),
+  \quad
+  B_i(\chaincomp{C}) := \im(d_{i + 1})
+  \mathand
+  H_i(\chaincomp{C}) := \quot{Z_i(\chaincomp{C})}{B_i(\chaincomp{C})}
+\]
+the $i$th \emph{cycle}, \emph{boundary} and \emph{homology} objects
+of $\chaincomp{C}$ respectively.
+
+The most interesting examples of chain and cochain complexes arise
+from applications, and we will see one in \cref{sect_coh_sheaf_cohom}.
+For now, we collect some more remedial examples in order to introduce
+some useful terminology.
+
+\begin{example}
+  Each $A \in \abcat{A}$ may be regarded as a bounded complex
+  $\cochaincomp{A}$ \emph{concentrated in degree $n$}, i.e. such that
+  $A^n = A$, $A^i = 0$ for all $i \neq n$ and $d = 0$.
+  In this case, we have $H^n(\cochaincomp{A}) \cong A$ and
+  $H^i(\cochaincomp{A}) = 0$ whenever $i \neq n$.
+  Sometimes, we will write $\cochaincomp{A} = A[n]$.
+\end{example}
+
+\begin{example}
+  Since $\im(f) = \ker(g)$ implies that $g f = 0$, any exact sequence
+  in $\abcat{A}$ can be defined as a complex.
+  More generally, a complex $\cochaincomp{C}$ is \emph{exact} if
+  $Z^i(\cochaincomp{C}) = B^i(\cochaincomp{C})$ or \emph{acyclic} if
+  $H^i(\cochaincomp{C}) = 0$ for all $i \in \bb{Z}$, and it is
+  immediate that these two notions are in fact equivalent.
+  Studying the cohomology objects of $\cochaincomp{C}$ thus provides
+  insight into the extent to which $\cochaincomp{C}$ fails to be
+  exact degreewise.
+\end{example}
+
+We now define a suitable notion of a morphism of complexes.
+
+\begin{definition}
+  \label{def_cochain_map}
+  Let $\cochaincomp{C}$ and $\cochaincomp{D}$ be cochain complexes in
+  $\abcat{A}$ with associated differentials $d_C$ and $d_D$.
+  A \emph{morphism of cochain complexes} (or \emph{cochain map}) $f:
+  \cochaincomp{C} \to \cochaincomp{D}$ is a collection of morphisms
+  $\{f^i: C^i \to D^i\}_{i \in \bb{Z}}$ such that
+  $d_D f = f d_C$, i.e. there is a commutative diagram
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & C^{i - 1} \arrow[d, "f"'] \arrow[r, "d_C"]
+      & C^i \arrow[d, "f"] \arrow[r, "d_C"]
+      & C^{i + 1} \arrow[d, "f"] \arrow[r]
+      & \cdots
+      \\
+      \cdots \arrow[r]
+      & D^{i - 1} \arrow[r, "d_D"']
+      & D^i \arrow[r, "d_D"']
+      & D^{i + 1} \ar[r]
+      & \cdots.
+    \end{tikzcd}
+  \]
+  We say that $f$ is an \emph{isomorphism} if each $f^i$ is an isomorphism.
+\end{definition}
+
+\begin{definition}
+  The \emph{category of cochain complexes} in $\abcat{A}$ is the
+  category $\Ch{\abcat{A}}$ whose objects and morphisms are as
+  defined in \cref{def_complexes} and \cref{def_cochain_map}, with
+  composition defined by the degreewise composition of cochain maps.
+  Its full subcategories $\Ch[-]{\abcat{A}}$, $\Ch[+]{\abcat{A}}$ and
+  $\Ch[b]{\abcat{A}}$ are the categories of \emph{bounded above},
+  \emph{bounded below} and \emph{bounded} cochain complexes in
+  $\abcat{A}$ respectively.
+\end{definition}
+
+It turns out that $\Ch{\abcat{A}}$ is also an abelian category, and
+it inherits much of this structure from the base category $\abcat{A}$.
+A partial account of the details can be found in
+\cite[Section~1.2]{weibel}, but we shall state the main ideas.
+The preadditive structure comes from the fact that each hom-set is an
+abelian group under degreewise addition of cochain maps, and the
+composition of cochain maps is clearly bilinear with respect to this addition.
+This upgrades into an additive structure upon noticing that the zero
+object of $\abcat{A}$ concentrated in degree 0 plays the role of the
+zero object (denoted $\cochaincomp{0}$) of $\Ch{\abcat{A}}$, and that
+the degreewise direct sum of any finite collection of complexes
+$\{\cochaincomp{C_i}\}$ is a suitable biproduct for complexes.
+Given a cochain map $f: \cochaincomp{C} \to \cochaincomp{D}$, the complex
+\[
+  \begin{tikzcd}
+    \cdots & {\ker(f^{i - 1})} && {\ker(f^i)} && {\ker(f^{i + 1})} & \cdots
+    \arrow[from=1-1, to=1-2]
+    \arrow["{d_C^i \, \circ \, \ker(f^{i - 1})}", from=1-2, to=1-4]
+    \arrow["{d_C^{i + 1} \, \circ \, \ker(f^i)}", from=1-4, to=1-6]
+    \arrow[from=1-6, to=1-7]
+  \end{tikzcd}
+\]
+is a suitable kernel of $f$, with cokernels constructed similarly.
+This shows that $\Ch{\abcat{A}}$ is abelian.
+Due to this fact, it is possible to consider complexes of complexes
+in $\abcat{A}$, which will play a role in \cref{chap_derived_categories}.
+We give only the cochain definition.
+
+\begin{definition}
+  \label{def_double_complex}
+  A \emph{double cochain complex} $\cochainbicomp{C}$ in $\abcat{A}$
+  consists of a collection of objects $\{C^{p, q}\}_{p, q \in
+  \bb{Z}}$ together with \emph{horizontal} and \emph{vertical} differentials
+  \[
+    d_h^{p, q}: C^{p, q} \to C^{p + 1, q}
+    \mathand
+    d_v^{p, q}: C^{p, q} \to C^{p, q + 1}
+  \]
+  subject to the anticommutativity relation $d_v d_h + d_h d_v = 0$,
+  and such that each row and column in the following lattice diagram
+  is a chain complex:
+  \[
+    \begin{tikzcd}[cramped]
+      & \vdots & \vdots & \vdots \\
+      \cdots & {C^{p - 1, q - 1}} & {C^{p, q - 1}} & {C^{p + 1, q -
+      1}} & \cdots \\
+      \cdots & {C^{p - 1, q}} & {C^{p, q}} & {C^{p + 1, q}} & \cdots \\
+      \cdots & {C^{p - 1, q + 1}} & {C^{p, q + 1}} & {C^{p + 1, q +
+      1}} & \cdots \\
+      & \vdots & \vdots & \vdots
+      \arrow[from=1-2, to=2-2]
+      \arrow[from=1-3, to=2-3]
+      \arrow[from=1-4, to=2-4]
+      \arrow[from=2-1, to=2-2]
+      \arrow["{d_h}", from=2-2, to=2-3]
+      \arrow["{d_v}"', from=2-2, to=3-2]
+      \arrow["{d_h}", from=2-3, to=2-4]
+      \arrow["{d_v}"', from=2-3, to=3-3]
+      \arrow[from=2-4, to=2-5]
+      \arrow["{d_v}"', from=2-4, to=3-4]
+      \arrow[from=3-1, to=3-2]
+      \arrow["{d_h}"', from=3-2, to=3-3]
+      \arrow["{d_v}"', from=3-2, to=4-2]
+      \arrow["{d_h}"', from=3-3, to=3-4]
+      \arrow["{d_v}"', from=3-3, to=4-3]
+      \arrow[from=3-4, to=3-5]
+      \arrow["{d_v}"', from=3-4, to=4-4]
+      \arrow[from=4-1, to=4-2]
+      \arrow["{d_h}"', from=4-2, to=4-3]
+      \arrow[from=4-2, to=5-2]
+      \arrow["{d_h}"', from=4-3, to=4-4]
+      \arrow[from=4-3, to=5-3]
+      \arrow[from=4-4, to=4-5]
+      \arrow[from=4-4, to=5-4]
+    \end{tikzcd}
+  \]
+\end{definition}
+
+\begin{remark}[The sign trick]
+  For a fixed row $q$, the vertical differentials $d_v^{\bullet, q}$
+  in a double complex do not form a morphism of the complexes
+  $C^{\bullet, q}$ to $C^{\bullet, q + 1}$.
+  This can be remedied by introducing a sign, i.e. by replacing
+  $d_v^{p, q}$ with $(-1)^p d_v^{p, q}$.
+  This has the effect of making squares in the above lattice
+  alternate between commutativity and anticommutativity.
+\end{remark}

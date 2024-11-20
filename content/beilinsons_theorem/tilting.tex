@@ -1,0 +1,207 @@
+\section{Tilting in the derived category}
+
+We are now justified in wondering if anything more interesting
+happens in the derived category where this information ought to be more visible.
+The logical conclusion of this inquiry is Beilinson's theorem.
+The proof via \emph{tilting theory} for this result first emerged in
+the literature with the publication of \cite{baer}, though in the
+context of smooth \emph{weighted projective varieties}.
+Rather than using this original work as our source, we instead adapt
+the simpler exposition given in \cite{craw} for the details to sketch
+how this result follows.
+
+In the interest of keeping an already lengthy and multidisciplinary
+thesis focused, we will not discuss tilting theory as a subject area,
+and rather just give an overview of how its methods apply in this case.
+This is an area best approached and motivated from the point of view
+of representation theory, and we defer the interested reader to
+\cite{handbook_of_tilting_theory}, the peerless source on the topic.
+
+The key notion is that of a \emph{tilting object}.
+We will present only the definition relevant to this geometric case.
+
+\begin{definition}
+  Let $\abcat{A}$ be an abelian category and $\triangcat{D} =
+  \dercat[b]{\abcat{A}}$ its bounded derived category.
+  Call a subcategory of $\triangcat{D}$ \emph{\'{e}paisse} if it is
+  closed under isomorphisms and shifts, as well as taking cones of
+  morphisms and direct summands of objects.
+  An object $A \in \abcat{A}$ is said to \emph{classically generate}
+  $\triangcat{D}$ if the \emph{\'{e}paisse envelope} of $A$, i.e. the
+  smallest \'{e}paisse subcategory of $\triangcat{D}$ containing $A$
+  (as a complex concentrated in degree 0, say), is $\triangcat{D}$ itself.
+\end{definition}
+
+\begin{definition}
+  A coherent sheaf $\shf{T}$ is a \emph{tilting sheaf} on $\proj{1}$ if
+  \begin{enumerate}[leftmargin=3.9em]
+    \item[(T1)] $\Extalt{i}(\shf{T}, \shf{T}) = 0$ for all $i > 0$;
+    \item[(T2)] the $k$-algebra $\End(\shf{T})$ has finite global
+      dimension (c.f. \cref{sect_resolutions});
+    \item[(T3)] $\shf{T}$ classically generates $\dercat[b]{\Coh(\proj{1})}$.
+  \end{enumerate}
+  We call a locally free tilting sheaf a \emph{tilting bundle} on $\proj{1}$.
+\end{definition}
+
+With the following series of lemmas, we check that $\tiltshf$
+satisfies all three of the properties of a tilting bundle, showing it
+deserves its name.
+
+\begin{lemma}
+  The sheaf $\tiltshf$ satisfies (T1).
+\end{lemma}
+
+\begin{proof}
+  Since $\Extalt{1}$ is an additive functor, it follows that
+  \begin{align*}
+    \Extalt{1}(\tiltshf, \tiltshf)
+    % &\cong \Extalt{1}(\shf{O}, \shf{O})
+    %     \biprod \Extalt{1}(\shf{O}, \twist{1})
+    %     \biprod \Extalt{1}(\twist{1}, \shf{O})
+    %     \biprod \Extalt{1}(\twist{1}, \twist{1}) \\
+    \cong H^1(\shf{O}) \biprod H^1(\twist{1}) \biprod H^1(\twist{-1})
+    \biprod H^1(\shf{O}) = 0
+  \end{align*}
+  by \cref{prop_ext_from_twist} and \cref{lemma_h1_twist}.
+\end{proof}
+
+\begin{lemma}
+  The sheaf $\tiltshf$ satisfies (T2).
+\end{lemma}
+
+\begin{proof}
+  As we have seen, $\End(\tiltshf)$ is the algebra opposite to the
+  path algebra $k \Delta$.
+  But it is well known that any quiver without oriented cycles has a
+  \emph{hereditary} path algebra, i.e. of global dimension 1.
+  We will not prove this, and instead defer to
+  \cite[Proposition~III.1.4]{auslander_reiten_smalo}.
+\end{proof}
+
+\begin{lemma}
+  The sheaf $\tiltshf$ satisfies (T3).
+\end{lemma}
+
+\begin{proof}
+  This is the most challenging property to establish.
+  Let $\triangcat{E}$ be the \emph{\'{e}paisse envelope} of
+  $\tiltshf$ in $\dercat[b]{\Coh(\proj{1})}$.
+  Throughout the proof, we implicitly treat sheaves as complexes
+  concentrated in degree 0 in $\dercat[b]{\Coh(\proj{1})}$ and write
+  $\shf{F} \in \triangcat{E}$ if $\triangcat{E}$ contains $\shf{F}$
+  in this manner.
+  Since the cone of $0: \shf{F}[-1] \to \shf{G}$ is $\shf{F} \biprod
+  \shf{G}$, it follows that $\triangcat{E}$ is also closed under
+  taking direct sums.
+  Thus to show that $\triangcat{E} = \dercat[b]{\Coh(\proj{1})}$, it
+  is enough to show that we can build every coherent sheaf on
+  $\proj{1}$ in degree 0, as taking direct sums of shifted complexes
+  then recovers all other bounded complexes.
+  Moreover, Grothendieck's splitting theorem further reduces this to
+  obtaining the twisting sheaves and thickened skyscraper sheaves.
+  To facilitate this, we establish one last closure property.
+  Given coherent sheaves $\shf{F}, \shf{G} \in \triangcat{E}$, any
+  short exact sequence
+  \[
+    \begin{tikzcd}
+      0 & {\shf{F}} & {\shf{G}} & {\shf{H}} & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow["\Phi", from=1-2, to=1-3]
+      \arrow["\Psi", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  induces an exact triangle in $\dercat[b]{\Coh(\proj{1})}$ by
+  \cref{prop_dercat_ses_exact_triang} isomorphic to the strict
+  triangle on $\Phi$.
+  In particular, we have a quasi-isomorphism $\cone{u} \to \shf{H}$
+  which becomes an isomorphism in $\dercat[b]{\Coh(\proj{1})}$, so
+  closure under cones and isomorphisms gives $\shf{H} \in \triangcat{E}$.
+  Using the rotation axiom (TR2) for triangulated categories, this
+  argument shows by extension that given that any two of the three
+  terms in the above short exact sequence belong to $\shf{E}$, the
+  third also necessarily belongs to $\shf{E}$.
+
+  Since $\shf{E}$ contains $\shf{O}$ and $\twist{1}$ by construction,
+  we can obtain $\twist{2} \in \triangcat{E}$ by considering the
+  degree 2 twist of the Euler exact sequence, i.e.
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\shf{O}} & {\twist{1}^{\biprod 2}} & {\twist{2}} & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  Taking successive degree 1 twists of the above sequence
+  inductively, we also obtain $\twist{n} \in \triangcat{E}$ for all $n > 0$.
+  Similarly, to obtain $\twist{-1}$, we instead take the degree 1
+  twist of the Euler exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{-1}} & {\shf{O}^{\biprod 2}} & {\twist{1}} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  and then negatively twist this exact sequence inductively to obtain
+  $\twist{n} \in \triangcat{E}$ for all $n < 0$ too.
+  Finally, we now take the ideal sheaf sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{-m}} & {\shf{O}} & {\skyscraper{mp}} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  shows that $\skyscraper{mp} \in \triangcat{E}$ for all $m \in
+  \zpos$ and $p \in \proj{1}$.
+  This completes the proof.
+\end{proof}
+
+At long last, we can now state and prove Beilinson's theorem reimagined by Baer.
+
+\begin{theorem}[Beilinson, Baer]
+  Let $\shf{T}$ be the tilting bundle of $\proj{1}$ as defined in
+  \cref{def_tilting_bdl} and $\Lambda$ the corresponding tilted algebra.
+  Then the total derived functor
+  \[
+    \rightderfunc{\Hom(\shf{T}, -)}: \dercat[b]{\Coh(\proj{1})} \to
+    \dercat[b]{\mod{\op{\Lambda}}}
+  \]
+  induces an equivalences of bounded derived categories whose quasi-inverse is
+  \[
+    \dertensor{\Lambda}{-}{\shf{T}}: \dercat[b]{\mod{\op{\Lambda}}}
+    \to \dercat[b]{\Coh(\proj{1})}.
+  \]
+  \vspace{-30pt}
+\end{theorem}
+
+We will stop short of giving the proof of this result, which is found
+in \cite[Theorem~2.1]{craw} and instead briefly comment on the
+necessity of the tilting bundle assumptions in its proof.
+The requirement that the tilted algebra has finite global dimension
+is necessary to ensure that the image of
+$\dertensor{\Lambda}{-}{\shf{T}}$ produces bounded complexes.
+The property (T2) shows that
+\[
+  \rightderfunc{\Hom(\shf{T}, \dertensor{\Lambda}{\Lambda}{\shf{T}})} = A,
+\]
+i.e. the composite is the identity on $\Lambda$.
+Finally, the property (T3) shows that the image of
+$\dertensor{\Lambda}{-}{\shf{T}}$, which is the triangulated
+subcategory of $\dercat[b]{\Coh(\proj{1})}$ generated by $\shf{T}$.
+This is then where (T3) applies to close out the proof.
+
+The tilting theory literature expands more upon the significance of
+this theorem.
+In particular, a classical theorem of Happel is that any hereditary
+abelian category with tilting object is, up to equivalence, the
+category of coherent sheaves on some \emph{weighted projective line}
+or the category of left modules over some finite dimensional algebra.
+We defer to \cite{handbook_of_tilting_theory} for more details.

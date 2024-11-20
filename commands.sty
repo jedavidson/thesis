@@ -1,0 +1,296 @@
+% Supervisor
+\newcommand{\supervisor}[1]{\def\@supervisor{#1}}
+\newcommand{\@supervisor}{}
+
+% Blackboard font
+\newcommand{\bb}{\mathbb}
+
+% Named category font
+\newcommand{\namedcat}[1]{\mathsf{#1}}
+
+% Bold face font
+\renewcommand{\bf}{\mathbf}
+
+% Give emphasised text a colour
+\newcommand{\highlight}[1]{\textcolor{themecolor}{\emph{{#1}}}}
+
+% TODO comment
+\newcommand\todo[1]{\textcolor{red}{[TODO: #1]}}
+
+% Spaced and for use in math mode to separate two equations, etc.
+\newcommand{\mathand}{\quad \text{and} \quad}
+
+% Longer rightarrow
+\DeclareRobustCommand{\longerrightarrow}{
+  \DOTSB\relbar\joinrel\relbar\joinrel\rightarrow
+}
+
+% Cokernel
+\newcommand{\coker}{\operatorname{coker}}
+
+% Image and coimage morphism
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\coim}{\operatorname{coim}}
+
+% Kernel, cokernel, image and coimage objects
+\newcommand{\kerobj}{\operatorname{Ker}}
+\newcommand{\cokerobj}{\operatorname{Coker}}
+\newcommand{\imobj}{\operatorname{Im}}
+\newcommand{\coimobj}{\operatorname{Coim}}
+
+% Mono, epi and iso arrows
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\iso}{\stackrel{\cong}{\to}}
+
+% Category script
+\newcommand{\cat}{\mathcal}
+
+% Objects and Hom collections of a category
+\newcommand{\ob}{\operatorname{ob}}
+\newcommand{\Hom}{\operatorname{Hom}}
+
+% Opposite {ring, category, functor}
+\newcommand{\op}[1]{{#1}^{\mathrm{op}}}
+
+% Identity
+\newcommand{\id}{\operatorname{id}}
+
+% Natural transformation arrow
+\newcommand{\nattrans}{\Rightarrow}
+
+% Adjunction
+\newcommand{\adj}{\dashv}
+
+% In-line quotients, with aware spacing in the case of operators
+\newcommand{\quot}[2]{{#1}\mathopen/{#2}}
+
+% Positive and negative integers
+\newcommand{\zpos}{\bb{Z}_{\geq 0}}
+\newcommand{\zneg}{\bb{Z}_{\leq 0}}
+
+% Z/nZ
+\newcommand{\zn}[1]{\quot{\bb{Z}}{{#1}\bb{Z}}}
+
+% The category of sets
+\newcommand{\Set}{\namedcat{Set}}
+
+% The category of abelian groups Ab, and its finite subcategory
+\newcommand{\Ab}{\namedcat{Ab}}
+\newcommand{\FinAb}{\namedcat{FinAb}}
+
+% The category of rings and commutative rings
+\newcommand{\Ring}{\namedcat{Ring}}
+\newcommand{\CRing}{\namedcat{CRing}}
+
+% The category of left and right R-modules, and its
+% finitely-generated counterpart
+\iftrue
+\newcommand{\Mod}[1]{\namedcat{Mod}(#1)}
+\renewcommand{\mod}[1]{\namedcat{mod}(#1)}
+% \newcommand{\Mod}[1]{{#1}\namedcat{-Mod}}
+% \newcommand{\mod}[1]{\namedcat{Mod-}{#1}}
+\else
+\newcommand{\Mod}[1]{{\namedcat{Mod}}_{{#1}}}
+\newcommand{\mod}[1]{{\namedcat{mod}}_{{#1}}}
+\newcommand{\leftmodcat}[1]{\prescript{}{{#1}}{\namedcat{Mod}}}
+\newcommand{\fgleftmodcat}[1]{\prescript{}{{#1}}{\namedcat{mod}}}
+\fi
+
+% The category of ector spaces
+\newcommand{\Vect}[1]{{\namedcat{Vect}}_{{#1}}}
+
+% Category of sheaves on a topological space
+\newcommand{\Sh}[1]{\namedcat{Sh}(#1)}
+
+% Functor category
+\newcommand{\Fun}[2]{\namedcat{Fun}({#1}, {#2})}
+
+% Abelian category script
+\newcommand{\abcat}[1]{\cat{#1}}
+
+% Biproduct
+\newcommand{\biprod}{\oplus}
+
+% Tensor product
+\newcommand{\tensor}{\otimes}
+
+% Chain and cochain complex
+\newcommand{\chaincomp}[1]{{{#1}}_{\bullet}}
+\newcommand{\cochaincomp}[1]{{{#1}}^{\bullet}}
+\newcommand{\chainbicomp}[1]{{{#1}}_{\bullet \bullet}}
+\newcommand{\cochainbicomp}[1]{{{#1}}^{\bullet \bullet}}
+
+% Total sum and product complexes
+\newcommand{\totprodsymb}{\operatorname{Tot}^{\Pi}}
+\newcommand{\totprodcomp}[1]{\totprodsymb(#1)}
+\newcommand{\totsumsymb}{\operatorname{Tot}^{\biprod}}
+\newcommand{\totsumcomp}[1]{\totsumsymb(#1)}
+
+% The category of chain complexes
+% #1: superscript (e.g. bounded), optional
+% #2: the abelian category
+% Invoke as \Ch[b]{A} or \Ch{A}
+\newcommand{\Ch}[2][]{{\bf{C}}^{{#1}}({#2})}
+
+% Mapping cone
+\newcommand{\cone}[1]{\operatorname{cone}({#1})}
+
+% Ext and Tor
+% First argument is ring, second is index
+\newcommand{\Ext}[2]{\operatorname{Ext}_{{#2}}^{{#1}}}
+\newcommand{\Extalt}[1]{\operatorname{Ext}^{{#1}}}
+\newcommand{\Tor}[2]{\operatorname{Tor}_{{#1}}^{{#2}}}
+
+% Homotopy category K(A)
+% #1: superscript (e.g. bounded), optional
+% #2: the abelian category
+% Invoke as \homcat[b]{A} or \homcat{A}
+\newcommand{\homcat}[2][]{{\bf{K}}^{{#1}}({#2})}
+
+% Triangulated category
+\newcommand{\triangcat}[1]{\cat{#1}}
+
+% Localisation S^-1C
+% #1: object
+% #2: multiplicative subset
+\newcommand{\locln}[2]{
+  {{#2}}^{-1}{{#1}}
+}
+
+% Bracketed style of localisation C[S^-1]
+\newcommand{\loclnalt}[2]{{{#1}}[{{#2}}^{-1}]}
+
+% Left and right fractions
+% X <- s - X_1 - f -> Y
+\newcommand{\leftfrac}[5]{
+  {#1} \stackrel{{#2}}{\leftarrow} {#3} \stackrel{{#4}}{\rightarrow} {#5}
+}
+% X - g -> X_1 <- t - Y
+\newcommand{\rightfrac}[5]{
+  {#1} \stackrel{{#2}}{\leftarrow} {#3} \stackrel{{#4}}{\rightarrow} {#5}
+}
+
+% Derived category D(A)
+% #1: superscript (e.g. bounded), optional
+% #2: the abelian category
+% Invoke as \dercat[b]{A} or \dercat{A}
+\newcommand{\dercat}[2][]{{\bf{D}}^{{#1}}({#2})}
+\newcommand{\dercatlocln}[2][]{Q^{{#1}}_{{#2}}}
+
+% Left and right total derived functor
+\newcommand{\leftderfunc}[1][]{\bf{L}^{{#1}}}
+\newcommand{\rightderfunc}[1][]{\bf{R}^{{#1}}}
+
+% Inner hom
+\newcommand{\InnerHom}{\Hom^\bullet}
+
+% Derived Hom functor
+\newcommand{\derhom}{\rightderfunc{\mathrm{Hom}}}
+
+% Derived tensor product functor
+\newcommand{\dertensorsymb}{\tensor^{\leftderfunc}}
+\newcommand{\dertensor}[3]{{{#2}} \dertensorsymb_{{#1}} {{#3}}}
+
+% Global dimension
+\newcommand{\gldim}{\operatorname{gl.dim}}
+
+% Affine n-space
+\newcommand{\aff}[1]{\bb{A}^{{#1}}}
+
+% Projective n-space
+\newcommand{\proj}[1]{\bb{P}^{{#1}}}
+
+% Homogenisation of a polynomial
+\newcommand{\dehomog}[2]{{{#1}}_{{#2}}}
+
+% Linear span
+\newcommand{\linspan}{\operatorname{span}}
+
+% Generated group
+\newcommand{\gen}[1]{\left\langle {#1} \right\rangle}
+
+% Ideals
+\newcommand{\ideal}{\mathfrak}
+\newcommand{\idealof}{\unlhd}
+
+% Restriction
+\newcommand{\littletaller}{\mathchoice{\vphantom{\big|}}{}{}{}}
+\newcommand\setres[2]{{
+    \left.\kern-\nulldelimiterspace
+    {#1}
+    \littletaller
+    \right|_{#2}
+}}
+
+% Sheaf stuff
+\newcommand{\shf}{\mathcal}
+\newcommand{\res}[2]{\rho_{{#1}, {#2}}}
+\newcommand{\sections}[2]{\Gamma({#1}, {#2})}
+\newcommand{\displaystylesections}[2]{\Gamma\left({#1}, {#2}\right)}
+
+% Associated module
+\newcommand{\assmod}[1]{\widetilde{{#1}}}
+
+% The structure sheaf of a variety X
+\newcommand{\strshf}[1]{\shf{O}_{{#1}}}
+
+% Spectrum of a ring
+\newcommand{\Spec}{\operatorname{Spec}}
+
+% The twisting sheaf O(n)
+\newcommand{\twist}[1]{\shf{O}({#1})}
+
+% Skyscraper sheaf
+\newcommand{\skyscraper}[1]{\shf{O}_{{#1}}}
+
+% Category of presheaves and sheaves
+\newcommand{\Psh}[1]{\namedcat{Psh}({#1})}
+\renewcommand{\Sh}[1]{\namedcat{Sh}({#1})}
+
+% Category of coherent sheaves on X
+\newcommand{\Coh}{\operatorname{\namedcat{Coh}}}
+\newcommand{\QCoh}{\operatorname{\namedcat{QCoh}}}
+
+% Sheaf Hom and tensor product
+\newcommand{\shfhom}{\mathcal{H}om_{\strshf{\proj{1}}}}
+\newcommand{\shftensor}{\tensor_{\strshf{\proj{1}}}}
+
+% Dual symbol
+\newcommand{\dual}[1]{{#1}^{\lor}}
+
+% Picard group of P^1
+\newcommand{\Pic}{\operatorname{Pic}(\proj{1})}
+
+% Cech cohomology
+\newcommand{\cech}[3]{\check{H}^{#1}({#2}, {#3})}
+\newcommand{\cechcochain}[3]{\check{C}^{#1}({#2}, {#3})}
+\newcommand{\cechalt}[2]{\check{H}^{#1}({#2})}
+\newcommand{\cechcochainalt}[2]{\check{C}^{#1}({#2})}
+
+% Head and tail of a quiver
+% \newcommand{\hd}{\operatorname{hd}}
+% \newcommand{\tl}{\operatorname{tl}}
+\newcommand{\hd}{\operatorname{hd}}
+\newcommand{\tl}{\operatorname{tl}}
+
+% 2x2 matrix
+\newcommand{\mattwo}[4]{
+  \begin{bmatrix}
+    {#1} & {#2} \\
+    {#3} & {#4}
+  \end{bmatrix}
+}
+
+% Endomorphism algebra
+\newcommand{\End}{\operatorname{End}}
+
+% Projection map
+\newcommand{\pr}{\operatorname{pr}}
+
+% Category of representations, including finite dimensionals
+\newcommand{\Rep}[2]{\namedcat{Rep}_{{#1}}(#2)}
+\newcommand{\rep}[2]{\namedcat{rep}_{{#1}}(#2)}
+
+% Tilting sheaf
+\newcommand{\tiltshf}{\shf{O} \biprod \twist{1}}

@@ -1,0 +1,379 @@
+\section{Localising the homotopy category}
+\label{sect_localising_homcat}
+
+We now have a triangulated category $\homcat{\abcat{A}}$ that turns
+homotopy equivalences into isomorphisms.
+While it is true that homotopy equivalences are quasi-isomorphisms,
+we have noted previously that the converse is generally false.
+If we are yet to fully achieve our goal of identifying complexes with
+the same cohomology, this observation suggests that we need a way to
+make the quasi-isomorphisms actual isomorphisms too.
+Taking cues from the method in commutative algebra of the same name,
+the second and final phase of constructing the derived category is to
+take a \emph{localisation} of $\homcat{\abcat{A}}$.
+
+\begin{definition}
+  \label{def_univ_prop_of_locln}
+  Let $S$ be a collection of morphisms in a category $\cat{C}$.
+  A \emph{localisation of $\cat{C}$ with respect to $S$} is a
+  category $\locln{\cat{C}}{S}$ and a \emph{localisation functor}
+  $Q_S: \abcat{C} \to \locln{\abcat{C}}{S}$ such that $Q_S(s)$ is an
+  isomorphism for every $s \in S$, and which is universal among all
+  functors with this property.
+  That is, any functor $F: \cat{C} \to \cat{D}$ such that $F(s)$ is
+  an isomorphism in $\cat{D}$ for every $s \in S$ factors uniquely
+  through $Q_S$:
+  \[
+    \begin{tikzcd}
+      {\cat{C}} & {\cat{D}.} \\
+      {\locln{\cat{C}}{S}}
+      \arrow["F", from=1-1, to=1-2]
+      \arrow["Q_S"', from=1-1, to=2-1]
+      \arrow["\exists!"', dashed, from=2-1, to=1-2]
+    \end{tikzcd}
+  \]
+  \vspace{-12pt}
+\end{definition}
+
+\iffalse
+\begin{example}
+  Because of \cref{prop_univ_prop_of_homcat},
+  $\homcat{\abcat{A}}$ is in fact a localisation of $\Ch{\abcat{A}}$
+  with respect to homotopy equivalences.
+\end{example}
+\fi
+
+The universal property shows that if a localisation exists, it is
+unique up to an equivalence of categories.
+We will follow the explicit construction given by the \emph{calculus
+of fractions} proposed by Gabriel and Zisman in 1967.
+The mild hypothesis that this calculus requires is that $S$ forms a
+\emph{multiplicative system}.
+There are some more foundational concerns (i.e. hom-sets potentially
+no longer being sets) that are technically relevant in what follows,
+but which we will ignore.
+
+\begin{definition}
+  A \emph{multiplicative system} in a category $\cat{C}$ is a
+  collection of morphisms $S$ satisfying the following three axioms:
+  \begin{enumerate}
+    \item
+      \emph{(Closure.)}
+      $S$ is closed under composition and contains all identity morphisms.
+
+    \item
+      \emph{(The Ore condition.)}
+      Given $t: D \to B$ in $S$ and $g: A \to B$ in $\cat{C}$, there
+      exist $s: C \to A$ in $S$ and $f: C \to D$ in $\cat{C}$ such
+      that the diagram
+      \[
+        \begin{tikzcd}
+          C & D \\
+          A & B
+          \arrow["{f}", dashed, from=1-1, to=1-2]
+          \arrow["{s}"', dashed, from=1-1, to=2-1]
+          \arrow["t", from=1-2, to=2-2]
+          \arrow["g"', from=2-1, to=2-2]
+        \end{tikzcd}
+      \]
+      commutes.
+      Symmetrically, given the morphisms $f$ and $s$ as in the above
+      diagram, one may find such $t$ and $g$.
+      This is expressed informally as $t^{-1} g = f s^{-1}$.
+
+    \item
+      \emph{(Cancellation.)}
+      If $f,g: A \to B$ are morphisms in $\cat{C}$, then $sf = sg$
+      for some $s: B \to C$ in $S$ if and only if $ft = gt$ for some
+      $t: D \to A$ in $S$.
+  \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+  Let $S$ be the collection of quasi-isomorphisms in $\homcat{\abcat{A}}$.
+  Then $S$ is a multiplicative system in $\homcat{\abcat{A}}$.
+\end{proposition}
+
+\begin{proof}
+  By definition, $S$ is the collection of morphisms such that
+  $H^i(s)$ is an isomorphism for all $i \in \bb{Z}$ and $s \in S$, so
+  we say that $S$ \emph{arises from} the functor $H^0:
+  \homcat{\abcat{A}} \to \abcat{A}$.
+  By the first claim of \cite[Proposition~10.4.1]{weibel}, any
+  collection arising from a cohomological functor must be a
+  multiplicative system.
+\end{proof}
+
+Proceeding according to the calculus of fractions, localising
+$\homcat[*]{\abcat{A}}$ does not require changing the set of objects.
+It therefore remains to say what the morphisms should be and how to
+compose them, which is the actual namesake of this construction.
+
+\begin{definition}
+  An arrangement of cochain maps
+  $\leftfrac{\cochaincomp{A}}{s}{\cochaincomp{X}}{f}{\cochaincomp{B}}$
+  in $\homcat{\abcat{A}}$ is called a \emph{fraction} (or
+  \emph{roof}) if $s$ a quasi-isomorphism.
+  We use the more compact and suggestive notation $fs^{-1}$ whenever
+  the underlying complexes are understood.
+\end{definition}
+
+Given compatible fractions
+$\leftfrac{\cochaincomp{A}}{s}{\cochaincomp{X}}{f}{\cochaincomp{B}}$
+and
+$\leftfrac{\cochaincomp{B}}{t}{\cochaincomp{Y}}{g}{\cochaincomp{C}}$,
+let us attempt to compose them.
+Using the Ore condition, choose a quasi-isomorphism $r:
+\cochaincomp{Z} \to \cochaincomp{X}$ and a cochain map $h:
+\cochaincomp{Z} \to \cochaincomp{Y}$ fitting into a commutative diagram
+\[
+  \begin{tikzcd}
+    && \cochaincomp{B} \\
+    & \cochaincomp{X} && \cochaincomp{Y} \\
+    \cochaincomp{A} && \cochaincomp{Z} && \cochaincomp{C}.
+    \arrow["f", from=2-2, to=1-3]
+    \arrow["s"', from=2-2, to=3-1]
+    \arrow["t"', from=2-4, to=1-3]
+    \arrow["g", from=2-4, to=3-5]
+    \arrow["r", dashed, from=3-3, to=2-2]
+    \arrow["h"', dashed, from=3-3, to=2-4]
+  \end{tikzcd}
+\]
+We declare the fraction
+\[
+  \leftfrac{\cochaincomp{A}}{sr}{\cochaincomp{Z}}{gh}{\cochaincomp{C}}
+\]
+to be `the' composite of $fs^{-1}$ and $gt^{-1}$.
+It is clear that this composition operation is associative, and that
+the fraction
+\[
+  \leftfrac{\cochaincomp{A}}{\id}{\cochaincomp{A}}{\id}{\cochaincomp{A}}
+\]
+acts as a two-sided identity.
+However, one issue is that since $r$ and $h$ are not guaranteed to be
+unique, neither in general is the composition of two fractions.
+To remedy this, we need a notion of fraction equivalence.
+
+\begin{definition}
+  Two fractions
+  \[
+    \leftfrac{\cochaincomp{A}}{s_1}{\cochaincomp{X_1}}{f_1}{\cochaincomp{B}}
+    \mathand
+    \leftfrac{\cochaincomp{A}}{s_2}{\cochaincomp{X_2}}{f_2}{\cochaincomp{B}}
+  \]
+  are \emph{equivalent} if they are \emph{dominated} by a third
+  fraction
+  $\leftfrac{\cochaincomp{A}}{s_3}{\cochaincomp{X_3}}{f_3}{\cochaincomp{B}}$,
+  i.e. there are cochain maps $\cochaincomp{X_3} \to
+  \cochaincomp{X_1}$ and $\cochaincomp{X_3} \to \cochaincomp{X_2}$
+  completing a commutative diagram
+  \[
+    \begin{tikzcd}
+      && \cochaincomp{X_3} \\
+      & \cochaincomp{X_1} && \cochaincomp{X_2} \\
+      \cochaincomp{A} &&&& \cochaincomp{B}
+      \arrow["s_1"{description}, from=2-2, to=3-1]
+      \arrow["f_1"{description}, from=2-2, to=3-5]
+      \arrow["s_2"{description}, from=2-4, to=3-1]
+      \arrow[dashed, from=1-3, to=2-2]
+      \arrow[dashed, from=1-3, to=2-4]
+      \arrow["f_2"{description}, from=2-4, to=3-5]
+      \arrow[dashed, "s_3"{description}, curve={height=30pt}, from=1-3, to=3-1]
+      \arrow[dashed, "f_3"{description}, curve={height=-30pt}, from=1-3, to=3-5]
+    \end{tikzcd}
+  \]
+  in $\homcat{\abcat{A}}$.
+  The collection of equivalence classes of fractions is denoted
+  $\Hom_S(\cochaincomp{A}, \cochaincomp{B})$.
+\end{definition}
+
+To amend the composition procedure, we now choose a representative
+fraction for both classes, composing them as before and then declare
+the class of the result to be the composite.
+We omit the verification that this is independent of the choice of
+representatives and thus a well-defined operation, since it is just
+an exercise in setting up the appropriate diagram and checking commutativity.
+
+In view of our earlier observations, the upshot is that the
+collections $\Hom_S(\cochaincomp{A}, \cochaincomp{B})$ fulfil the
+properties needed to be the hom-sets of a category.
+Thus at long last, everything is now in place to define the derived category.
+By the Gabriel-Zisman theorem, the definition below will precisely be
+a localisation of the homotopy category with respect to the
+quasi-isomorphisms, and so has the property we have sought after.
+Moreover, thanks to \cite[Proposition~10.4.1]{weibel}, we do not
+sacrifice the triangulated structure.
+
+\begin{definition}
+  Let $\abcat{A}$ be an abelian category, and $S$ the multiplicative
+  system of quasi-isomorphisms in $\homcat{\abcat{A}}$.
+  The \emph{derived category} of $\abcat{A}$ is the triangulated
+  category $\dercat{\abcat{A}}$ with the same objects as
+  $\homcat{\abcat{A}}$ and hom-sets
+  \[
+    \Hom_{\dercat{\abcat{A}}}(\cochaincomp{A}, \cochaincomp{B}) :=
+    \Hom_S(\cochaincomp{A}, \cochaincomp{B}).
+  \]
+  The localisation functor $\dercatlocln{\abcat{A}}:
+  \homcat{\abcat{A}} \to \dercat{\abcat{A}}$ is the identity on
+  objects and sends a cochain map $f: \cochaincomp{A} \to
+  \cochaincomp{B}$ to the fraction
+  \[
+    \leftfrac{\cochaincomp{A}}{\id}{\cochaincomp{A}}{f}{\cochaincomp{B}}.
+  \]
+  The \emph{bounded} derived categories $\dercat[*]{\abcat{A}}$ and
+  localisation functors $\dercatlocln[*]{\abcat{A}}:
+  \homcat[*]{\abcat{A}} \to \dercat[*]{\abcat{A}}$ are defined
+  similarly, and are all full subcategories of $\dercat{\abcat{A}}$.
+\end{definition}
+
+\begin{proposition}[{\cite[Proposition~III.5.2]{gelfand_and_manin}}]
+  The composite functor
+  \[
+    \begin{tikzcd}[cramped]
+      \iota_{\abcat{A}}: {\abcat{A}} & {\Ch[b]{\abcat{A}}} &
+      {\homcat[b]{\abcat{A}}} & {\dercat[b]{\abcat{A}}}
+      \arrow[hook, from=1-1, to=1-2]
+      \arrow["\pi", from=1-2, to=1-3]
+      \arrow["{\dercatlocln[*]{\abcat{A}}}", from=1-3, to=1-4]
+    \end{tikzcd}
+  \]
+  which concentrates objects and morphisms in degree 0 is fully faithful.
+\end{proposition}
+
+\iffalse
+\begin{proposition}[{\cite[Corollaries~10.3.9--10]{weibel}}]
+  \label{prop_locln_properties_of_dercat}
+  \begin{enumerate}
+    \item
+      Two complexes $\cochaincomp{A}$ and $\cochaincomp{B}$ in
+      $\Ch{\abcat{A}}$ are isomorphic in $\dercat{\abcat{A}}$ if and only
+      if they are quasi-isomorphic in $\homcat{\abcat{A}}$.
+      Thus $\cochaincomp{A}$ is zero if and only if it is exact/acyclic.
+
+    \item
+      Two cochain maps $f,\, g: \cochaincomp{A} \to
+      \cochaincomp{B}$ are the same in $\dercat{\abcat{A}}$ if and only
+      if $sf = sg$ for some quasi-isomorphism $s: \cochaincomp{B} \to
+      \cochaincomp{C}$.
+      Thus $f$ is zero in $\dercat{\abcat{A}}$ if and only if
+      $sf$ is null-homotopic.
+  \end{enumerate}
+\end{proposition}
+\fi
+
+With the derived category now at hand, it is worth pausing to reflect
+on the goals we established at the start of this chapter.
+By \cref{rem_res_is_a_qis}, any resolution of an object in
+$\abcat{A}$ is quasi-isomorphic to the image of that object under the
+above embedding functor, and by the universal property of
+$\dercatlocln{\abcat{A}}$ this becomes an isomorphism of objects in
+$\dercat{\abcat{A}}$.
+Thus in the derived category, the passage from an object to any of
+its resolutions is completely natural, which was precisely the main
+motivation for trying to invert quasi-isomorphisms in the first place.
+Another benefit of $\dercat{\abcat{A}}$ over $\homcat{\abcat{A}}$ is
+that the triangulated structure of the derived category is better behaved.
+
+\begin{proposition}[{\cite[Example~10.4.9]{weibel}}]
+  \label{prop_dercat_ses_exact_triang}
+  Every short exact sequence
+  \[
+    \begin{tikzcd}
+      \cochaincomp{0} \arrow[r]
+      & \cochaincomp{A} \arrow[r, "u"]
+      & \cochaincomp{B} \arrow[r, "v"]
+      & \cochaincomp{C} \arrow[r]
+      & \cochaincomp{0}
+    \end{tikzcd}
+  \]
+  in $\Ch{\abcat{A}}$ fits into an exact triangle $(u, v, w)$ on
+  $(\cochaincomp{A}, \cochaincomp{B}, \cochaincomp{C})$ in
+  $\dercat{\abcat{A}}$ isomorphic to the strict triangle on $u$.
+\end{proposition}
+
+The price to pay for all of this on-paper computational convenience
+is that compared to $\homcat{\abcat{A}}$, the morphisms in
+$\dercat{\abcat{A}}$ are more elaborate and can be difficult to
+actually work with in general, especially in unbounded derived categories.
+This may seem like a perverse outcome, but in practice one is most
+interested in the bounded derived categories anyway, and it is often
+the case that $\abcat{A}$ has certain properties which allow for
+simplifications to be made.
+We now discuss what can be done in such cases.
+
+The need to localise the homotopy category arose from the observation
+that not all quasi-isomorphisms are homotopy equivalences.
+However, we have also seen that a partial converse for bounded below
+complexes of injectives holds by \cref{prop_qis_is_homotopy_equiv_partial_conv}.
+On the face of it, this suggests that whenever $\abcat{A}$ has enough
+injectives and $\abcat{I}$ is the full additive subcategory of
+$\abcat{A}$ consisting of injectives, the triangulated subcategory
+$\homcat[+]{\abcat{I}}$ of $\homcat{\abcat{A}}$ already suffices in
+order to invert quasi-isomorphisms.
+% Both this statement and its dual turn out to be true in the following way.
+
+\begin{proposition}[{\cite[Theorem~10.4.8]{weibel}}]
+  \label{prop_bounded_below_dercat_equiv}
+  Let $\abcat{A}$ be an abelian category with enough injectives and
+  $\abcat{I}$ the full additive subcategory of injectives in $\abcat{A}$.
+  Then
+  \[
+    \begin{tikzcd}
+      {T^+:\homcat[+]{\abcat{I}}} & {\homcat[+]{\abcat{A}}} &
+      {\dercat[+]{\abcat{A}}}
+      \arrow[hook, from=1-1, to=1-2]
+      \arrow["{\dercatlocln[+]{\abcat{A}}}", from=1-2, to=1-3]
+    \end{tikzcd}
+  \]
+  is an equivalence of categories.
+  % Dually, if $\abcat{A}$ has enough projectives and $\abcat{P}$ is
+  % the full additive subcategory of $\abcat{A}$ consisting of projectives, then
+  % \[
+  %     \begin{tikzcd}
+  %       {\homcat[-]{\abcat{P}}} & {\homcat[-]{\abcat{A}}} &
+  % {\dercat[-]{\abcat{A}}}
+  %       \arrow[hook, from=1-1, to=1-2]
+  %       \arrow["{\dercatlocln[-]{\abcat{A}}}", from=1-2, to=1-3]
+  %     \end{tikzcd}
+  % \]
+  % is an equivalence of categories.
+\end{proposition}
+
+We will not prove this.
+The argument in \cite{weibel} uses the machinery of
+\emph{Cartan-Eilenberg resolutions} (i.e. double complexes acting as
+`resolutions' for complexes) and formal properties of localisation.
+Alternatively, the (longer) proof of
+\cite[Proposition~2.40]{huybrechts} shows more directly that the
+composite is fully faithful and essentially surjective, i.e.
+\begin{equation}
+  \label{eq_bij_dercat_homcat_injs}
+  \Hom_{\homcat[+]{\abcat{I}}}(\cochaincomp{I}, \cochaincomp{J})
+  \longrightarrow
+  \Hom_{\dercat[+]{\abcat{A}}}(\cochaincomp{I}, \cochaincomp{J})
+\end{equation}
+is bijective and every complex $\cochaincomp{A} \in
+\dercat[+]{\abcat{A}}$ is isomorphic in $\dercat[+]{\abcat{A}}$ to
+some complex $\cochaincomp{I} \in \homcat[+]{\abcat{I}}$.
+Unfortunately, this equivalence of categories does not immediately
+descend to $\dercat[b]{\abcat{A}}$ without the inclusion of an extra hypothesis.
+
+\begin{corollary}
+  \label{cor_bounded_dercat_equiv}
+  The functor of \cref{prop_bounded_below_dercat_equiv} is an
+  equivalence of categories
+  \[
+    \begin{tikzcd}
+      {T^b: \homcat[b]{\abcat{I}}} & {\homcat[b]{\abcat{A}}} &
+      {\dercat[b]{\abcat{A}}}
+      \arrow[hook, from=1-1, to=1-2]
+      \arrow["{\dercatlocln[b]{\abcat{A}}}", from=1-2, to=1-3]
+    \end{tikzcd}
+  \]
+  if all objects of $\abcat{A}$ have injective resolutions of finite length.
+\end{corollary}
+
+The dual statements of \cref{prop_bounded_below_dercat_equiv} and
+\cref{cor_bounded_dercat_equiv} for projective objects and
+$\dercat[-]{\abcat{A}}$ also hold, but this case will be of less interest to us.

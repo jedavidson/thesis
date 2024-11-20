@@ -1,0 +1,462 @@
+\section{The tilting bundle and the Kronecker quiver}
+
+The goal of this section is to motivate why the coherent sheaves on
+$\proj{1}$ connect to the representation theory of algebras and
+quivers on a more foundational level before we move to the derived category.
+We start from the algebra side.
+
+\begin{definition}
+  \label{def_tilting_bdl}
+  The \emph{tilting bundle} of $\proj{1}$ is the sheaf $\shf{T} := \tiltshf$.
+  Its endomorphism algebra $\Lambda := \End(\shf{T}) = \Hom(\shf{T},
+  \shf{T})$ is called the \emph{tilted algebra} of $\proj{1}$.
+\end{definition}
+
+This choice is not strictly unique, as it will turn out that one can
+take any twist of $\shf{T}$ and the results of this chapter will
+still go through.
+At the outset, we immediately note that $\Lambda$ is a
+non-commutative, finite dimensional $k$-algebra.
+To begin to understand $\Lambda$ further, we recall an important
+decomposition arising in the theory of idempotents.
+
+\begin{definition}
+  Let $A$ be a $k$-algebra and $e$ an \emph{idempotent} element of
+  $A$ (i.e. $e^2 = e$).
+  Then the \emph{(two-sided) Peirce decomposition} of $A$ with
+  respect to $e$ as a $k$-algebra is the direct sum decomposition
+  \[
+    A = eAe \biprod eA(1 - e) \biprod (1 - e)Ae \biprod (1 - e)A(1 - e).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+For details, see \cite[\S21]{lam}.
+So that we may compute the Peirce decomposition of $\Lambda$, we
+first need to identify an idempotent endomorphism in $\shf{T}$.
+Given that $\shf{T}$ is formed as a direct sum, a straightforward
+choice seems to be the \emph{first projection} endomorphism $\Pi_1 :=
+(\pi_1, \pi_1')$ defined by the projection maps
+\[
+  \pi_1: k[z]^{\biprod 2} \to k[z]^{\biprod 2}
+  \mathand
+  \pi_1': k[z^{-1}]^{\biprod 2} \to k[z^{-1}]^{\biprod 2}
+\]
+onto the respective first summands.
+It is not difficult to see that $\Pi_1$ is indeed an endomorphism of
+$\shf{T}$, and clearly $\Pi_1^2 = \Pi_1$.
+Similarly, one obtains the \emph{second projection} endomorphism
+$\Pi_2 := (\pi_2, \pi_2')$ with analogous properties and such that
+$\id_{\shf{T}} - \Pi_1 = \Pi_2$.
+Thus the Peirce decomposition for $\Lambda$ with respect to $\Pi_1$ reads
+\[
+  \Lambda = \Pi_1 \Lambda \Pi_1 \biprod \Pi_1 \Lambda \Pi_2 \biprod
+  \Pi_2 \Lambda \Pi_1 \biprod \Pi_2 \Lambda \Pi_2.
+\]
+In the following series of lemmas, we identify these direct summands.
+
+\begin{lemma}
+  \label{lemma_eAe_peirce_decomp_tilting_algebra}
+  We have $\Pi_1 \Lambda \Pi_1 = k \Pi_1$ and $\Pi_2 \Lambda \Pi_2 = k\Pi_2$.
+\end{lemma}
+
+\begin{proof}
+  It will be sufficient to prove only the first claim, as the proof
+  of the second is virtually identical.
+  Given any endomorphism $\Phi = (\varphi, \varphi')$ of $\shf{T}$, we can write
+  \[
+    \varphi(f, g) = (\varphi_1(f, g), \varphi_2(f, g)),
+  \]
+  where $\varphi_1, \varphi_2: k[z]^2 \to k[z]$ are necessarily
+  $k[z]$-module homomorphisms.
+  Since
+  \begin{align*}
+    (\pi_1 \circ \varphi \circ \pi_1)(f, g)
+    = f \cdot (\pi_1 \circ \varphi \circ \pi_1)(1, g)
+    = f \cdot (\varphi_1(1, 0), 0),
+  \end{align*}
+  we see that the map $\pi_1 \circ \varphi \circ \pi_1$ is determined
+  by the polynomial $\lambda = \varphi_1(1, 0)$.
+  Similarly, there are $k[z^{-1}]$-module homomorphisms $\varphi_1',
+  \varphi_2': k[z^{-1}]^2 \to k[z^{-1}]$ so that
+  \[
+    (\pi_1' \circ \varphi' \circ \pi_1')(f, g) = f \cdot (\varphi'(1, 0), 0),
+  \]
+  so $\pi_1' \circ \varphi' \circ \pi_1'$ is determined by the
+  polynomial $\lambda' = \varphi_1'(1, 0)$.
+  The diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {k[z, z^{-1}]^{\biprod 2}} && {k[z, z^{-1}]^{\biprod 2}} \\
+      {k[z, z^{-1}]^{\biprod 2}} && {k[z, z^{-1}]^{\biprod 2}}
+      \arrow["{\pi_1 \circ \varphi \circ \pi_1}", from=1-1, to=1-3]
+      \arrow["{(\times 1, \times z^{-1})}"', from=1-1, to=2-1]
+      \arrow["{(\times 1, \times z^{-1})}", from=1-3, to=2-3]
+      \arrow["{\pi_1' \circ \varphi' \circ \pi_1'}"', from=2-1, to=2-3]
+    \end{tikzcd}
+  \]
+  associated to $\Pi_1 \Phi \Pi_1$ commutes, so it follows by chasing
+  the image of the element $(1, 0)$ that $\lambda = \lambda'$.
+  Since $\lambda \in k[z]$ and $\lambda' \in k[z^{-1}]$, this forces
+  $\lambda \in k$.
+  Thus $\pi_1 \circ \varphi \circ \pi_1 = \lambda \pi_1$ and $\pi_1'
+  \circ \varphi' \circ \pi_1' = \lambda \pi_1'$.
+\end{proof}
+
+\begin{lemma}
+  We have $\Pi_1 \Lambda \Pi_2 = 0$.
+\end{lemma}
+
+\begin{proof}
+  Given an endomorphism $\Phi = (\varphi, \varphi')$ of $\shf{T}$, it
+  is easy to compute that
+  \[
+    \pi_1 \circ \varphi \circ \pi_2 = 0
+    \mathand
+    \pi_1' \circ \varphi' \circ \pi_2' = 0,
+  \]
+  so $\Pi_1 \Phi \Pi_2 = 0$ for all such $\Phi$.
+\end{proof}
+
+Before tackling the final summand, we define a type of endomorphism
+that will help us completely characterise the elements of $\Pi_2 \Lambda \Pi_1$.
+
+\begin{definition}
+  Let $(\lambda, \lambda') \in k[z] \times k[z^{-1}]$ be a pair of
+  \emph{weight polynomials} for $\shf{T}$, i.e. such that $\lambda' =
+  z^{-1} \lambda$ in $k[z, z^{-1}]$.
+  Then the \emph{right shift of $\shf{T}$ with weight $(\lambda,
+  \lambda')$} is the endomorphism $S_{\lambda, \lambda'} :=
+  (s_\lambda, s'_{\lambda'})$, where
+  $s_\lambda: k[z]^2 \to k[z]^2$ and $s'_{\lambda'}: k[z^{-1}]^2 \to
+  k[z^{-1}]^2$ are the module homomorphisms
+  \[
+    s_\lambda(f, g) = (0, \lambda f) \mathand s'_{\lambda'}(f, g) =
+    (0, \lambda' f).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+The verification that any right shift of $\shf{T}$ is indeed an
+endomorphism of $\shf{T}$ is straightforward and left to the reader.
+This is a non-standard notion and somewhat restrictive in its setup,
+since any choice of weights is determined by the choice of $\lambda$,
+and it is easy to see from a degree argument that $\lambda$ can only
+be a constant or linear polynomial in $z$, say $\lambda(z) = a + bz$
+for some $a, b \in k$.
+This is strictly to our advantage, however.
+The construction of right shifts is linear with respect to the weight
+polynomials, by which we mean that
+\[
+  s_\lambda = a s_1 + b s_z
+  \mathand
+  s'_{\lambda'} = a s'_{z^{-1}} + b s'_1,
+\]
+which is to say that $S_{\lambda, \lambda'} = a S_{1, z^{-1}} + b S_{z, 1}$.
+Since the composition of any two right shifts is trivially 0 in
+$\Lambda$, the set of all right shifts forms the subalgebra of
+$\Lambda$ generated as a vector space over $k$ by $S_{1, z^{-1}}$ and
+$S_{z, 1}$.
+
+\begin{lemma}
+  The subalgebra of right shifts of $\shf{T}$ is precisely $\Pi_2
+  \Lambda \Pi_1$.
+\end{lemma}
+
+\begin{proof}
+  The argument is similar to
+  \cref{lemma_eAe_peirce_decomp_tilting_algebra}, so we provide fewer
+  details this time.
+  Consider an endomorphism $\Phi = (\varphi, \varphi')$ of $\shf{T}$
+  and, in the prior notation, let $\lambda = \varphi_2(1, 0)$ and
+  $\lambda' = \varphi_2'(1, 0)$.
+  Then $\Pi_2 \Phi \Pi_1$ is the endomorphism of $\shf{T}$ determined
+  by the maps
+  \begin{align*}
+    (\pi_2 \circ \varphi \circ \pi_1)(f, g)
+    = (0, \lambda f)
+    \mathand
+    (\pi_2' \circ \varphi' \circ \pi_1')(f, g)
+    = (0, \lambda' f).
+  \end{align*}
+  Chasing the image of $(1, 0)$ in the corresponding commutative
+  diagram for $\Pi_2 \Phi \Pi_1$, one sees that $\lambda' = z^{-1}
+  \lambda$ in $k[z, z^{-1}]$, so $\Pi_2 \Phi \Pi_1$ is indeed the
+  right shift $S_{\lambda, \lambda'}$.
+\end{proof}
+
+Putting these results together, we have
+\[
+  \Lambda = k \Pi_1 \oplus k S_{1, z^{-1}} \oplus k S_{z, 1} \oplus k \Pi_2.
+\]
+The algebra structure is determined by the idempotent relations
+$\Pi_1^2 = \Pi_1$ and $\Pi_2^2 = \Pi_2$, as well as the non-zero products
+\[
+  S_{1, z^{-1}} \Pi_1 = S_{1, z^{-1}},
+  \quad
+  S_{z, 1} \Pi_1 = S_{z, 1},
+  \quad
+  \Pi_2 S_{1, z^{-1}} = S_{1, z^{-1}}
+  \mathand
+  \Pi_2 S_{z, 1} = S_{z, 1}.
+\]
+We now turn to interpreting this algebra from the point of view of
+\emph{quivers}.
+These may seem decidedly less complicated objects than coherent
+sheaves on $\proj{1}$, but have a rich and interesting representation
+theory in their own with many surprising connections to other areas
+of mathematics.
+
+\begin{definition}
+  A \emph{quiver} is a directed multigraph $Q = (Q_0, Q_1, \hd,
+  \tl)$, where $Q_0$ is its set of \emph{vertices}, $Q_1$ is its set
+  of \emph{arrows}, and $\hd, \tl: Q_1 \to Q_0$ are set functions
+  which assign to each arrow its \emph{head} and \emph{tail} vertex
+  respectively.
+\end{definition}
+
+This definition allows in principle for quivers consisting of
+infinitely many vertices or arrows, but the theory is understandably
+best behaved under finiteness assumptions on both $Q_0$ and $Q_1$.
+We shall consider the single example relevant to our goals.
+
+\begin{example}
+  The \emph{Kronecker quiver} is the graph
+  \[
+    \begin{tikzcd}
+      1 & 2.
+      \arrow["\alpha", shift left=2, from=1-1, to=1-2]
+      \arrow["\beta"', shift right=2, from=1-1, to=1-2]
+    \end{tikzcd}
+  \]
+  Formally, this is the quiver $\Delta = (\{1, 2\}, \{\alpha,
+  \beta\}, \hd, \tl)$, where
+  \[
+    \hd(\alpha) = \hd(\beta) = 1
+    \mathand
+    \tl(\alpha) = \tl(\beta) = 2.
+  \]
+  \vspace{-24pt}
+\end{example}
+
+The origin of $\Delta$ traces back to a classical problem (c. 1890)
+of linear algebra studied by its namesake, as Kronecker was
+interested in classifying all pairs of linear maps
+\[
+  \begin{tikzcd}
+    {\bb{C}^m} & {\bb{C}^n}
+    \arrow["S", shift left=2, from=1-1, to=1-2]
+    \arrow["T"', shift right=2, from=1-1, to=1-2]
+  \end{tikzcd}
+\]
+of vector spaces over $\bb{C}$ up to a change of basis, i.e. $(S, T)
+\sim (S', T')$ if
+\[
+  S' = B^{-1} S A
+  \mathand
+  T' = B^{-1} T A
+\]
+for some linear isomorphisms $A: \bb{C}^m \to \bb{C}^m$ and $B:
+\bb{C}^n \to \bb{C}^n$.
+Though this problem predates quivers, this is in fact a question
+about the \emph{finite dimensional representations} of $\Delta$ over $\bb{C}$.
+Just as one is able to do in the representation theory of finite
+groups as modules over its group algebra, we can equivalently view
+representations of a quiver as modules over its \emph{path algebra}.
+This will also reveal where the relationship between the quiver
+$\Delta$ and the tilting bundle $\shf{T}$ comes from.
+
+\iffalse
+\begin{definition}
+  A \emph{representation} $(V_i, \rho_a)$ of a quiver $Q$ over a
+  field $k$ is an assignment of a $k$-vector space $V_i$ for each
+  vertex $i \in Q_0$ and a linear map $\rho_a: V_{\hd(a)} \to
+  V_{\tl(a)}$ for each arrow $a \in Q_1$.
+  A representation is \emph{finite dimensional} if each $V_i$ is so over $k$.
+\end{definition}
+
+\begin{definition}
+  A \emph{morphism of representations} $\Phi: (V_i, \rho_a) \to (W_i,
+  \tau_a)$ of $Q$ consists of a linear map $\varphi_i: V_i \to W_i$
+  for each $i \in Q_0$ such that the diagrams
+  \[
+    \begin{tikzcd}[cramped]
+      {V_{\hd(a)}} & {V_{\tl(a)}} \\
+      {W_{\hd(a)}} & {W_{\tl(a)}}
+      \arrow["{\rho_a}", from=1-1, to=1-2]
+      \arrow["{\varphi_{\hd(a)}}"', from=1-1, to=2-1]
+      \arrow["{\varphi_{\tl(a)}}", from=1-2, to=2-2]
+      \arrow["{\tau_a}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  commute for all $a \in Q_1$.
+  With composition of morphisms defined in the obvious way, this
+  furnishes $\rep{k}{Q}$, the \emph{category of finite dimensional
+  representations of $Q$ over $k$}.
+\end{definition}
+
+An intimately related notion to the representations of $Q$ over $k$
+is its \emph{path algebra} of a quiver over $k$.
+This will also clarify the relationship between $\Delta$ and the
+tilting sheaf $\shf{T}$.
+\fi
+
+\begin{definition}
+  Given a quiver $Q$, a \emph{path} is a (possibly empty) sequence of
+  arrows $p = a_1 a_2 \cdots a_n$ in $Q$ such that $\tl(a_i) =
+  \hd(a_{i + 1})$ for all $1 \leq i < n$.
+  We shall write $\hd(p) = \hd(a_1)$ and $\tl(p) = \tl(a_n)$.
+  There is an empty path for each vertex $i \in Q_0$, called the
+  \emph{trivial path} $e_i$, such that $\hd(e_i) = \tl(e_i) = i$.
+\end{definition}
+
+\begin{definition}
+  Fix a field $k$.
+  Given a quiver $Q$, let $kQ$ be the vector space over $k$ freely
+  generated by paths in $Q$, i.e. the set of formal $k$-linear
+  combinations $\sum \lambda_i p_i$ with $\lambda_i \in k$ and $p_i$
+  ranging over all paths in $Q$.
+  For any two paths $p = a_1 a_2 \cdots a_n$ and $q = b_1 b_2 \cdots
+  b_m$, we define the \emph{concatenation} of $p$ and $q$ to be the element
+  \[
+    pq :=
+    \begin{cases}
+      a_1 a_2 \cdots a_n b_1 b_2 \cdots b_m & \text{if } \tl(p) = \hd(q) \\
+      0 & \text{otherwise.}
+    \end{cases}
+  \]
+  This extends to a bilinear product, and we call $kQ$ the \emph{path
+  algebra} of $Q$ over $k$.
+\end{definition}
+
+\begin{example}
+  For the Kronecker quiver, the path algebra over $k$ is the vector space
+  \[
+    k\Delta = k e_1 \oplus k e_2 \oplus k \alpha \oplus k \beta.
+  \]
+  To describe the algebra structure, we find the relations on these basis paths.
+  It is clear that the trivial paths are always idempotents of the
+  path algebra, so $e_1^2 = e_1$ and $e_2^2 = e_2$.
+  The only other non-zero concatenations of paths in $k \Delta$ are
+  \[
+    e_1 \alpha  = \alpha, \quad
+    e_1 \beta = \beta, \quad
+    \alpha e_2 = \alpha \mathand
+    \beta e_2 = \beta.
+  \]
+  Moreover, as one easily checks, the map
+  \[
+    e_1 \mapsto \Pi_1,
+    \quad
+    e_2 \mapsto \Pi_2,
+    \quad
+    \alpha \mapsto S_{1, z^{-1}}
+    \mathand
+    \beta \mapsto S_{z, 1}
+  \]
+  determines a $k$-algebra isomorphism $k \Delta \cong \op{\Lambda}$,
+  the \emph{opposite algebra} of $\Lambda$.
+\end{example}
+
+\begin{remark}
+  An alternative way to present the data of these $k$-algebras is as
+  a certain \emph{generalised matrix algebra} of lower-triangular matrices.
+  The set
+  \[
+    \mattwo{k}{0}{k^2}{k}
+    :=
+    \left\{
+      \mattwo{a}{0}{(b, c)}{d}: a, b, c, d \in k
+    \right\}
+  \]
+  is a vector space over $k$ with addition defined in the obvious
+  way, and becomes a $k$-algebra via the multiplication operation
+  \[
+    \mattwo{a}{0}{(b, c)}{d} \mattwo{e}{0}{(f, g)}{h}
+    =
+    \mattwo{ae}{0}{(be + df, ce + dg)}{dh}.
+  \]
+  This matrix algebra is isomorphic to $\Lambda$, as witnessed by the map
+  \begin{align*}
+    \Pi_1 &\mapsto \mattwo{1}{0}{(0, 0)}{0}, & \Pi_2 &\mapsto
+    \mattwo{0}{0}{(0, 0)}{1}, \\
+    S_{1, z^{-1}} &\mapsto \mattwo{0}{0}{(1, 0)}{0}, & S_{z, 1}
+    &\mapsto \mattwo{0}{0}{(0, 1)}{0}.
+  \end{align*}
+\end{remark}
+
+With a more general view toward the representation theory of finite
+dimensional algebras, path algebras of quivers occupy a key role.
+They prove to be a rich source of (often non-commutative) algebras,
+and as we have seen with the Kronecker quiver, any finite quiver with
+no oriented cycles will yield a finite dimensional path algebra.
+In fact, one can say much more.
+
+\begin{theorem}[Gabriel]
+  Let $A$ be a finite dimensional algebra over a field $k$.
+  Then there exists a quiver $Q$ and an ideal $I \idealof kQ$ such
+  that $A$ is \emph{Morita equivalent} to $\quot{kQ}{I}$, i.e. the
+  categories $\mod{A}$ and $\mod{\quot{kQ}{I}}$ are equivalent.
+\end{theorem}
+
+We can generalise the discussion of the tilted algebra by considering
+$\Hom(\shf{T}, \shf{F})$ for any coherent sheaf $\shf{F}$ on $\proj{1}$.
+This is a finite dimensional vector space over $k$ on which $\Lambda$
+acts on the right by precomposition, so all told we obtain a functor
+\[
+  \Hom(\shf{T}, -): \Coh(\proj{1}) \to \mod{\op{\Lambda}}.
+\]
+We can tell right away that this is not an equivalence of categories
+for two reasons.
+By \cref{exmp_morphisms_of_twists}, we see that $\End(\twist{-1}) \neq 0$ and
+\[
+  \Hom(\shf{T}, \twist{-1})
+  = \Hom(\shf{O}, \twist{-1}) \biprod \Hom(\twist{1}, \twist{-1})
+  = 0
+\]
+in $\mod{\op{\Lambda}}$, so the functor $\Hom(\shf{T}, -)$ is not
+fully faithful.
+It is also true that an equivalence of abelian categories is
+necessarily exact, and we see by \cref{prop_ext_from_twist} that
+\[
+  \Extalt{1}(\shf{T}, \twist{-1})
+  \cong
+  H^1(\twist{-1}) \biprod H^1(\twist{-2})
+  \cong k
+  \neq 0.
+\]
+From the point of view of this thesis and everything we have done so
+far, the latter is the more interesting observation: it suggests that
+there is additional cohomological information we are not seeing at
+the level of the abelian categories.
+
+% \begin{proposition}
+%     The categories $\rep{k}{Q}$ and $\mod{kQ}$ are equivalent.
+% \end{proposition}
+
+% \begin{proof}[Proof sketch]
+%     We briefly describe the equivalence only on objects in each
+% direction, but we shall not verify the details.
+%     Given any finite dimensional representation $(V_i, \rho_a)$ of
+% $Q$, $M = \bigoplus_{i \in Q_0} V_i$ has a left action by $kQ$ as follows.
+%     For each $m_i \in W_i$, we set $e_i m_i = m_i$ and $e_j m_i =
+% 0$ for any $i \neq j$.
+%     For each individual arrow $a \in Q_1$, we set $am_{\tl(a)} =
+% \rho_a(m_{\tl(a)})$ and $a m_i = 0$ for any $i \neq \tl(a)$.
+%     It is not difficult to see that this produces a finitely
+% generated left $kQ$-module.
+
+%     Given any finitely generated left $kQ$-module $M$, the vector
+% spaces $V_i = e_i M$ is a finite dimensional vector space over $k$
+% for each $i \in Q_0$.
+%     Right multiplication by each $a \in Q_1$ induces linear maps
+% $\rho_a: V_{\hd(a)} \to V_{\tl(a)}$, since $a = e_{\tl(a)} a e_{\hd(a)}$.
+% \end{proof}
+
+% Because of this, and the fact that studying module categories of
+% finite dimensional algebras is itself one of the main problems in
+% the representation theory of algebras, our preference will be to
+% work with $kQ$.
+
+% https://sites.math.washington.edu/~julia/teaching/Sem_Fall2010/Jim_notes.pdf
+% https://www.famaf.unc.edu.ar/~angiono/assets/files/Schedler-Quiver.pdf

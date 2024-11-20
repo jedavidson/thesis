@@ -1,0 +1,67 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+
+\renewcommand{\footnotesize}{\scriptsize}
+
+\usetheme{Singapore}
+\usecolortheme{rose}
+
+\colorlet{themecolour}{Fuchsia}
+\setbeamercolor{structure}{fg=themecolour}
+\renewcommand{\thefootnote}{\textcolor{themecolour}{*}}
+
+\title{Opening Presentation}
+\author{James Davidson\footnote{Supervisor: Professor Daniel Chan}}
+\institute{School of Mathematics and Statistics \\ UNSW Sydney}
+\date{February 28, 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Who}
+
+\begin{frame}{Background}
+  I'm doing a \alert{standalone} honours in the pure stream this year, but I finished my double degree in CS and Math in the summer term last year.
+  (What did I do in the interim? Industry for a bit, travelling for a bit, then tutoring in the school of CSE.)
+\end{frame}
+
+\section{What}
+
+\begin{frame}{My goal}
+  The goal of my thesis is to understand the following (and its generalisations, if time allows):
+
+  \begin{block}{Theorem (Beilinson, 1978)}
+    Fix some field $k$. Let $\mathsf{Coh} \, \mathbb{P}^1$ be the category of coherent sheaves of the projective line over $k$,
+    and $\mathsf{mod} \, {k \Delta}$ the category of modules over $k \Delta$, the path $k$-algebra of the Kronecker quiver.
+    Then there is an equivalence of (bounded) derived categories
+    \[
+      \mathbf{D}^b(\mathsf{Coh} \, \mathbb{P}^1) \longrightarrow \mathbf{D}^b(\mathsf{mod} \, {k \Delta}).
+    \]
+  \end{block}
+
+  This gives a link between representation theory and algebraic geometry, and hinges on a tool from the former:
+  \alert{tilting theory}, which generalises Morita equivalence of rings.
+\end{frame}
+
+\begin{frame}[fragile]{A little glimpse}
+  Most things in the foregoing result probably make about as much sense to you as they do to me right now, but one bit is easy.
+  A quiver is essentially just a graph permitting multiple parallel edges, and the \alert{Kronecker quiver} is quite simple among such objects:
+
+  \begin{figure}
+    \centering
+    \begin{tikzcd}[ampersand replacement=\&]
+      1
+      \arrow[r, bend left, "\alpha"]
+      \arrow[r, bend right, swap, "\beta"]
+      \&
+      2
+    \end{tikzcd}
+  \end{figure}
+
+  Somehow, this little thing has a connection to algebraic geometry, and therein lies my thesis topic.
+\end{frame}
+
+\end{document}

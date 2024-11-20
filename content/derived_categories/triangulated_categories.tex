@@ -1,0 +1,319 @@
+\section{Triangulated categories}
+\label{sect_triangcat}
+
+This particular structure of triangles, including the fact that exact
+triangles give rise to long exact cohomology sequences, can be found
+in categories other than the homotopy category.
+Since this will apply also to derived categories, it is worth taking
+an intermission to discuss the general case, which is that of
+Verdier's \emph{triangulated categories}.
+% These categories in fact have an intimately connected history with
+% derived categories, having been formulated by Verdier in 1963
+% during the same period as Grothendieck's seminal work on derived categories.
+
+We start with a general definition of triangles and morphisms of triangles.
+These concepts are similar to what we have already seen for
+$\homcat{\abcat{A}}$, but will make sense in any category with a
+functor similar to the shift of complexes.
+
+\begin{definition}
+  A \emph{translation functor} on a category $\cat{C}$ is an
+  autoequivalence (i.e. an equivalence of categories $T: \cat{C} \to \cat{C}$).
+  For notational ease, we shall write $[n] = T^n$ and $[-n] = T^{-n}$
+  for each $n > 0$, where $T^n$ and $T^{-n}$ are the $n$-fold
+  applications of $T$ and $T^{-1}$ respectively.
+\end{definition}
+
+\begin{definition}
+  Let $\cat{C}$ be a category equipped with a \emph{translation functor} $T$.
+  Given an ordered triple of objects $(A, B, C)$ in $\cat{C}$, a
+  \emph{triangle} over $(A, B, C)$ is an ordered triple $(u, v, w)$
+  corresponding to a sequence
+  \[
+    \begin{tikzcd}
+      A \arrow[r, "u"]
+      & B \arrow[r, "v"]
+      & C \arrow[r, "w"]
+      & A[1],
+    \end{tikzcd}
+  \]
+  so called as this sequence may suggestively be `folded' into a
+  triangular diagram
+  \[
+    \begin{tikzcd}
+      & C \\
+      A && B.
+      \arrow["w"', from=1-2, to=2-1]
+      \arrow["u"', from=2-1, to=2-3]
+      \arrow["v"', from=2-3, to=1-2]
+    \end{tikzcd}
+  \]
+\end{definition}
+
+\begin{definition}
+  Given two triangles $(u, v, w)$ and $(u', v', w')$ over $(A, B, C)$
+  and $(A', B', C')$ respectively, a \emph{morphism of triangles} is
+  an ordered triple of morphisms $(f, g, h)$ such that the diagram
+  \[
+    \begin{tikzcd}
+      A & B & C & {A[1]} \\
+      {A'} & B' & C' & {A'[1]}
+      \arrow["u", from=1-1, to=1-2]
+      \arrow["f"', from=1-1, to=2-1]
+      \arrow["v", from=1-2, to=1-3]
+      \arrow["g"', from=1-2, to=2-2]
+      \arrow["w", from=1-3, to=1-4]
+      \arrow["h", from=1-3, to=2-3]
+      \arrow["{f[1]}", from=1-4, to=2-4]
+      \arrow["{u'}"', from=2-1, to=2-2]
+      \arrow["{v'}"', from=2-2, to=2-3]
+      \arrow["{w'}"', from=2-3, to=2-4]
+    \end{tikzcd}
+  \]
+  commutes in $\cat{C}$, and an \emph{isomorphism of triangles} if
+  $f$, $g$ and $h$ are isomorphisms.
+\end{definition}
+
+In a manner of speaking, a triangulated category is one in which all
+triangles `play nicely' with a certain family of triangles analogous
+to the exact triangles in $\homcat{\abcat{A}}$.
+This is made more precise by the following definition, rather
+infamous for its complexity.
+
+\begin{definition}
+  A \emph{triangulated category} is an additive category
+  $\triangcat{D}$ equipped with a translation functor $T$ and a
+  family of triangles, called the \emph{exact} (or
+  \emph{distinguished}) triangles in $\triangcat{D}$, subject to the
+  following four axioms:
+
+  \begin{enumerate}[leftmargin=4.4em]
+    \item[(TR1)]
+      For each object $A$, the triangle $(\id_A, 0, 0)$ is exact over
+      $(A, A, 0)$.
+      For each morphism $u: A \to B$, there exists an object $C$
+      together with morphisms $v$ and $w$ so that the triangle $(u,
+      v, w)$ is exact over $(A, B, C)$.
+      Any triangle isomorphic to an exact triangle is also exact.
+
+    \item[(TR2)]
+      \emph{(The rotation axiom.)}
+      If the triangle
+      \[
+        \begin{tikzcd}
+          A \arrow[r, "u"]
+          & B \arrow[r, "v"]
+          & C \arrow[r, "w"]
+          & A[1]
+        \end{tikzcd}
+      \]
+      is exact, then so are the rotated triangles
+      \[
+        \begin{tikzcd}[cramped]
+          B & C & {A[1]} & {B[1]}, \\
+          {C[-1]} & A & B & C.
+          \arrow["v", from=1-1, to=1-2]
+          \arrow["w", from=1-2, to=1-3]
+          \arrow["{-u[1]}", from=1-3, to=1-4]
+          \arrow["{-w[-1]}", from=2-1, to=2-2]
+          \arrow["u", from=2-2, to=2-3]
+          \arrow["v", from=2-3, to=2-4]
+        \end{tikzcd}
+      \]
+      % If $(u, v, w)$ is exact over $(A, B, C)$, then the triangles
+      % \[
+      %     \begin{tikzcd}
+      %       & B &&& {T(A)} \\
+      %       {T^{-1}(C)} && A, & B && C
+      %       \arrow["v"', from=1-2, to=2-1]
+      %       \arrow["{-T(u)}"', from=1-5, to=2-4]
+      %       \arrow["{-T^{-1}(w)}"', from=2-1, to=2-3]
+      %       \arrow["u"', from=2-3, to=1-2]
+      %       \arrow["v"', from=2-4, to=2-6]
+      %       \arrow["w"', from=2-6, to=1-5]
+      %     \end{tikzcd}
+      % \]
+      % are also exact.
+      % \todo{Think about whether changing shift from $[-1]$ to $[1]$
+      % means $T^{-1}$ should be $T$.}
+
+    \item[(TR3)]
+      \emph{(The morphism axiom.)}
+      Given exact triangles $(u, v, w)$ and $(u', v', w')$ over $(A,
+      B, C)$ and $(A', B', C')$ respectively, as well as morphisms
+      $f: A \to A'$ and $g: B \to B'$ such that $gu = u' f$, there
+      exists a morphism $h: C \to C'$ so that $(f, g, h)$ is a
+      morphism of triangles, i.e.
+      \[
+        \begin{tikzcd}
+          A & B & C & {A[1]} \\
+          {A'} & B' & C' & {A'[1]}
+          \arrow["u", from=1-1, to=1-2]
+          \arrow["f"', from=1-1, to=2-1]
+          \arrow["v", from=1-2, to=1-3]
+          \arrow["g"', from=1-2, to=2-2]
+          \arrow["w", from=1-3, to=1-4]
+          \arrow[dashed, "h", from=1-3, to=2-3]
+          \arrow["{f[1]}", from=1-4, to=2-4]
+          \arrow["{u'}"', from=2-1, to=2-2]
+          \arrow["{v'}"', from=2-2, to=2-3]
+          \arrow["{w'}"', from=2-3, to=2-4]
+        \end{tikzcd}
+      \]
+      may be completed to a commutative diagram in $\triangcat{D}$.
+
+    \item[(TR4)]
+      \emph{(The octahedral axiom.)}
+      Omitted, but the interested reader may refer to
+      \cite[Definition~10.2.1]{weibel} for a full statement.
+  \end{enumerate}
+\end{definition}
+
+Our reasons for omitting (TR4) are twofold.
+It is not needed in this thesis, since we will not prove that any
+categories are triangulated, and the axiom itself is rather
+complicated to print due to the octahedral diagram from which it gets its name.
+% Separately, there is also some debate amongst experts as to whether
+% these axioms are actually the `correct' definition of triangulated categories.
+% Higher-minded replacements for triangulated categories have been
+% proposed, such as \emph{differential graded categories} and
+% \emph{stable $\infty$-categories}.
+
+\begin{example}
+  We claimed that $\homcat{\abcat{A}}$ is triangulated, although so
+  far we have only checked that (TR1) holds.
+  For the remaining details, see \cite[Proposition~10.2.4]{weibel}.
+  Naturally, the same is true for the categories
+  $\homcat[*]{\abcat{A}}$, and it will even be true for
+  $\homcat[*]{\cat{C}}$ when $\cat{C}$ is some full additive
+  subcategory of $\abcat{A}$.
+\end{example}
+
+\begin{remark}
+  A triangulated category $\triangcat{D}$ is usually not abelian, and
+  it turns out that a necessary and sufficient condition for this to
+  occur is that $\triangcat{D}$ is a \emph{semisimple} category.
+  For details, see
+  \cite[Section~III.2.3~and~Exercise~IV.1.1]{gelfand_and_manin}.
+  In the particular case of $\homcat{\abcat{A}}$, one notable
+  obstruction is that homotopy equivalent maps most likely do not
+  share the same kernels or cokernels.
+\end{remark}
+
+Of course, what we would really like in order to make the
+substitution most effective is a generalisation the result of
+\cref{prop_homcat_long_exact_coh_seq} to arbitrary triangulated categories.
+
+\begin{definition}
+  Let $\triangcat{D}$ be a triangulated category and $\abcat{A}$ an
+  abelian category.
+  An additive functor $H: \triangcat{D} \to \abcat{A}$ is said to be
+  a \emph{cohomological functor} if, for any exact triangle $(u, v,
+  w)$ on $(A, B, C)$, there is a long exact sequence
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & H(A[i]) \arrow[r, "u_i^*"]
+      & H(B[i]) \arrow[r, "v_i^*"]
+      & H(C[i]) \arrow[r, "w_i^*"]
+      & H(A[i + 1]) \arrow[r]
+      & \cdots
+    \end{tikzcd}
+  \]
+  in $\cat{A}$, where the induced maps are given by $f_i^* = H(f[i])$.
+  In this long exact sequence, we often write $H^i = H \circ [i]$ for
+  $i > 0$ and $H^0 = H$ for notational ease.
+\end{definition}
+
+% \begin{example}
+%     Another important example is $\Hom(A, -): \triangcat{K} \to
+% \Ab$ for any object $A$ of a triangulated category $\triangcat{K}$,
+% which is explored in \cite[Example~10.2.8]{weibel}.
+% \end{example}
+
+In other words, cohomological functors send exact triangles to long
+exact sequences, but we may also consider functors that instead send
+them to exact triangles.
+This fills the remaining hole left by the loss of exact sequences,
+which is a substitute for the notion of exact functors between
+triangulated categories, and will prove useful in \cref{sect_derfunc}.
+Though some authors also use the term `exact' to refer to such a
+functor, we will opt to make the terminological distinction between
+usual exactness and triangulated exactness clear in the following definition.
+% After one convinces themselves that the opposite category of a
+% triangulated category is also triangulated, we may dualise this
+% definition to obtain contravariant cohomological functors.
+
+\begin{definition}
+  Let $\triangcat{D}$ and $\triangcat{D}'$ be triangulated
+  categories, and denote by $T_{\triangcat{D}}$ and
+  $T_{\triangcat{D}'}$ their respective translation functors.
+  We say that an additive functor $F: \triangcat{D} \to
+  \triangcat{D}'$ is an \emph{exact triangulated functor} if it
+  satisfies the following two conditions:
+  \begin{enumerate}
+    \item
+      $F$ commutes with translation up to natural isomorphism,
+      i.e. there exists a natural isomorphism of composite functors
+      $\eta: F \circ T_{\triangcat{D}} \Rightarrow T_{\triangcat{D}'} \circ F$.
+      % That is, for each object $A$ in $\triangcat{K}$ there is an
+      % isomorphism $\eta_A: F(T_{\triangcat{K}}(A)) \to
+      % T_\triangcat{L}(F(A))$, and for each morphism $f: A \to B$ in
+      % $\triangcat{K}$ the associated naturality square commutes in
+      % $\triangcat{L}$:
+      % \[
+      %     \begin{tikzcd}[cramped]
+      %       {F(T_{\triangcat{K}}(A))} && {T_{\triangcat{L}}(F(A))} \\
+      %       \\
+      %       {F(T_{\triangcat{K}}(B))} && {T_{\triangcat{L}}(F(B)).}
+      %       \arrow["{\eta_A}", from=1-1, to=1-3]
+      %       \arrow["{F(T_{\triangcat{K}}(f))}"', from=1-1, to=3-1]
+      %       \arrow["{T_{\triangcat{L}}(F(f))}", from=1-3, to=3-3]
+      %       \arrow["{\eta_B}"', from=3-1, to=3-3]
+      %     \end{tikzcd}
+      % \]
+
+    \item
+      $F$ sends exact triangles to exact triangles, in the sense that
+      for each exact triangle
+      \[
+        \begin{tikzcd}
+          A \arrow[r, "u"]
+          & B \arrow[r, "v"]
+          & C \arrow[r, "w"]
+          %   & T_{\triangcat{K}}(A)
+          & A[1]
+        \end{tikzcd}
+      \]
+      in $\triangcat{D}$, the following is an exact triangle in
+      $\triangcat{D}'$:
+      \[
+        \begin{tikzcd}
+          {F(A)} & {F(B)} & {F(C)} && {F(A)[1]}.
+          \arrow["{F(u)}", from=1-1, to=1-2]
+          \arrow["{F(v)}", from=1-2, to=1-3]
+          \arrow["{\eta_A \circ F(w)}", from=1-3, to=1-5]
+        \end{tikzcd}
+      \]
+  \end{enumerate}
+\end{definition}
+
+\iffalse
+\begin{remark}
+  This definition may seem stronger than initially stated, but the
+  first condition is essential to impose, as applying $F$ to an exact
+  triangle only gives a sequence
+  \[
+    \begin{tikzcd}
+      F(A) \arrow[r, "F(u)"]
+      & F(B) \arrow[r, "F(v)"]
+      & F(C) \arrow[r, "F(w)"]
+      & F(A[1])
+    \end{tikzcd}
+  \]
+  in $\triangcat{D}'$, which is not a well-formed triangle without
+  the isomorphism
+  % $F(T_{\triangcat{K}}(A)) \cong T_{\triangcat{L}}(F(A))$.
+  $F(A[1]) \cong F(A)[1]$.
+\end{remark}
+\fi

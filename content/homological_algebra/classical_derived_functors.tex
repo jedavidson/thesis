@@ -1,0 +1,454 @@
+\section{Classical derived functors}
+\label{sect_classical_derfunc}
+
+Now that we have a systematic way to study the failure of a complex
+to be exact, we finish by discussing the same problem for a covariant
+functor $F: \abcat{A} \to \abcat{B}$ between abelian categories.
+Specifically, we will see that when $F$ is left (resp. right) exact,
+there exist \emph{classical right} (resp. \emph{left}) \emph{derived
+functors} that measure the failure of $F$ to be exact.
+The reason for the term `classical' will become clear in \cref{sect_derfunc}.
+
+Our experience in the previous sections show that cohomology can be a
+useful tool in these situations.
+Replacing any object $A \in \abcat{A}$ with a right resolution $A \to
+\cochaincomp{C}$ and applying a left exact functor $F: \abcat{A} \to
+\abcat{B}$ gives a cochain complex
+\[
+  \begin{tikzcd}[cramped]
+    \cdots & 0 & {F(C^0)} & {F(C^1)} & {F(C^2)} & \cdots
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+    \arrow[from=1-5, to=1-6]
+  \end{tikzcd}
+\]
+in $\abcat{B}$.
+This will typically have non-trivial cohomology, but it is always
+acyclic when $F$ is exact.
+While this does seem to have the measuring capabilities we seek, a
+problem is that the cohomology objects we obtain are sensitive to our
+choice of resolution.
+If we instead work with injective resolutions, then any two will be
+homotopy equivalent by \cref{thm_fund_thm_of_hom_alg}, and so we will
+always recover the same cohomology objects.
+The intuitive reason for considering right resolutions here to begin
+with is that left exact functors have issues extending left exact
+sequences to the right (c.f. \cref{def_exact_functors}).
+
+\begin{definition}
+  Let $F: \abcat{A} \to \abcat{B}$ be a left exact functor and
+  suppose that $\abcat{A}$ has enough injectives.
+  For each $A \in \abcat{A}$, fix an injective resolution $A \to
+  \cochaincomp{I}$ and define
+  \[
+    R^iF(A) := H^i(F(\cochaincomp{I}))
+  \]
+  for $i \in \zpos$.
+  The functor $R^iF: \abcat{A} \to \abcat{B}$ is called the
+  \emph{$i$th right derived functor} of $F$.
+\end{definition}
+
+We have already seen that this is a well-defined map on objects, but
+we have yet to specify what $R^iF$ does to morphisms.
+Given a morphism $f: A \to B$, fix a pair of injective resolutions $A
+\to \cochaincomp{I}$ and $B \to \cochaincomp{J}$ and then lift $f$
+using \cref{thm_fund_thm_of_hom_alg} to a cochain map $\widetilde{f}:
+\cochaincomp{I} \to \cochaincomp{J}$.
+This defines a unique map
+\[
+  R^iF(f) := H^n(F(\widetilde{f})): H^i(F(\cochaincomp{I})) \to
+  H^i(F(\cochaincomp{J})),
+\]
+since any lift of $f$ is unique up to homotopy equivalence.
+It is now clear that $R^iF$ is actually a functor to begin with and
+is moreover additive.
+% \[
+%     R^iF(gf) = R^iF(g) \circ R^iF(f) \mathand R^iF(f + g) = R^iF(f) + R^iF(g)
+% \]
+% whenever the composite $gf$ and sum $f + g$ are defined.
+% Given a compatible morphism $g$, the composite
+% $\widetilde{\vphantom{f}g} \widetilde{f}$ is a lift for $gf$, so
+% $R^iF(gf) = R^iF(g) \circ R^iF(f)$.
+% Finally, if $g$ is now a morphism parallel to $f$, we see that
+% $\widetilde{f} + \widetilde{\vphantom{f}g}$ is a lift of $f + g$,
+% and so $R^iF(f + g) = R^iF(f) + R^iF(g)$.
+
+The key properties that the functors $R^iF$ have are best expressed
+by the following framework due to Grothendieck.
+As the name implies, the model for this will be the collection of
+cohomology functors of \cref{prop_cochain_map_induced_cohomology},
+with the key property being that there is an analogue of the long
+exact cohomology sequence.
+
+\begin{definition}
+  A \emph{cohomological $\delta$-functor} $T: \abcat{A} \to
+  \abcat{B}$ consists of a collection of additive functors $\{T^i:
+  \abcat{A} \to \abcat{B}\}_{i \in \zpos}$ subject to the following
+  two conditions:
+  \begin{enumerate}
+    \item
+      For each short exact sequence
+      \[
+        \begin{tikzcd}
+          0 & A & B & C & 0
+          \arrow[from=1-1, to=1-2]
+          \arrow[from=1-2, to=1-3]
+          \arrow[from=1-3, to=1-4]
+          \arrow[from=1-4, to=1-5]
+        \end{tikzcd}
+      \]
+      in $\abcat{A}$, there exist morphisms $\delta^i: T^i(C) \to
+      T^{i + 1}(A)$ and a long exact sequence
+      \[
+        \begin{tikzcd}[cramped]
+          0 & {T^0(A)} & {T^0(B)} & {T^0(C)} \\
+          & {T^1(A)} & {T^1(B)} & {T^1(C)} \\
+          & {T^2(A)} & {T^2(B)} & {T^2(C)} & \cdots
+          \arrow[from=1-1, to=1-2]
+          \arrow[from=1-2, to=1-3]
+          \arrow[from=1-3, to=1-4]
+          \arrow["{\delta^0}"{description}, dashed, from=1-4, to=2-2]
+          \arrow[from=2-2, to=2-3]
+          \arrow[from=2-3, to=2-4]
+          \arrow["{\delta^1}"{description}, dashed, from=2-4, to=3-2]
+          \arrow[from=3-2, to=3-3]
+          \arrow[from=3-3, to=3-4]
+          \arrow[from=3-4, to=3-5, dashed]
+        \end{tikzcd}
+      \]
+      in $\abcat{B}$.
+      (In particular, $T^0$ is left exact.)
+
+    \item
+      Given a morphism of short exact sequences
+      \[
+        \begin{tikzcd}[cramped]
+          0 & A & B & C & 0 \\
+          0 & {A'} & {B'} & {C'} & 0
+          \arrow[from=1-1, to=1-2]
+          \arrow[from=1-2, to=1-3]
+          \arrow[from=1-2, to=2-2]
+          \arrow[from=1-3, to=1-4]
+          \arrow[from=1-3, to=2-3]
+          \arrow[from=1-4, to=1-5]
+          \arrow[from=1-4, to=2-4]
+          \arrow[from=2-1, to=2-2]
+          \arrow[from=2-2, to=2-3]
+          \arrow[from=2-3, to=2-4]
+          \arrow[from=2-4, to=2-5]
+        \end{tikzcd}
+      \]
+      in $\abcat{A}$, each of the below squares in $\abcat{B}$ commute:
+      \[
+        \begin{tikzcd}[cramped]
+          {T^i(C)} & {T^{i + 1}(A)} \\
+          {T^i(C')} & {T^{i + 1}(A')}.
+          \arrow["{\delta^i}", from=1-1, to=1-2]
+          \arrow[from=1-1, to=2-1]
+          \arrow[from=1-2, to=2-2]
+          \arrow["{(\delta')^i}"', from=2-1, to=2-2]
+        \end{tikzcd}
+      \]
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  Let $S, \, T: \abcat{A} \to \abcat{B}$ be cohomological $\delta$-functors.
+  A \emph{morphism of $\delta$-functors} $\mu: S \to T$ is a
+  collection of natural transformations $\{\mu^i: S^i \Rightarrow
+  T^i\}_{i \in \zpos}$ which commute with $\delta_S$ and $\delta_T$.
+  That is, for any short exact sequence
+  \[
+    \begin{tikzcd}
+      0 & A & B & C & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  in $\abcat{A}$, each of the below squares in $\abcat{B}$ commute:
+  \[
+    \begin{tikzcd}[cramped]
+      {S^i(C)} & {S^{i + 1}(A)} \\
+      {T^i(C)} & {T^{i + 1}(A)}.
+      \arrow["{\delta_S^i}", from=1-1, to=1-2]
+      \arrow["{\mu_C^i}"', from=1-1, to=2-1]
+      \arrow["{\mu_A^{i + 1}}", from=1-2, to=2-2]
+      \arrow["{\delta_T^i}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  Moreover, $T$ is \emph{universal} if for any choice of $S$ and
+  natural transformation $\mu^0: S^0 \Rightarrow T^0$ there exists a
+  unique extension of $\mu^0$ to a morphism of $\delta$-functors $\mu: S \to T$.
+\end{definition}
+
+\begin{proposition}
+  The collection of all right derived functors of a left exact
+  functor $F: \abcat{A} \to \abcat{B}$ form a cohomological universal
+  $\delta$-functor.
+\end{proposition}
+
+\begin{proof}
+  Both parts of this claim are non-trivial.
+  The proofs in the dual case of the \emph{left} derived functors
+  $L_iF$ of a \emph{right} exact $F$ are the content of
+  \cite[Theorems~2.4.6 and 2.4.7]{weibel}, but with our initial
+  hypotheses it will turn out that
+  \[
+    R^iF(A) = \op{(L_i \op{F})}(A)
+  \]
+  for all $A \in \abcat{A}$, so this is indeed enough.
+\end{proof}
+
+There are several other benefits to this construction.
+First, the information of the original functor $F$ is captured by $R^0F$.
+Indeed, since $F$ is left exact, the sequence
+\[
+  \begin{tikzcd}
+    0 & {F(A)} & {F(I^0)} & {F(I^1)}
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+  \end{tikzcd}
+\]
+is exact for any injective resolution $A \to \cochaincomp{I}$, so
+\begin{align*}
+  R^0F(A)
+  = H^0(F(\cochaincomp{I}))
+  \cong \ker(F(I^0) \to F(I^1))
+  = \im(F(A) \to F(I^0))
+  = F(A),
+\end{align*}
+and moreover $R^0F(f) = F(f)$ for any morphism $f$.
+If $I$ is an injective object, then computing $R^iF(I)$ using the
+injective resolution
+\[
+  \begin{tikzcd}
+    0 & I & I & 0 & 0 & \cdots
+    \arrow[from=1-1, to=1-2]
+    \arrow["\id", from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+    \arrow[from=1-5, to=1-6]
+  \end{tikzcd} \qedhere
+\]
+shows that $R^iF(I) = 0$ for $i > 0$.
+It is also clear that if $F$ is exact, then $R^iF = 0$ for $i > 0$.
+The upshot is therefore that the right derived functors of $F$
+provide a convenient way of measuring how far $F$ is from being exact
+as intended, and the fact that they are a cohomological universal
+$\delta$-functor shows that they are the most natural way to do so.
+
+\begin{remark}
+  \label{rem_computing_with_F_acyclics}
+  Even with enough injectives, actually obtaining a injective
+  resolution for an object can be difficult.
+  With reference to a specific functor $F$, an object $X \in
+  \abcat{A}$ is said to be \emph{$F$-acyclic} if $R^iF(X) = 0$ for $i
+  > 0$, and it turns out that it is sufficient to use $F$-acyclic
+  resolutions to compute $R^iF(A)$, since $R^iF(A) \cong
+  H^i(F(\cochaincomp{X}))$ for any $F$-acyclic resolution $A \to
+  \cochaincomp{X}$.
+  This can be seen by the \emph{dimension shifting} argument outlined
+  (albeit for the left derived case again) in \cite[Exercise~2.4.3]{weibel}.
+\end{remark}
+
+We now summarise the analogous construction of left derived functors
+when $F$ is right exact.
+What we will end up with is a \emph{homological} $\delta$-functor,
+which is defined in a dual way to cohomological $\delta$-functors
+(c.f. \cite[Section~2.1]{weibel}).
+The strategy is the same as last time, except we now use projective
+resolutions and take negative cohomology.
+
+\begin{proposition}
+  \label{prop_classical_right_derfunc}
+  Let $F: \abcat{A} \to \abcat{B}$ be a right exact functor and
+  suppose that $\abcat{A}$ has enough projectives.
+  For each $A \in \abcat{A}$, fix a projective resolution
+  $\cochaincomp{P} \to A$ and define
+  \[
+    L_i F(A) := H^{-i}(F(\cochaincomp{P}))
+  \]
+  for each $i \in \zpos$.
+  The corresponding functor $L_iF: \abcat{A} \to \abcat{B}$ is called
+  the \emph{$n$th classical left derived functor} of $F$, and it
+  satisfies the following properties:
+  \begin{enumerate}
+    \item
+      Each functor $L_iF$ is well-defined up to natural isomorphism
+      and additive.
+
+    \item
+      $L_0F(A) \cong F(A)$ and $L_0F(f) = F(f)$ for each object $A
+      \in \abcat{A}$ and morphism $f \in \abcat{A}$.
+
+    \item
+      If $P$ is projective, then $L_iF(P) = 0$ for $i > 0$.
+
+    \item
+      The left derived functors of $F$ are a homological universal
+      $\delta$-functor.
+  \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+  The above discussion assumes covariant functors, but the
+  construction of left and right derived functors can easily be
+  carried out for a contravariant functor $F: \abcat{A} \to \abcat{B}$.
+  Since $F: \op{\abcat{A}} \to \abcat{B}$ is covariant and an
+  injective resolution in $\op{\abcat{A}}$ becomes a projective
+  resolution in $\abcat{A}$, one can compute right derived functors
+  when $F$ is left exact and $\abcat{A}$ has enough projectives, and
+  dually for left derived functors.
+\end{remark}
+
+We close out this chapter by introducing the two most important
+examples of these derived functors, followed by some final remarks.
+
+\begin{definition}
+  Let $\abcat{A}$ be an abelian category with enough injectives, and
+  fix an object $A \in \abcat{A}$.
+  Then the functor $\Hom_{\abcat{A}}(A, -)$ is left exact, and its
+  suite of classical right derived functors are the associated
+  \emph{Ext functors}
+  \[
+    \Ext{i}{\abcat{A}}(A, -) := R^i\Hom_{\abcat{A}}(A, -): \abcat{A} \to \Ab.
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+\begin{definition}
+  Fix an $R$-module $N$.
+  Then the functor $- \tensor_R N$ is right exact, and its suite of
+  classical left derived functors are the associated \emph{Tor functors}
+  \[
+    \Tor{i}{R}(-, N) := L_i (- \tensor_R N): \Mod{R} \to \Ab.
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+\iftrue
+The names given to these derived functors are suggestive of some of
+their applications.
+Given an $R$-module $M$, the Ext groups $\Ext{1}{R}(M, N)$ are
+related to the \emph{module extensions} of $M$ by another $R$-module $N$.
+If $r \in R$ is not a zero divisor, the Tor group
+$\Tor{1}{R}(\quot{R}{(r)}, M)$ is the \emph{$r$-torsion subgroup} of $M$.
+We will not discuss these applications any further, but these are the
+subject of \cite[Chapter~3]{weibel}.
+\else
+The names given to these derived functors are suggestive of some of
+their applications.
+The first Ext group $\Ext{1}{\abcat{A}}(A, B)$ coincides with the
+first \emph{Yoneda extension group} of $A$ and $B$.
+This is the abelian group of equivalence classes of \emph{extensions}
+of the object $B$ by $A$, i.e. short exact sequences
+\[
+  \begin{tikzcd}
+    0 & A & E & B & 0
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+  \end{tikzcd}
+\]
+in $\abcat{A}$, with two extensions deemed equivalent if there is a
+commutative diagram
+\[
+  \begin{tikzcd}
+    0 & A & E & B & 0 \\
+    0 & A & E & B & 0.
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[Rightarrow, no head, from=1-2, to=2-2]
+    \arrow[from=1-3, to=1-4]
+    \arrow["\cong"', from=1-3, to=2-3]
+    \arrow[from=1-4, to=1-5]
+    \arrow[Rightarrow, no head, from=1-4, to=2-4]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=2-2, to=2-3]
+    \arrow[from=2-3, to=2-4]
+    \arrow[from=2-4, to=2-5]
+  \end{tikzcd}
+\]
+The group operation is the \emph{Baer sum} of extensions, and the
+split exact sequence
+\[
+  \begin{tikzcd}[cramped]
+    0 & A & {A \biprod B} & B & 0
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+  \end{tikzcd}
+\]
+is its identity element.
+Since the details of this group structure are rather technical and
+require the categorical notions of \emph{pullbacks} and
+\emph{pushouts}, we defer to \cite[Section~3.4]{weibel}.
+The interpretation of Tor is less relevant to us, but the relation
+between the first Tor group and \emph{torsion subgroups} is
+elaborated on in \cite[Section~3.1]{weibel}.
+\fi
+
+A useful fact about Ext that we will use later is the following.
+
+\begin{lemma}
+  \label{lemma_ext_preserved_by_equiv}
+  Let $\abcat{A} \to \abcat{B}$ be an equivalence of abelian
+  categories both with enough projectives.
+  Then for all $A, B \in \abcat{A}$ and $i \in \zpos$, there is an isomorphism
+  \[
+    \Ext{i}{\abcat{A}}(A, B) \cong \Ext{i}{\abcat{B}}(F(A), F(B)).
+  \]
+  \vspace{-24pt}
+\end{lemma}
+
+\begin{proof}
+  Fix an injective resolution $B \to \cochaincomp{I}$.
+  Since $F$ is fully faithful, we have
+  \[
+    \Hom_{\abcat{A}}(A, I^j) \cong \Hom_{\abcat{B}}(F(A), F(I^j))
+  \]
+  for each $j \in \zpos$.
+  As in \cref{rem_exact_limit_colimit_pres}, it turns out that an
+  equivalences of categories also preserves limits and colimits, and
+  from this it follows that $F$ is an exact functor that preserves injectives.
+  This shows that $F(B) \to F(\cochaincomp{I})$ is a projective resolution, so
+  \[
+    \Ext{i}{\abcat{A}}(A, B)
+    = H^i \Hom_{\abcat{A}}(A, \cochaincomp{I})
+    \cong H^i \Hom_{\abcat{B}}(F(A), F(\cochaincomp{I}))
+    = \Ext{i}{\abcat{A}}(F(A), F(B))
+  \]
+  for $i \in \zpos$ as claimed.
+\end{proof}
+
+\begin{remark}
+  Since $\Hom_R$ and $\tensor_R$ are \emph{bifunctors}, one also
+  could have decided to construct Ext and Tor by instead taking the
+  derived functors $R^i \Hom_R(-, N)$ and $L_i (M \tensor_R -)$.
+  Through a careful process of \emph{balancing}, one sees that in
+  fact these functors will be naturally isomorphic to Ext and Tor as
+  we have defined them above.
+  The details are lengthy and immaterial to the goals of this thesis,
+  so we refer the interested reader to \cite[Section~2.7]{weibel}.
+\end{remark}
+
+\begin{remark}
+  \label{rem_tor_computed_by_flat_res}
+  The Tor functors provide the most straightforward example of a
+  functor which benefits from being computed by acyclic resolutions
+  as described in \cref{rem_computing_with_F_acyclics}.
+  Retaining the hypotheses of \cref{prop_classical_right_derfunc}, an
+  object $X \in \abcat{A}$ is $F$-acyclic if $L_iF(X) = 0$ for $i >
+  0$, and similarly we have $L_iF(A) \cong
+  H^{-i}(F(\cochaincomp{X}))$ for an $F$-acyclic resolution
+  $\cochaincomp{X} \to A$.
+  In particular, $\Tor{i}{R}(A, N) = 0$ for $i > 0$ whenever $A$ is a
+  flat $R$-module, so Tor can be computed using flat resolutions.
+\end{remark}

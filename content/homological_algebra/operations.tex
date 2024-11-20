@@ -1,0 +1,147 @@
+\section{Operations on complexes}
+
+Aside from taking cohomology, there are other useful things which one
+can do with complexes.
+We first introduce some more functors on $\Ch{\abcat{A}}$ which we
+will need later.
+The fact that these define additive functors is immediate by construction.
+
+\begin{definition}
+  Let $n \in \bb{Z}$.
+  The degreewise (left) shift of complexes and cochain maps by $n$
+  defines an additive endofunctor $[n]: \Ch{\abcat{A}} \to
+  \Ch{\abcat{A}}$, called the \emph{$n$th shift} (or \emph{$n$th
+  translation}) functor.
+  Explicitly, $[n]$ sends $\cochaincomp{C}$ to the complex
+  $\cochaincomp{C}[n]$ with
+  \[
+    {C}[n]^i = C^{i + n}
+    \mathand
+    d[n]^i = (-1)^n d^{i + n},
+  \]
+  and sends $f: \cochaincomp{C} \to \cochaincomp{D}$ to the cochain
+  map $f[n]: \cochaincomp{C} \to \cochaincomp{D}$ with $f[n]^i = f^{i + n}$.
+\end{definition}
+
+For technical reasons that we shall not explain, it turns out that
+introducing the sign $(-1)^n$ in the differential like this is
+generally convenient when setting up the theory.
+Though it seems like a small observation now, the shift complex has a
+convenient property in the context of \cref{sect_triangcat}.
+
+\begin{proposition}
+  The shift functor $[n]$ is autoequivalence for all $n \in \bb{Z}$.
+\end{proposition}
+
+This shift functor is related to another common construction.
+Associated to any cochain map is its \emph{mapping cone}, once again
+directly inspired by topology.
+
+\begin{definition}
+  The \emph{mapping cone} of a cochain map $f: \cochaincomp{C} \to
+  \cochaincomp{D}$ is the cochain complex $\cone{f}$ whose cochains
+  and differentials are given by
+  \[
+    \cone{f}^i = C^{i + 1} \oplus D^i
+    \mathand
+    d^n =
+    \begin{bmatrix}
+      -d_C^{i + 1} & 0 \\
+      -f^{i + 1} & d^i_D
+    \end{bmatrix},
+  \]
+  with the differential acting as if by componentwise matrix
+  multiplication on $C^{i + 1} \oplus D^i$.
+\end{definition}
+
+The mapping cone has two uses.
+The first is that it allows one to insert any cochain map $f:
+\cochaincomp{C} \to \cochaincomp{D}$ into a short exact sequence in
+$\Ch{\abcat{A}}$.
+In particular, we have that
+\[
+  \begin{tikzcd}
+    \cochaincomp{0} \arrow[r]
+    & \cochaincomp{D} \arrow[r]
+    & \cone{f} \arrow[r]
+    & \cochaincomp{C}[1] \arrow[r]
+    & \cochaincomp{0}
+  \end{tikzcd}
+\]
+is exact, where the two middle cochain maps are the canonical
+injection and projection of direct sums respectively.
+This leads to its second use, detecting quasi-isomorphisms.
+
+\begin{corollary}
+  \label{cor_quasi_isom_has_acyclic_cone}
+  A cochain map is a quasi-isomorphism if and only if its mapping
+  cone is an exact (equivalently, acyclic) complex.
+\end{corollary}
+
+\begin{proof}
+  Using the identification $H^i(\cochaincomp{C}[1]) \cong H^{i +
+  1}(\cochaincomp{C})$, the long exact cohomology sequence for the
+  above short exact sequence is of the form
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & H^i(\cochaincomp{D}) \arrow[r]
+      & H^i(\cone{f}) \arrow[r]
+      & H^{i + 1}(\cochaincomp{C}) \arrow[r, "\partial^i"]
+      & H^{i + 1}(\cochaincomp{D}) \arrow[r]
+      & \cdots,
+    \end{tikzcd}
+  \]
+  where $\partial$ is the connecting map.
+  It is therefore enough to show that $\partial^i = H^{i + 1}(f)$,
+  which is the content of \cite[Lemma~1.5.3]{weibel}.
+\end{proof}
+
+An even more simple-minded but crucial operation on complexes is
+applying an additive functor $F: \abcat{A} \to \abcat{B}$ degreewise.
+This induces a functor $\Ch{F}: \Ch{\abcat{A}} \to \Ch{\abcat{B}}$,
+though for notational ease we will typically refer to $\Ch{F}$ simply
+by $F$ itself.
+
+\begin{lemma}
+  \label{lemma_add_func_preserves_homotopy_and_cones}
+  The functor $\Ch{F}$ is additive and preserves homotopies, homotopy
+  equivalences and mapping cones.
+  Moreover, it commutes with shift functors.
+\end{lemma}
+
+\begin{proof}
+  These properties follow from functoriality and
+  \cref{lemma_additive_func_commutes_with_dirsum}.
+\end{proof}
+
+In the case of double complexes, the only operation we will concern
+ourselves with is \emph{totalisation}, which is a construction that
+collapses a double complex down into a normal complex in one of two ways.
+
+\begin{definition}
+  \label{def_totalisation}
+  Given a double complex $\cochainbicomp{C}$, the \emph{total
+  complexes} $\totprodcomp{\cochainbicomp{C}}$ and
+  $\totsumcomp{\cochainbicomp{C}}$ are those obtained by taking
+  products and direct sums along each lattice diagonal (c.f.
+  \cref{def_double_complex}), i.e.
+  \[
+    \totprodcomp{\cochainbicomp{C}}^i = \prod_{i = p + q} C^{p, q}
+    \mathand
+    \totsumcomp{\cochainbicomp{C}}^i = \bigoplus_{i = p + q} C^{p, q}.
+  \]
+  In both cases, the differential is defined componentwise by $d =
+  d_h^{p, q} + d_v^{p, q}$.
+\end{definition}
+
+\begin{remark}
+  A priori, totalising a double complex involves taking infinite
+  products or direct sums of objects in $\abcat{A}$, which may not be
+  possible if the base category $\abcat{A}$ is not \emph{(co)complete}.
+  However, many double complexes arising in practice, including any
+  we will encounter in this thesis, have only finitely many objects
+  along each lattice diagonal.
+  A sufficient condition for this to occur is that the double complex
+  to be totalised is constructed out of bounded complexes.
+\end{remark}

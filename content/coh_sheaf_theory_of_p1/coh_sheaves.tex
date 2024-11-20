@@ -1,0 +1,652 @@
+\section{Coherent sheaves on $\proj{1}$}
+\label{sect_coh_sheaves_p1}
+
+With our preparations out of the way, we are now in a position to
+introduce \emph{coherent sheaves} on $\proj{1}$.
+It will be instructive to give the usual definitions upfront in order
+to provide some sense of where our hands-on definitions we obtain
+later come from.
+
+\begin{definition}
+  \label{def_general_qcoh}
+  Let $\shf{F}$ be an $\strshf{X}$-module on some quasi-projective
+  variety $X$ over $k$.
+  Then $\shf{F}$ is \emph{quasi-coherent} if there is an affine open
+  cover $X = \bigcup_i U_i$ (i.e. with each $U_i$ isomorphic to an
+  affine variety) and an $\shf{O}(U_i)$-module $M_i$ such that
+  $\setres{\shf{F}}{U_i} \cong \assmod{M_i}$.
+  We say that $\shf{F}$ is \emph{coherent} if furthermore each module
+  $M_i$ is finitely generated over $\shf{O}(U_i)$.
+\end{definition}
+
+There is another equivalent definition, which we package up in the
+following result.
+
+\begin{proposition}[{\cite[Proposition~II.5.4]{hartshorne}}]
+  \label{prop_general_qcoh_equiv}
+  An $\strshf{X}$-module $\shf{F}$ is quasi-coherent if and only if
+  for each affine open $U \subseteq X$, there is an
+  $\shf{O}(U)$-module $M$ such that $\setres{\shf{F}}{U} \cong \assmod{M}$.
+  Moreover, $\shf{F}$ is coherent if and only if $M$ is finitely
+  generated over $\shf{O}(U)$.
+\end{proposition}
+
+Though \cref{def_general_qcoh} and \cref{prop_general_qcoh_equiv} are
+standard fare in algebraic geometry, the reader should feel some
+trepidation here.
+The issue is that as we have constructed it, \cref{def_assmod} only
+applies to quasi-affine varieties in $\aff{1}$ rather than arbitrary
+affine varieties, so the assertion that $\setres{\shf{F}}{U} \cong
+\assmod{M}$ for some affine open $U \subseteq X$ is ill-defined.
+We will only concern ourselves with the varieties $\aff{1}$ and
+$\proj{1}$ for which this issue is not a concern.
+The intention of presenting these definitions in spite of this
+imprecision is to convey the important idea that quasi-coherent
+sheaves on $X$ are `locally just modules'.
+
+The category of quasi-coherent sheaves on $X$ is denoted $\QCoh(X)$,
+and the coherent sheaves form a full subcategory $\Coh(X)$.
+In the case of $\aff{1}$, these categories end up being as nice as
+one could realistically ask for.
+
+\begin{corollary}
+  \label{cor_affine_coh_equiv_to_mods}
+  % If $\shf{F}$ is a (quasi-)coherent sheaf on $\aff{1}$,
+  % then $\shf{F}$ is determined by the $k[x]$-module of global
+  % sections $\sections{\aff{1}}{\shf{F}}$.
+  The category $\QCoh(\aff{1})$ is equivalent to $\Mod{k[x]}$ via the
+  pair of naturally inverse functors $\shf{F} \mapsto
+  \sections{\aff{1}}{\shf{F}}$ and $M \mapsto \assmod{M}$.
+  Moreover, this restricts to an equivalence of categories between
+  $\Coh(\aff{1})$ and $\mod{k[x]}$.
+\end{corollary}
+
+\begin{proof}
+  This is a specialisation and restatement of
+  \cite[Corollary~II.5.5]{hartshorne}, but the main contention
+  follows from \cref{prop_general_qcoh_equiv}.
+\end{proof}
+
+In other words, the coherent sheaves on $\aff{1}$ are little more
+than finitely generated $k[x]$-modules.
+Technical concerns notwithstanding, the same claim is true mutatis
+mutandis for all affine varieties, which is a significant reduction
+in the complexity of studying these sheaves.
+However, one can go even further specifically in the case of $\aff{1}$.
+In particular, the structure theorem for finitely generated modules
+over a principal ideal domain can be appropriated as a classification
+theorem for coherent sheaves on $\aff{1}$.
+For convenience, we state this as the following theorem in its
+primary decomposition form.
+
+\begin{theorem}
+  \label{thm_coh_sheaf_classification_of_aff_line}
+  If $\shf{F}$ is a coherent sheaf on $\aff{1}$, i.e. a finitely
+  generated $k[x]$-module $M$, then there are $r, s \in \zpos$,
+  powers $n_1, n_2, \ldots, n_s \in \zpos$ and points $a_1, \ldots,
+  a_r \in k$, not necessarily distinct, such that $\shf{F}$ is the
+  sheaf associated to the module
+  \[
+    M
+    \cong
+    k[x]^{\oplus r} \oplus \frac{k[x]}{\gen{x - a_1}^{n_1}} \oplus
+    \cdots \oplus \frac{k[x]}{\gen{x - a_s}^{n_s}}.
+  \]
+  \vspace{-18pt}
+  % Moreover, the points $a_i$ are unique up to associates in $k$.
+\end{theorem}
+
+Put another way, this theorem also shows that any coherent sheaf on
+$\aff{1}$ splits as a sum of a torsion-free and a torsion summand, an
+observation we will return to later.
+
+The next natural question to ask is whether there is also an elegant
+theory for coherent sheaves on non-affine quasi-projective varieties.
+Immediately, $\proj{1}$ makes for a good case study, since $\proj{1}$
+has a standard affine open cover by two copies of $\aff{1}$ (i.e. we
+are again free of prior technical concerns).
+
+We first fix some conventions for $\proj{1}$ that we will use throughout.
+Recall that the aforementioned affine open cover is given by
+$\proj{1} = U_x \cup U_y$, where
+\[
+  U_x = \{(x : y): x \neq 0\} \mathand U_y = \{(x : y): y \neq 0\}.
+\]
+Each point $(x : y) \in U_x$ is the same as $(1 : y/x)$, so there is
+a clear homeomorphism $\phi_x: U_x \to \aff{1}_z$ identifying $U_x$
+with the affine line $\aff{1}_z$ with coordinate $z = y/x$.
+Similarly, there is a clear homeomorphism $\phi_y: U_y \to
+\aff{1}_{w}$ where $\aff{1}_{w}$ has coordinate $w = x/y$.
+% This defines an open cover $\proj{1} = U_x \cup U_y$, and the
+% aforementioned bijections $\phi_x: U_x \to \aff{1}_z$ and $\phi_y:
+% U_y \to \aff{1}_{w}$ are in fact homeomorphisms (c.f.
+% \cite[Proposition~I.1.2.2]{hartshorne}).
+We call the maps $\phi_x$ and $\phi_y$ \emph{affine charts} for
+$\proj{1}$, and similarly we call the open subsets $U_x$ and $U_y$
+\emph{affine patches}.
+We can convert between affine charts on $U_{xy} = U_x \cap U_y$ using
+the \emph{transition map} $\tau: \aff{1}_z \setminus \{0\} \to
+\aff{1}_w \setminus \{0\}$ defined by
+\[
+  \tau(z)
+  := \phi_y \phi_x^{-1}(z)
+  = \phi_y(1 : z)
+  = \phi_y(z^{-1} : 1)
+  = z^{-1}.
+\]
+Because of this, we can also view $\proj{1}$ as the result of gluing
+together the affine lines $\aff{1}_z$ and $\aff{1}_w$ according to
+the rule $w = z^{-1}$ whenever $z, w \neq 0$.
+For algebraic convenience, we will replace the affine coordinate $w$
+with $z^{-1}$ so that, formally, $\proj{1} = \aff{1}_z \sqcup \aff{1}_{z^{-1}}$.
+
+In view of \cref{def_general_qcoh}, a quasi-coherent sheaf $\shf{F}$
+on $\proj{1}$ is locally determined on this open cover by
+$\shf{F}|_{U_x}$ and $\shf{F}|_{U_y}$, i.e. by a module $M$ over
+$\shf{O}(U_x) \cong k[z]$ and a module $M'$ over $\shf{O}(U_y) \cong
+k[z^{-1}]$ respectively.
+One complication in simply forgetting the sheaf structure and
+retaining only the pair $(M, M')$ is that between them, they encode a
+significant amount of overlapping sheaf data on $U_{xy}$.
+To resolve this problem, it is enough to specify an isomorphism of sheaves
+\[
+  \vartheta:
+  \setres{\left(\setres{\shf{F}}{U_x}\right)}{U_{xy}}
+  \to
+  \setres{\left(\setres{\shf{F}}{U_y}\right)}{U_{xy}}.
+\]
+Algebraically, $U_{xy}$ is the region in which both $z$ and $z^{-1}$
+are invertible in $k[z]$ and $k[z^{-1}]$ respectively, so it stands
+to reason that $\vartheta$ can equivalently be specified as an
+isomorphism between $\sections{D(z)}{\assmod{M}} = M_z$ and
+$\sections{D(z^{-1})}{\assmod{M'}} = M'_{z^{-1}}$ as modules over
+$k[z, z^{-1}]$, the ring of \emph{Laurent polynomials} in $z$.
+This is the outline for the alternative definition of quasi-coherent
+sheaves for $\proj{1}$ we will use in this thesis.
+We will also pair it with a more tailored notion of a morphism than
+\cref{def_general_sheaf_morphism}.
+
+% In order to generalise \cref{def_assmod} so that we get a sheaf on
+% $\proj{1}$, one plausible strategy is specify each section
+% separately on the patches $U_x$ and $U_y$ using a pair of modules
+% on the affine lines $\aff{1}_z$ and $\aff{1}_{z^{-1}}$.
+% We will also have to specify a map to glue this section data
+% together on the compatible overlap $U_x \cap U_y$, which
+% algebraically is the region where $z$ amd $z^{-1}$ are invertible
+% in $k[z]$ and $k[z^{-1}]$ respectively.
+% Just as in the construction of the associated sheaf of a module, we
+% take appropriate extensions of scalars so that our gluing map will
+% be an isomorphism between $M[z^{-1}]$ and $M[z]$.
+% Naturally, these are modules over $k[z, z^{-1}]$, the ring of
+% \emph{Laurent polynomials} in $z$.
+
+% This is obviously far from a `canonical' way to approach defining
+% such a sheaf, since it depends heavily on the particular choice of
+% covering of $\proj{1}$, but it turns out that it is once again
+% commensurate with the `real' definition of \emph{quasi-coherent}
+% sheaves for $\proj{1}$.
+% Since we are at pains to avoid the general theory here, this claim
+% is out of our reach, but it does justify taking the following as
+% our working definition.
+
+\begin{definition}
+  \label{def_coh_sheaf}
+  A \emph{quasi-coherent sheaf} on $\proj{1}$ is the data of a triple
+  $\shf{F} = (M, M', \vartheta)$ consisting of a $k[z]$-module $M$, a
+  $k[z^{-1}]$-module $M'$ and a $k[z^{-1}]$-module isomorphism
+  $\vartheta: M_{z} \to M'_{z^{-1}}$, called the \emph{descent datum}
+  of $\shf{F}$.
+  We say that $\shf{F}$ is \emph{coherent} if $M$ and $M'$ are both
+  finitely generated over $k[z]$ and $k[z^{-1}]$ respectively.
+\end{definition}
+
+\begin{definition}
+  \label{def_coh_sheaf_morphism}
+  Let $\shf{F} = (M, M', \vartheta)$ and $\shf{G} = (N, N', \varrho)$
+  be quasi-coherent sheaves on $\proj{1}$.
+  A \emph{morphism} $\Phi: \shf{F} \to \shf{G}$ is a pair $(\varphi,
+  \varphi')$ consisting of a $k[z]$-module homomorphism $\varphi: M
+  \to N$ and a $k[z^{-1}]$-module homomorphism $\varphi': M' \to N'$,
+  subject to the condition that there is a commutative diagram of
+  $k[z, z^{-1}]$-modules
+  \[
+    \begin{tikzcd}
+      {M_z} & {N_z} \\
+      {M'_{z^{-1}}} & {N'_{z^{-1}}}.
+      \arrow["{\varphi_z}", from=1-1, to=1-2]
+      \arrow["\vartheta"', from=1-1, to=2-1]
+      \arrow["\varrho", from=1-2, to=2-2]
+      \arrow["{\varphi'_{z^{-1}}}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  % Here, we introduce a slight abuse of notation by identifying
+  % $\varphi$ and $\varphi'$ with the homomorphisms induced by
+  % localisation so that, say, $\varphi(m/z^i) = \varphi(m)/z^i$.
+  If $\Psi: \shf{G} \to \shf{H}$ is another morphism of
+  quasi-coherent sheaves with data $(\psi, \psi')$, then we define
+  the \emph{composite} $\Psi \circ \Phi: \shf{F} \to \shf{H}$ to be
+  the morphism with data $(\psi \circ \varphi, \psi' \circ \varphi')$.
+\end{definition}
+
+Choosing to regard quasi-coherent sheaves in this manner is somewhat
+`unnatural', insofar as it is often more advantageous to try and work
+in coordinate-free settings.
+It is often necessary to fix coordinates for actual computations
+though, and this presents no significant obstruction in practice.
+
+\begin{proposition}
+  Let $\cat{Q}$ be the category of quasi-coherent sheaves on
+  $\proj{1}$ in the sense of \cref{def_coh_sheaf} and
+  \cref{def_coh_sheaf_morphism}, and let $\cat{C}$ be the full
+  subcategory of $\cat{Q}$ consisting of coherent sheaves.
+  Then $\QCoh(\proj{1})$ is equivalent to $\cat{Q}$, and this
+  restricts to an equivalence of categories between $\Coh(\proj{1})$
+  and $\cat{C}$.
+\end{proposition}
+
+\begin{proof}
+  We give only a brief idea of the proof.
+  The functor $\QCoh(\proj{1}) \to \cat{Q}$ in this equivalence is
+  easy to construct, as given $\shf{F} \in \QCoh(\proj{1})$ we have
+  \[
+    \displaystylesections{\setres{\shf{F}}{U_x}}{U_{xy}} =
+    \sections{\shf{F}}{U_{xy}} =
+    \displaystylesections{\setres{\shf{F}}{U_y}}{U_{xy}},
+  \]
+  so we simply take $\shf{F} \mapsto \left(\sections{\shf{F}}{U_x},
+  \sections{\shf{F}}{U_y}, \id_{\sections{\shf{F}}{U_{xy}}}\right)$.
+  The functor $\cat{Q} \to \QCoh(\proj{1})$ naturally inverse to this
+  is harder to construct, but in essence will follow from the
+  forthcoming description of the sections and restriction maps of
+  some $\shf{F} \in \cat{Q}$.
+\end{proof}
+
+From this point forward, we therefore identify $\QCoh(\proj{1})$ and
+$\Coh(\proj{1})$ with $\cat{Q}$ and $\cat{C}$ and dispense with the
+general definitions from the start of this section.
+Though we will stop short of an explicit verification that these
+triples are actually sheaves in the technical sense of
+\cref{def_sheaf}, it will be worthwhile to at least describe what the
+sections and restriction maps of some $\shf{F} \in \QCoh(\proj{1})$
+are to get a feel for how to work with these sheaves computationally.
+We first recall the following facts about $\proj{1}$.
+
+\begin{lemma}
+  \label{lemma_opens_of_proj_line_are_principal}
+  Every open subset $U \subseteq \proj{1}$ is of the form $D(F) :=
+  \proj{1} \setminus V(F)$ for some homogeneous polynomial $F \in k[x, y]$.
+  Moreover, any open subset $V \subseteq U$ is of the form $V =
+  D(FG)$ for some other homogeneous polynomial $G \in k[x, y]$.
+\end{lemma}
+
+% \begin{proof}
+%     If $U \subseteq \proj{1}$ is open, then $U = \proj{1} = X
+% \setminus V(I)$ for some homogeneous ideal $I \idealof k[x, y]$,
+% i.e. $I$ is generated by homogeneous polynomials.
+%     Since $k[x, y]$ is Noetherian, $I$ is generated by finitely
+% many such polynomials.
+%     Thus $V(I)$ is finite, and we can construct a homogeneous
+% polynomial $F$ whose zeroes are precisely the points of $V(I)$.
+% \end{proof}
+
+This result is the projective analogue of
+\cref{lemma_opens_of_aff_line_are_principal} and
+\cref{lemma_principal_open_inclusions_of_aff_line}.
+Since the proof is similar, we shall omit it and mention only that
+one instead needs to use the fact that $k[x, y]$ is Noetherian for
+the first claim.
+We may always arrange that $F$ and $G$ have minimal degree here,
+since for example we can take
+\[
+  F(x, y) = (b_1 x - a_1 y) (b_2 x - a_2 y) \cdots (b_d x - a_d y),
+\]
+where the $(a_i : b_i)$ are the distinct points of the (finite) set
+$\proj{1} \setminus U$.
+At this juncture, it will be convenient to introduce some notation
+and an important fact about dehomogenisation of polynomials.
+
+\begin{definition}
+  \label{def_canonical_dehomog}
+  Let $F \in k[x, y]$ be a homogeneous polynomial.
+  Setting $z = y/x$, the \emph{dehomogenisations} of $F$ separately
+  with respect to $x$ and $y$ produces the pair of univariate
+  polynomials which, whenever they are defined, are denoted by
+  \[
+    \dehomog{F}{x}(z) := F(1, z) \in k[z]
+    \mathand
+    \dehomog{F}{y}(z^{-1}) := F(z^{-1}, 1) \in k[z^{-1}].
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+\begin{lemma}
+  The dehomogenisations of a homogeneous polynomial $F \in k[x, y]$
+  are associates in the ring of Laurent polynomials $k[z, z^{-1}]$,
+  where $z = y/x$.
+\end{lemma}
+
+\begin{proof}
+  This follows from homogenity, since if $d = \deg{F}$, then
+  \[
+    \dehomog{F}{x}(z) = F(1, z) = F(z z^{-1}, z) = z^d F(z^{-1}, 1) =
+    z^d \dehomog{F}{y}(z^{-1}). \qedhere
+  \]
+  \vspace{-24pt}
+\end{proof}
+
+Now, suppose that $U \subseteq \proj{1}$ is the open set $D(F)$ as in
+\cref{lemma_opens_of_proj_line_are_principal}.
+The dehomogenisations of $F$ identify $U$ in each affine patch, i.e.
+we have homeomorphisms
+\[
+  U \cap U_x \cong D(\dehomog{F}{x})
+  \mathand
+  U \cap U_y \cong D(\dehomog{F}{y}),
+\]
+so a section of $\shf{F}$ over $U$ is a pair of affine sections $(s,
+s') \in M_{\dehomog{F}{x}} \times M'_{\dehomog{F}{y}}$, say
+\[
+  s = \quot{m}{\dehomog{F}{x}^i}
+  \mathand
+  s' = \quot{m'}{\dehomog{F}{y}^j}.
+\]
+It remains to describe how to glue $s$ and $s'$ on $U \cap U_{xy}$.
+Algebraically, this is the region in which both $\dehomog{F}{x}$ and
+$\dehomog{F}{y}$ are invertible in $k[z, z^{-1}]$, so we consider the
+modules $M_{\dehomog{F}{x}, z}$ and $M'_{\dehomog{F}{y}, z^{-1}}$
+over the ring $k[z, z^{-1}, \dehomog{F}{x}^{-1}, \dehomog{F}{y}^{-1}]$.
+Since $\dehomog{F}{x} = z^{\deg{F}} \dehomog{F}{y}$ in this ring, the
+fraction $\vartheta(m)/\dehomog{F}{x}^i$ is a well-defined element of
+$M'_{\dehomog{F}{y}, z^{-1}}$, and we will insist for the sake of
+compatibility that it agrees with $s'$, i.e. we impose the condition
+\[
+  \quot{\vartheta(m)}{\dehomog{F}{x}^i} = \quot{m'}{\dehomog{F}{y}^j}
+  % \frac{\vartheta(m)}{f^i} = \frac{m'}{g^j}
+\]
+in $M'_{\dehomog{F}{y}, z^{-1}}$.
+By definition of equality in a localised module, this holds if and only if
+\begin{equation}
+  \label{eq_local_section_compatibility}
+  \dehomog{F}{y}^n(\dehomog{F}{y}^j \vartheta(m) - \dehomog{F}{x}^i m') = 0
+\end{equation}
+in $M'_{z^{-1}}$ for some power $n \in \zpos$.
+The restriction maps at this point are clear, so we present the
+following definition to summarise this discussion.
+
+\begin{definition}
+  \label{def_coh_sheaf_sects_and_restr}
+  Let $\shf{F} = (M, M', \vartheta)$ be a quasi-coherent sheaf on
+  $\proj{1}$ and $U = D(F)$ an open subset of $\proj{1}$.
+  A \emph{local section} of $\shf{F}$ over $U$ is a pair
+  \[
+    (s, s')  = (m/\dehomog{F}{x}^i, m'/\dehomog{F}{y}^j) \in
+    M_{\dehomog{F}{x}} \times M'_{\dehomog{F}{y}}
+  \]
+  satisfying \cref{eq_local_section_compatibility},
+  and a \emph{global section} of $\shf{F}$ is a pair $(m, m') \in M
+  \times M'$ satisfying $\vartheta(m) = m'$.
+  For any open subset $V = D(FG) \subseteq U$, the \emph{restriction
+  map} $\res{U}{V}$ of $\shf{F}$ sends the section $(s, s') \in
+  \sections{U}{\shf{F}}$ to the section
+  \[
+    \left(\setres{s}{D(\dehomog{F}{x} \dehomog{G}{x})},\,
+    \setres{s'}{D(\dehomog{F}{y} \dehomog{G}{y})}\right) \in
+    \sections{V}{\shf{F}}
+  \]
+  via the affine restriction maps for $\assmod{M}$ and $\assmod{M'}$
+  on each component.
+\end{definition}
+
+We will study the two most fundamental families of coherent sheaves
+on $\proj{1}$ in depth for the remainder of this section, but it will
+be convenient to introduce some more specific terminology and
+definitions as we go.
+
+\begin{definition}
+  A quasi-coherent sheaf $\shf{F} = (M, M', \vartheta)$ on $\proj{1}$
+  is \emph{locally free} of rank $r$ if $M \cong k[z]^r$ and $M'
+  \cong k[z^{-1}]^r$.
+  A locally free sheaf of rank 1 is called a \emph{line bundle}.
+  % or an \emph{invertible sheaf} (for reasons that will become clear
+  % in the next section).
+\end{definition}
+
+\begin{example}
+  \label{exmp_twists}
+  The structure sheaf $\shf{O} := \strshf{\proj{1}}$ can be described
+  as the line bundle $(k[z], k[z^{-1}], \id)$.
+  This is a special case of a more general family of line bundles on
+  $\proj{1}$, as for each $n \in \bb{Z}$ we define a line bundle
+  $\twist{n} = (k[z], k[z^{-1}], \vartheta_n)$, called the $n$th
+  \emph{twisting sheaf}, where $\vartheta_n$ is the multiplication
+  map given by $z^{-n}$ on $k[z, z^{-1}]$.
+  These are all examples of $\strshf{\proj{1}}$-modules. \noparskip
+
+  To see just how much varying the degree $n$ of the twist changes
+  $\twist{n}$, we consider its global sections.
+  These are pairs $(f, g) \in k[z] \times k[z^{-1}]$ such that $g =
+  z^{-n} f$ in $k[z, z^{-1}]$, so each section is determined by the
+  choice of $f$.
+  This immediately implies that there are no non-zero global sections
+  when $n < 0$, since $z^{-n} f$ consists of monomials of
+  non-negative degree in $z$ while the opposite is true for $g$.
+  By a similar degree argument, we see that the only possible choices
+  of $f$ when $n \geq 0$ are of the form $f(z) = \sum_{i = 0}^{n}
+  \lambda_i z^i$ for scalars $\lambda_i \in k$, so
+  $\sections{\proj{1}}{\twist{n}} \cong k^{n + 1}$ as vector spaces over $k$.
+  In the case $n = 0$, this recovers the well-known fact that all
+  global regular functions on $\proj{1}$ are constant.
+\end{example}
+
+\begin{example}
+  \label{exmp_morphisms_of_twists}
+  Let us determine all morphisms $\twist{m} \to \twist{n}$, i.e. all
+  pairs of endomorphisms $\varphi: k[z] \to k[z]$ and $\varphi':
+  k[z^{-1}] \to k[z^{-1}]$ such that
+  \[
+    \begin{tikzcd}
+      {k[z, z^{-1}]} & {k[z, z^{-1}]} \\
+      {k[z, z^{-1}]} & {k[z, z^{-1}]}
+      \arrow["{\varphi_z}", from=1-1, to=1-2]
+      \arrow["\times z^{-m}"', from=1-1, to=2-1]
+      \arrow["\times z^{-n}", from=1-2, to=2-2]
+      \arrow["{\varphi'_{z^{-1}}}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  commutes.
+  Since $k[z]$ is a free $k[z]$-module of rank 1, $\varphi$ is
+  multiplication by some $f \in k[z]$.
+  Similarly, $\varphi'$ is multiplication by some $g \in k[z^{-1}]$,
+  so the commutativity of the above diagram requires that $z^{-n} f =
+  z^{-m} g$, which in turn holds if and only if $f = z^{n - m} g$.
+  Since $f$ is determined for a particular choice of $g$ by this
+  equation, it suffices to find all possible $g$.
+  By the same logic we used in studying the global sections above,
+  the degree (in $z^{-1}$) of $g$ must be at most $n - m$, so the
+  only morphism when $m > n$ is zero.
+  On the other hand, any $g \in \gen{1, z^{-1}, \ldots, z^{-(n - m)}}
+  \idealof k[z^{-1}]$ determines a non-trivial morphism when $m \leq n$.
+  Hence as a vector space over $k$,
+  \[
+    \Hom(\twist{m}, \twist{n})
+    \cong
+    \begin{cases}
+      k^{n - m + 1} & \text{if } m \leq n \\
+      0             & \text{if } m > n.
+    \end{cases}
+  \]
+  This also shows that $\twist{m} \cong \twist{n}$ if and only if $m = n$.
+\end{example}
+
+In the case $m \leq n$, it follows that $\Hom(\twist{m}, \twist{n})
+\cong \sections{\proj{1}}{\twist{n - m}}$.
+A result that generalises this observation is the following useful fact.
+
+\begin{lemma}
+  \label{prop_glob_sect_hom}
+  For any quasi-coherent sheaf $\shf{F}$ on $\proj{1}$, we have an isomorphism
+  \[
+    \Hom_{\QCoh(\proj{1})}(\shf{O}, \shf{F}) \cong \sections{\proj{1}}{\shf{F}}
+  \]
+  as vector spaces over $k$.
+\end{lemma}
+
+\begin{proof}
+  This is the sheaf analogue of the group isomorphism $\Hom_R(R, M)
+  \cong M$, so we can expect the proof to mimic it.
+  Given a sheaf morphism $(\varphi, \varphi'): \shf{O} \to \shf{F}$,
+  it follows from the commutativity of the diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {k[z, z^{-1}]} & {M_z} \\
+      {k[z, z^{-1}]} & {M'_{z^{-1}}}
+      \arrow["\varphi_z", from=1-1, to=1-2]
+      \arrow[Rightarrow, no head, from=1-1, to=2-1]
+      \arrow["\vartheta", from=1-2, to=2-2]
+      \arrow["{\varphi'_{z^{-1}}}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  that $(\varphi(1), \varphi'(1))$ is a global section of $\shf{F}$.
+  This defines a $k$-linear map whose inverse is the map sending any
+  global section $(m, m')$ of $\shf{F}$ to the pair $(\varphi,
+  \varphi')$, where $\varphi: k[z] \to M$ is the unique $k[z]$-module
+  homomorphism with $\varphi(1) = m$, and $\varphi': k[z^{-1}] \to
+  M'$ is similarly determined over $k[z^{-1}]$ by $\varphi'(1) = m'$.
+  Since $\vartheta(m) = m'$, it follows that the above diagram
+  commutes, so we indeed have a morphism $(\varphi, \varphi'):
+  \shf{O} \to \shf{F}$.
+\end{proof}
+
+With the twisting sheaves studied sufficiently for now, we move on to
+the next key class of coherent sheaves.
+These arise as instances of the following construction.
+
+\begin{definition}
+  \label{def_qcoh_sub_and_quot_objs}
+  Given quasi-coherent sheaves $\shf{F} = (M, M', \vartheta)$ and
+  $\shf{G} = (N, N', \varrho)$ on $\proj{1}$, we say that $\shf{G}$
+  is a \emph{subsheaf} of $\shf{F}$ if $N \leq M$, $N' \leq M'$ and
+  $\varrho$ is a restriction of $\vartheta$.
+  The \emph{quotient} of $\shf{F}$ by some subsheaf $\shf{G}$ is
+  defined as the quasi-coherent sheaf
+  \[
+    \quot{\shf{F}}{\shf{G}} := (\quot{M}{N}, \quot{M'}{N'},
+    \overline{\vartheta})
+  \]
+  whose descent datum is the induced isomorphism on quotient modules
+  \[
+    \overline{\vartheta}: \quot{M_z}{N_z} \to \quot{M'_{z^{-1}}}{N'_{z^{-1}}}.
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+\begin{example}
+  \label{exmp_ideal_sheaf}
+  Let $D$ be a closed subset of $\proj{1}$, say $D = V(F)$ for some
+  homogeneous polynomial $F \in k[x, y]$ by
+  \cref{lemma_opens_of_proj_line_are_principal}.
+  Then the dehomogenisations of $F$ precisely give the ideals of
+  vanishing for $D \cap U_x$ and $D \cap U_y$, i.e.
+  \[
+    I(D \cap U_x) = \gen{\dehomog{F}{x}} \idealof k[z]
+    \mathand
+    I(D \cap U_y) = \gen{\dehomog{F}{x}} \idealof k[z^{-1}].
+  \]
+  Since $\dehomog{F}{x}$ and $\dehomog{F}{y}$ are associates in $k[z,
+  z^{-1}]$, the identity map induces an isomorphism
+  $\gen{\dehomog{F}{x}}_z \cong \gen{\dehomog{F}{y}}_{z^{-1}}$, so
+  the structure sheaf admits the coherent subsheaf
+  \[
+    \twist{-D} := (\gen{\dehomog{F}{x}}, \gen{\dehomog{F}{y}}, \id)
+    \leq \shf{O},
+  \]
+  called an \emph{ideal sheaf}.
+  Moreover, the quotient $\skyscraper{D} :=
+  \quot{\shf{O}}{\twist{-D}}$ can be seen as a generalisation of the
+  skyscraper sheaf from \cref{exmp_skyscraper_shf} for $\proj{1}$ in
+  the case $D = \{p\}$ for some $p \in \proj{1}$.
+  We denote the skyscraper sheaf at $p$ by $\skyscraper{p}$. \noparskip
+
+  Let us study the sections of $\skyscraper{p}$ over $U_x$ for each
+  projective point $p = (a : b)$.
+  By computing the dehomogenisations of the polynomial $bx - ay$, it
+  follows that
+  \[
+    \twist{-p} = (\gen{b - az}, \gen{bz^{-1} -a}, \id),
+  \]
+  so the sheaf $\skyscraper{p}$ is determined by the modules
+  \[
+    M = \frac{k[z]}{\gen{b - az}}
+    \mathand
+    M' = \frac{k[z^{-1}]}{\gen{bz^{-1} - a}}
+  \]
+  over $k[z]$ and $k[z^{-1}]$ respectively.
+  Since $z^{-1}$ is not torsion in $M'$, the sections over $U_x$ will
+  be pairs $(\overline{f}, \overline{g}/z^{-j}) \in M \times
+  M'_{z^{-1}}$ such that $z^{-j} \overline{f} = \overline{g}$ in $M'_{z^{-1}}$.
+  Each section is therefore determined by the choice of
+  $\overline{f}$, which is a global section of the skyscraper sheaf
+  $\assmod{M}$ on $\aff{1}_z$.
+  It follows from the discussion in \cref{exmp_skyscraper_shf} that
+  \[
+    \sections{U_x}{\skyscraper{p}} \cong
+    \begin{cases}
+      k & \text{if } p \in U_x \\
+      0 & \text{if } p \not\in U_x.
+    \end{cases}
+  \]
+  More generally, one can show the same holds with $U_x$ replaced by
+  any open subset $U$ of $\proj{1}$.
+  This agrees with our intuition in the affine case.
+\end{example}
+
+What makes these examples so compelling is that any coherent sheaf on
+$\proj{1}$ is built from twisting sheaves and skyscraper sheaves at a point.
+This is the content of \emph{Grothendieck's splitting theorem} for
+$\proj{1}$, and serves as the projective analogue of
+\cref{thm_coh_sheaf_classification_of_aff_line}.
+Before this, we must extend \cref{exmp_ideal_sheaf} by considering
+\emph{thickenings} of skyscraper sheaves.
+
+\begin{definition}
+  Fix some $m \in \zpos$ and a projective point $p = (a : b)$.
+  Then the \emph{thickened skyscraper sheaf} $\skyscraper{mp} :=
+  \quot{\shf{O}}{\twist{-mp}}$, where
+  \[
+    \twist{-mp} := \twist{-p}^m = (\gen{b - az}^m, \gen{bz^{-1} - a}^m, \id).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+This is the geometric analogue of raising an ideal of a ring to a power.
+Applying the argument in \cref{exmp_ideal_sheaf}, it is not difficult
+to see that
+\[
+  \sections{U}{\skyscraper{mp}} \cong
+  \begin{cases}
+    k^m & \text{if } p \in U \\
+    0 & \text{if } p \not\in U.
+  \end{cases}
+\]
+The sheaf $\skyscraper{mp}$ is a torsion $\strshf{\proj{1}}$-module,
+and it will play the same role as the module $\quot{k[x]}{\gen{x -
+a}^n}$ does in \cref{thm_coh_sheaf_classification_of_aff_line}.
+In particular, it suffices to classify the torsion part of any coherent sheaf.
+
+\begin{theorem}[Grothendieck's splitting theorem]
+  Every coherent sheaf $\shf{F}$ on $\proj{1}$ decomposes as the direct sum
+  \[
+    \shf{F} \cong
+    \twist{n_1} \oplus \cdots \oplus \twist{n_r} \oplus
+    \skyscraper{m_1 p_1} \oplus \cdots \oplus \skyscraper{m_s p_s}.
+  \]
+  \vspace{-24pt}
+\end{theorem}
+
+The direct sum of quasi-coherent sheaves is defined exactly as one
+intuitively expects, though an explicit definition will be given in
+the next section.
+A proof of the splitting theorem is beyond the scope of this thesis.
+For our purposes, the upshot is more important, namely that to
+understand any coherent sheaf on $\proj{1}$, one only really needs to
+understand the twisting sheaves and thickened skyscraper sheaves.

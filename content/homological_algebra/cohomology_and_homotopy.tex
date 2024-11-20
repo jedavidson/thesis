@@ -1,0 +1,211 @@
+\section{Cohomology and homotopy}
+\label{sect_cohomology_homotopy}
+
+Cohomology is perhaps the most valuable data associated to a cochain
+complex, so we now introduce a circle of related ideas.
+
+\begin{proposition}
+  \label{prop_cochain_map_induced_cohomology}
+  A cochain map $f: \cochaincomp{C} \to \cochaincomp{D}$ induces
+  morphisms $Z^i(\cochaincomp{C}) \to Z^i(\cochaincomp{D})$ and
+  $B^i(\cochaincomp{C}) \to B^i(\cochaincomp{D})$.
+  Thus, cohomology is an additive functor $H^i: \Ch{\abcat{A}} \to \abcat{A}$.
+\end{proposition}
+
+\begin{proof}
+  The argument for abelian categories is a technical use of universal
+  properties, but it is instructive to at least see the explicit
+  construction for $\Mod{R}$.
+  Using the commutative diagram for $f$, it is not hard to see that
+  each map $f^i$ sends cocycles to cocycles and coboundaries to
+  coboundaries in degree $i$.
+  Thus the map
+  \[
+    z + B^i(\cochaincomp{C}) \mapsto f^i(z) + B^i(\cochaincomp{D})
+  \]
+  is the desired module homomorphism $H^i(f): H^i(\cochaincomp{C})
+  \to H^i(\cochaincomp{D})$, and it follows that
+  \[
+    H^i(gf) = H^i(g) H^i(f) \mathand H^i(f + g) = H^i(f) + H^i(g)
+  \]
+  for all compatible cochain maps $f$ and $g$, so $H^i$ is an
+  additive functor as claimed.
+\end{proof}
+
+% \begin{proof}
+%     The argument for arbitrary abelian categories is a technical
+% exercise in \emph{diagram chasing}, so we will consider $\abcat{A}
+% = \Mod{R}$ instead for simplicity.
+%     Using the commutative diagram for $f$, we see that $f$ must
+% send cocycles to cocycles and coboundaries to coboundaries in degree $n$.
+%     In particular, $H^n(f)$ is the map $z + B^n(\cochaincomp{C})
+% \mapsto f^n(z) + B^n(\cochaincomp{D})$, and clearly we have $H^n(f
+% + g) = H^n(f) + H^n(g)$ in $\abcat{A}$.
+%     Thus $H^n$ is additive.
+% \end{proof}
+
+% For the more general argument, there is this thread:
+% https://math.stackexchange.com/questions/4163943/functoriality-of-homology
+
+Since $\Ch{\abcat{A}}$ is abelian, it makes sense to consider short
+exact sequences of complexes.
+This leads to one of the cornerstone theorems of homological algebra.
+
+\begin{theorem}[Long exact cohomology sequence]
+  \label{thm_long_exact_cohomology_seq}
+  Consider a short exact sequence
+  \[
+    \begin{tikzcd}
+      \cochaincomp{0} \arrow[r]
+      & \cochaincomp{A} \arrow[r, "f"]
+      & \cochaincomp{B} \arrow[r, "g"]
+      & \cochaincomp{C} \arrow[r]
+      & \cochaincomp{0}
+    \end{tikzcd}
+  \]
+  in $\Ch{\abcat{A}}$.
+  Then there exist \emph{connecting morphisms} $\partial^i:
+  H^i(\cochaincomp{C}) \to H^{i + 1}(\cochaincomp{A})$ such that
+  \[
+    \begin{tikzcd}
+      \cdots & {H^i(\cochaincomp{A})} && {H^i(\cochaincomp{B})} &&
+      {H^i(\cochaincomp{C})} \\
+      \\
+      & {H^{i + 1}(\cochaincomp{A})} && {H^{i + 1}(\cochaincomp{A})}
+      && {H^{i + 1}(\cochaincomp{A})} & \cdots
+      \arrow[dashed, from=1-1, to=1-2]
+      \arrow["{H^i(f)}", from=1-2, to=1-4]
+      \arrow["{H^i(g)}", from=1-4, to=1-6]
+      \arrow["{\partial^i}"{description}, dashed, from=1-6, to=3-2]
+      \arrow["{H^{i + 1}(f)}"', from=3-2, to=3-4]
+      \arrow["{H^{i + 1}(g)}"', from=3-4, to=3-6]
+      \arrow[dashed, from=3-6, to=3-7]
+    \end{tikzcd}
+  \]
+  is an exact sequence in $\abcat{A}$.
+  Moreover, this construction is natural in the sense that given a
+  morphism of short exact sequences of complexes
+  \[
+    \begin{tikzcd}
+      \cochaincomp{0} & \cochaincomp{A} & \cochaincomp{B} &
+      \cochaincomp{C} & \cochaincomp{0} \\
+      \cochaincomp{0} & \cochaincomp{(A')} & \cochaincomp{(B')} &
+      \cochaincomp{(C')} & \cochaincomp{0},
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-2, to=2-2]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-3, to=2-3]
+      \arrow[from=1-4, to=1-5]
+      \arrow[from=1-4, to=2-4]
+      \arrow[from=2-1, to=2-2]
+      \arrow[from=2-2, to=2-3]
+      \arrow[from=2-3, to=2-4]
+      \arrow[from=2-4, to=2-5]
+    \end{tikzcd}
+  \]
+  in $\Ch{\abcat{A}}$, there are commutative squares
+  \[
+    \begin{tikzcd}[cramped]
+      {H^i(\cochaincomp{C})} & {H^{i + 1}(\cochaincomp{A})} \\
+      {H^i(\cochaincomp{(C')})} & {H^{i + 1}(\cochaincomp{(A')})}.
+      \arrow["{\partial^i}", from=1-1, to=1-2]
+      \arrow[from=1-1, to=2-1]
+      \arrow[from=1-2, to=2-2]
+      \arrow["{(\partial')^i}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  \vspace{-18pt}
+\end{theorem}
+
+\begin{proof}
+  The construction of the connecting morphisms requires the snake lemma.
+  We defer the technical details to the discussion in
+  \cite[Section~1.3]{weibel}.
+\end{proof}
+
+For computational purposes, it is often useful to be able to detect
+when two complexes have the same cohomology.
+There are two related ways to do this, the latter of which is
+inspired by the concept in topology of the same name.
+
+\begin{definition}
+  A cochain map $f: \cochaincomp{C} \to \cochaincomp{D}$ is called a
+  \emph{quasi-isomorphism} (or \emph{qis}) if each of the maps
+  $H^i(f): H^i(\cochaincomp{C}) \to H^i(\cochaincomp{D})$ induced by
+  cohomology is an isomorphism.
+  In case such a map $f$ exists, $\cochaincomp{C}$ and
+  $\cochaincomp{D}$ are said to be \emph{quasi-isomorphic} complexes.
+\end{definition}
+
+% Drawing from the concept of the same name in topology and the
+% eponymous area of \emph{homotopy theory}, there is another way in
+% which cohomology can be preserved, albeit in a more elaborate and
+% less direct manner.
+%  two cochain maps which is notable for its interaction with cohomology.
+% The inspiration draws again from the concept of the same name in
+% topology and the eponymous area of \emph{homotopy theory}.
+% A short but potentially useful prelude is the introduction of
+% \cite[Section~IX.4.3]{algebra_chapter_0}.
+
+\begin{definition}
+  A cochain map $f: \cochaincomp{C} \to \cochaincomp{D}$ is said to
+  be \emph{null-homotopic} if there is a collection of morphisms
+  $\{s^i: C^i \to D^{i - 1}\}_{i \in \bb{Z}}$, called a
+  \emph{contraction} of $f$, such that $f = d_D s + s d_C$.
+  We say that $f$ is \emph{homotopic} to another cochain map $g:
+  \cochaincomp{C} \to \cochaincomp{D}$ if their difference $f - g$ is
+  null-homotopic.
+  We write $f \sim g$ and call a contraction of $f - g$ a
+  \emph{homotopy} from $f$ to $g$:
+  \[
+    \begin{tikzcd}[cramped]
+      \cdots && {C^{i - 1}} && {C^i} && {C^{i + 1}} && \cdots \\
+      \\
+      \cdots && {D^{i - 1}} && {D^i} && {D^{i + 1}} && \cdots.
+      \arrow[from=1-1, to=1-3]
+      \arrow["{d_C}", from=1-3, to=1-5]
+      \arrow[from=1-3, to=3-1]
+      \arrow["{f}"', shift right, from=1-3, to=3-3]
+      \arrow["{g}", shift left, from=1-3, to=3-3]
+      \arrow["{d_C}", from=1-5, to=1-7]
+      \arrow["{s}"{description}, from=1-5, to=3-3]
+      \arrow["{f}"', shift right, from=1-5, to=3-5]
+      \arrow["{g}", shift left, from=1-5, to=3-5]
+      \arrow[from=1-7, to=1-9]
+      \arrow["{s}"{description}, from=1-7, to=3-5]
+      \arrow["{f}"', shift right, from=1-7, to=3-7]
+      \arrow["{g}", shift left, from=1-7, to=3-7]
+      \arrow[from=1-9, to=3-7]
+      \arrow[from=3-1, to=3-3]
+      \arrow["{d_D}"', from=3-3, to=3-5]
+      \arrow["{d_D}"', from=3-5, to=3-7]
+      \arrow[from=3-7, to=3-9]
+    \end{tikzcd}
+  \]
+  Moreover, we say that $f$ is a \emph{homotopy equivalence} if $f$
+  and $g$ are \emph{homotopy inverses} of each other, i.e. $gf \sim
+  \id_{\cochaincomp{C}}$ and $fg \sim \id_{\cochaincomp{D}}$.
+\end{definition}
+
+\begin{corollary}
+  Let $f,\, g: \cochaincomp{C} \to \cochaincomp{D}$ be cochain maps.
+  If $f$ is null-homotopic, then each morphism $H^i(f)$ is zero, and
+  if $f \sim g$, then $H^i(f) = H^i(g)$.
+\end{corollary}
+
+In other words, homotopic cochain maps induce the same morphisms at
+the level of cohomology.
+This implies that any homotopy equivalence is also a quasi-isomorphism.
+Though the converse is generally false, we have the following
+important partial result in this direction.
+This takes considerable effort to prove, but one can find a thorough
+account of the details in \cite[Section~IX.5.4]{algebra_chapter_0}.
+
+\begin{proposition}[{\cite[Theorem~IX.5.9]{algebra_chapter_0}}]
+  \label{prop_qis_is_homotopy_equiv_partial_conv}
+  If $\cochaincomp{C}$ and $\cochaincomp{D}$ are both bounded below
+  complexes of injectives or both bounded above complexes of
+  projectives, then any quasi-isomorphism $f: \cochaincomp{C} \to
+  \cochaincomp{D}$ is a homotopy equivalence.
+\end{proposition}

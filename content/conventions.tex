@@ -1,0 +1,87 @@
+\chapter{Conventions}
+\label{conventions}
+
+For the avoidance of doubt, the following is a reference for the
+conscious conventions and general notational choices we have made in
+this thesis:
+
+\begin{itemize}
+  \item
+    The set of non-negative integers is denoted $\zpos$.
+    Similarly, the set of non-positive integers is denoted $\zneg$.
+
+  \item
+    Unless otherwise stated, all rings should be assumed to be commutative.
+    Most algebras will not be, but will always be associative and unital.
+
+  \item
+    If $A$ is a ring or an algebra, the category of left $A$-modules
+    is denoted by $\Mod{A}$.
+    The full subcategory of finitely generated left $A$-modules is
+    denoted $\mod{A}$.
+    We do not consider right $A$-modules at any point in this thesis.
+
+  \item
+    If $R$ is a ring and $f \in R$, the ring $R_f$ denotes the
+    localisation of $R$ at the multiplicatively closed subset $S =
+    \{1, f, f^2, \ldots\} \subseteq R$.
+    More generally, if $M$ is an $R$-module, the $R_f$-module $M_f$
+    denotes the localisation of $M$ at $S$.
+    We will often abuse notation by conflating an element $m \in M$
+    with the fraction $m/1 \in M_f$.
+    Via the canonical ring monomorphism $R \mono R_f$, one may also
+    think of $M_f$ as an $R$-module, and it will be convenient to
+    implicitly apply this principle at times.
+
+  \item
+    Given $f, g \in R$, we denote the \emph{iterated} localisation of
+    an $R$-module $M$ at $f$ and then at $g$ by $M_{f, g}$, which is
+    an $R[f^{-1}, g^{-1}]$-module.
+    Manifestly, the order in which one does these localisations does not matter.
+    (Note that this is \emph{not} the same thing as the localisation
+      of $M$ at $fg$, as the elements of $M_{f, g}$ are fractions
+      $m/(f^i g^j)$ for some $m \in M$ and usually different powers $i,
+    j \in \zpos$.)
+
+  \item
+    Given a category $\cat{C}$, we write $A \in \cat{C}$ and $f \in
+    \cat{C}$ to denote that an object $A$ and a morphism $f$ belong
+    to $\cat{C}$, rather than the common Ob and Hom notation.
+
+  \item
+    We denote both the object $K$ and the morphism $k: K \mono A$
+    constituting a kernel of a morphism $f: A \to B$ in some category
+    by $\ker(f)$, with it being clear from context the way in which a
+    particular usage should be read.
+    We treat all cokernels, images and coimages similarly.
+
+  \item
+    Given functors $F,\, G: \cat{C} \to \cat{D}$ and $H: \cat{D} \to
+    \cat{E}$ as well as natural transformations $\eta: F \nattrans G$
+    and $\varepsilon: G \nattrans H$, we denote by $\varepsilon \circ
+    \eta: F \nattrans H$ the \emph{vertical composition} of
+    $\varepsilon$ with $\eta$ having components $(\varepsilon \circ
+    \eta)_X = \varepsilon_X \circ \eta_X$ for each $X \in \cat{C}$.
+    This is the implied composition operation for all commutative
+    diagrams of functors.
+
+  \item
+    There are two distinct ways of composing a natural transformation
+    with a functor.
+    Fix functors $G,\, H: \cat{C} \to \cat{D}$ and a natural
+    transformation $\eta: G \nattrans H$.
+    Given functors $F: \cat{B} \to \cat{C}$ and $K: \cat{D} \to
+    \cat{E}$, we define the natural transformations
+    \[
+      F \circ \eta: F \circ G \nattrans F \circ H
+      \mathand
+      \eta \circ K: G \circ K \nattrans H \circ K
+    \]
+    to have components
+    \[
+      (F \circ \eta)_X = F \circ \eta_X
+      \mathand
+      (\eta \circ K)_Y = \eta_{K(Y)}
+    \]
+    for each $X \in \cat{B}$ and $Y \in \cat{D}$.
+\end{itemize}

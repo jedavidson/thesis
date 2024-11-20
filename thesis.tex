@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper,oneside]{book}
+
+\usepackage{preamble}
+\usepackage{commands}
+
+\title{On a Theorem of Beilinson and the Derived Category of Coherent
+Sheaves on $\proj{1}$}
+\author{James Davidson}
+\supervisor{Professor Daniel Chan}
+\date{November 2024}
+
+\iffalse
+\includeonly{
+  content/intro,
+  content/abelian_categories/chapter,
+  content/homological_algebra/chapter,
+  content/derived_categories/chapter,
+  content/coh_sheaf_theory_of_p1/chapter,
+  content/beilinsons_theorem/chapter,
+  content/conventions
+}
+\fi
+
+\begin{document}
+
+\makeatletter
+\begin{titlepage}
+  \begin{figure}[ht!]
+    \centering
+    \includegraphics[width=5cm]{resources/crest}
+  \end{figure}
+  \vspace{2.5cm}
+  \begin{center}
+    \LARGE\bfseries
+    \@title
+  \end{center}
+  \vfill
+  \begin{center}
+    \Large
+    \@author
+  \end{center}
+  \vfill
+  \begin{center}
+    \large
+    Supervisor: \@supervisor \\
+    \vspace{0.5cm}
+    School of Mathematics and Statistics \\
+    UNSW Sydney \\
+    \vspace{0.5cm}
+    \@date
+  \end{center}
+  \vfill
+  \begin{center}
+    \small\itshape
+    Submitted in partial fulfillment of the requirements of the degree of \\
+    Bachelor of Science with Honours in Pure Mathematics
+  \end{center}
+\end{titlepage}
+\makeatother
+
+% So that PDF page numbers line up with displayed page numbers,
+% we increment the counter by 1
+\stepcounter{page}
+
+\include{content/plagiarism}
+\include{content/abstract}
+\include{content/acknowledgements}
+
+{
+  \pagestyle{plain}
+  \hypersetup{hidelinks}
+  \tableofcontents
+}
+
+% Start introduction from chapter 0 as a nod to CS :)
+\setcounter{chapter}{-1}
+\include{content/intro}
+
+\include{content/abelian_categories/chapter}
+\include{content/homological_algebra/chapter}
+\include{content/derived_categories/chapter}
+
+\include{content/coh_sheaf_theory_of_p1/chapter}
+\include{content/beilinsons_theorem/chapter}
+
+\appendix
+\include{content/conventions}
+
+{
+  \addtocontents{toc}{\protect\addvspace{1em}}
+  \bookmarksetup{startatroot}
+  \printbibliography[heading=bibintoc, title=References]
+}
+
+\end{document}

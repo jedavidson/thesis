@@ -1,0 +1,159 @@
+\section{A primer on sheaves}
+\label{sect_sheaf_primer}
+
+This section is intended to provide a brief overview of
+\emph{sheaves} in the abstract with a view toward algebraic geometry.
+We will strictly consider generalities here, but our needs for the
+more specific and forthcoming study of coherent sheaves can be met
+with little more than a few basic and well-motivated definitions.
+
+Recall that one of the main ways to study an algebraic variety is to
+look at the rings of regular functions defined locally and globally.
+An important consequence of the way the Zariski topology is
+constructed is that these regular functions enjoy a certain
+local-to-global relationship: two regular functions on the variety
+$X$ which agree locally on an open subset $U \subseteq X$ agree globally on $X$.
+% (c.f. \cite[Remark~I.3.1.1]{hartshorne}).
+Regular functions are far from the only data on $X$ that behaves
+similar in spirit to this.
+As one of many examples, one can develop a cogent theory of
+\emph{(K\"{a}hler) differentials} when $X$ is smooth which, among
+other things, can be used to define the \emph{geometric genus} of
+$X$, an important numerical invariant.
+There is an abundance of examples of this phenomena beyond just
+algebraic geometry, such as the continuous functions on any topological space.
+The language of sheaves arises as a convenient organisational tool in
+all of these contexts.
+
+\begin{definition}
+  \label{def_presheaf}
+  Let $X$ be a topological space.
+  A \emph{presheaf of abelian groups} $\shf{F}$ on $X$ is the data of
+  abelian group $\shf{F}(U)$ for each open set $U$, and for each
+  inclusion of opens $V \subseteq U$ a group homomorphism
+  $\res{U}{V}: \shf{F}(U) \to \shf{F}(V)$.
+  These homomorphisms are moreover required to be functorial in the
+  sense that $\res{U}{U} = \id_{\shf{F}(U)}$ for all open sets $U$
+  and $\res{U}{W} = \res{V}{W} \res{U}{V}$ for all inclusions of open
+  sets $W \subseteq V \subseteq U$.
+\end{definition}
+
+Though in this definition presheaf data takes values in the category
+$\Ab$, one can substitute for other concrete categories, such as
+$\Set$ and $\Ring$; more usefully and most commonly, one considers an
+abelian category.
+The elements of $\shf{F}(U)$ are called the \emph{sections} of
+$\shf{F}$ over $U$, and the sections over $X$ itself are called the
+\emph{global sections}.
+It is also common to denote the space of sections of $\shf{F}$ over
+$U$ by $\sections{U}{\shf{F}}$ or $H^0(U, \shf{F})$.
+The homomorphisms $\res{U}{V}$ are called \emph{restriction maps} due
+to how they are typically defined, and for a section $s \in
+\shf{F}(U)$ we introduce the suggestive shorthand $\setres{s}{V} =
+\res{U}{V}(s)$.
+
+As we have already alluded to above, the most fundamental example of
+a presheaf in algebraic geometry is the following.
+
+\begin{example}
+  The regular functions of a quasi-projective variety $X$ define a
+  presheaf of rings $\strshf{X}$ called the \emph{structure sheaf} of $X$.
+  For each open set $U$, we let $\strshf{X}(U)$ be the ring
+  $\shf{O}(U)$ of regular functions
+  % $f: U \to k$,
+  defined on $U$, and take as restriction maps the usual
+  contravariant inclusions $\shf{O}(U) \mono \shf{O}(V)$.
+\end{example}
+
+The definition of a presheaf captures the organisational aspects of
+the data of $\strshf{X}$, but we have already noted that there is
+more going on in the form of local-to-global relationships.
+Our next definition aims to make this more formal.
+
+\begin{definition}
+  \label{def_sheaf}
+  A presheaf $\shf{F}$ on $X$ is called a \emph{sheaf} if for any
+  open set $U$ and open cover $U = \bigcup_{i \in I} U_i$, the
+  following two conditions are satisfied:
+  \begin{enumerate}
+    \item
+      \emph{(Identity.)}
+      Given $s \in \shf{F}(U)$ such that $\setres{s}{U_i} = 0$ for
+      all $i \in I$, we have $s = 0$.
+
+    \item
+      \emph{(Gluability.)}
+      Given sections $s_i \in \shf{F}(U_i)$ such that
+      \[
+        \setres{s_i}{U_i \cap U_j} = \setres{s_j}{U_i \cap U_j}
+      \]
+      for all $i, j \in I$, there is a section $s \in \shf{F}(U)$
+      such that $s_i = \setres{s}{U_i}$ for all $i \in I$.
+  \end{enumerate}
+\end{definition}
+
+% In other words, a sheaf is a presheaf where families of local
+% sections glue together \emph{uniquely} on open covers.
+% The observant reader may feel shortchanged by this, since it is not
+% as strong as what happens for regular functions in $\strshf{X}$,
+% where local agreement immediately becomes global agreement.
+% This is entirely to be expected, however: the Zariski topology is
+% rather coarse and any variety $X$ is by definition irreducible,
+% which are both topologically restrictive conditions.
+
+\begin{example}
+  As the name implies, the structure sheaf $\strshf{X}$ is also a sheaf.
+  Aside from the importance of regular functions in general, what
+  makes $\strshf{X}$ so fundamental is that many other useful sheaves
+  occurring in algebraic geometry are `compatible' with it.
+  More precisely, we call a sheaf $\shf{F}$ an
+  \emph{$\strshf{X}$-module} if each $\shf{F}(U)$ is a module over
+  $\strshf{X}(U)$, and for each inclusion of open sets $V \subseteq U
+  \subseteq X$ we have
+  \[
+    \setres{(s + t)}{V} = \setres{s}{V} + \setres{t}{V}
+    \mathand
+    \setres{(f \cdot s)}{V} = \setres{f}{V} \cdot \setres{s}{V}
+  \]
+  for all $s, t \in \shf{F}(U)$ and $f \in \strshf{X}(U)$.
+  Naturally, $\strshf{X}$ is itself an $\strshf{X}$-module.
+\end{example}
+
+With the following notion of morphisms, one obtains the pair of
+categories $\Psh{X}$ and $\Sh{X}$ of all (pre)sheaves of abelian
+groups on some fixed space $X$.
+
+\begin{definition}
+  \label{def_general_sheaf_morphism}
+  Let $\shf{F}$ and $\shf{G}$ be (pre)sheaves of abelian groups on $X$.
+  A \emph{morphism of (pre)sheaves} $f: \shf{F} \to \shf{G}$ is the
+  data of group homomorphism $f_U: \shf{F}(U) \to \shf{G}(U)$ for
+  each open $U \subseteq X$ compatible with restriction, i.e. there
+  is a commutative diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {\shf{F}(U)} & {\shf{G}(U)} \\
+      {\shf{F}(V)} & {\shf{G}(V)}
+      \arrow["{f_U}", from=1-1, to=1-2]
+      \arrow["{\setres{-}{V}}"', from=1-1, to=2-1]
+      \arrow["{\setres{-}{V}}", from=1-2, to=2-2]
+      \arrow["{f_V}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  for each inclusion of opens $V \subseteq U \subseteq X$.
+  The composition of morphisms is defined in the obvious way.
+  We say that $f$ is an \emph{isomorphism} if there is a morphism $g:
+  \shf{G} \to \shf{F}$ such that $fg = \id_{\shf{G}}$ and $gf = \id_{\shf{F}}$.
+\end{definition}
+
+Finally, we define a basic but useful operation on sheaves that we
+will need later.
+
+\begin{definition}
+  Let $\shf{F}$ be a sheaf on $X$.
+  For each open $U \subseteq X$, the \emph{restricted sheaf}
+  $\setres{\shf{F}}{U}$ is the sheaf on $U$ such that
+  $(\setres{\shf{F}}{U})(V) = \shf{F}(V)$ for each open $V \subseteq
+  U$, and $(\setres{\rho}{U})_{V, W} = \res{V}{W}$ for each inclusion
+  of opens $W \subseteq V \subseteq U$.
+\end{definition}

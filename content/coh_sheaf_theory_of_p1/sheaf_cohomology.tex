@@ -1,0 +1,386 @@
+\section{Coherent sheaf cohomology for $\proj{1}$}
+\label{sect_coh_sheaf_cohom}
+
+To conclude this chapter, we discuss some aspects of \emph{coherent
+sheaf cohomology} for $\proj{1}$.
+In its full form, this is an indispensable technique in modern
+algebraic geometry that applies even more generally than just for
+quasi-coherent sheaves.
+In keeping with the spirit of this chapter so far, we present only
+what is needed for our goals.
+
+As a prelude to this discussion, now seems like a fitting time to
+address the issue of injectives and projectives in $\QCoh(\proj{1})$
+and $\Coh(\proj{1})$, for which there is mixed news.
+
+\begin{proposition}
+  The category $\QCoh(\proj{1})$ has enough injectives, but not
+  enough projectives.
+  The category $\Coh(\proj{1})$ has neither enough injectives nor
+  enough projectives.
+\end{proposition}
+
+We are not adequately equipped to treat these claims, so we only make
+brief remarks.
+The first claim is true because $\proj{1}$ is an example of a
+\emph{Noetherian scheme}, and the category of quasi-coherent sheaves
+on any such scheme will always have enough injectives (c.f.
+\cite[Exercise~III.3.6(a)]{hartshorne}).
+This does not descend to $\Coh(\proj{1})$ since coherent sheaves are
+intuitively ``too small'' to be injective, in much the same way that
+the injective envelope of a finitely generated module is not usually
+finitely generated.
+As for the lack of projectives in both categories, this can be seen
+to fail already for the structure sheaf $\shf{O}_{\proj{1}}$, which
+is the upshot of \cite[Exercise~III.6.2]{hartshorne}.
+This will be a more significant observation for
+\cref{chap_beilinsons_theorem}, but the more immediate task of
+setting up coherent sheaf cohomology is contingent only on the first claim.
+
+The motivation for this technology is to study potential problems in
+lifting global sections.
+It turns out that the \emph{global sections functor}
+$\sections{\proj{1}}{-}: \QCoh(\proj{1}) \to \Vect{k}$ is left exact,
+so given a short exact sequence of quasi-coherent sheaves
+\[
+  \begin{tikzcd}[cramped]
+    0 & {\shf{F}_1} & {\shf{F}_2} & {\shf{F}_3} & 0
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+  \end{tikzcd}
+\]
+on $\proj{1}$, we have only the left exact sequence of vector spaces
+\[
+  \begin{tikzcd}[cramped]
+    0 & {\sections{\proj{1}}{\shf{F}_1}} &
+    {\sections{\proj{1}}{\shf{F}_2}} & {\sections{\proj{1}}{\shf{F}_3}}.
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=1-4]
+  \end{tikzcd}
+\]
+The failure of the map $\sections{\proj{1}}{\shf{F}_2} \to
+\sections{\proj{1}}{\shf{F}_3}$ to be surjective is exactly the
+obstruction to lifting a global section from $\shf{F}_3$ to
+$\shf{F}_2$, and there are two main ways to qualitatively measure this.
+The more sophisticated view is given by Grothendieck in
+\cite{tohoku}, who suggests that we should study the \emph{derived
+functor cohomology groups}
+\[
+  H^i(\shf{F}) = H^i(\proj{1}, \shf{F}) := R^i
+  \sections{\proj{1}}{\shf{F}} \cong \Ext{i}{}(\shf{O}, \shf{F}).
+\]
+The last isomorphism follows by \cref{prop_glob_sect_hom}, and it is
+for this reason that one has the additional notation $H^0(X,
+\shf{F})$ for global sections.
+While this is certainly powerful for answering theoretical questions,
+this version of sheaf cohomology is inconvenient to compute in
+practice since we must explicitly construct an injective resolution
+of $\shf{F}$.
+Serre's original version of sheaf cohomology for algebraic geometry
+as defined in \cite{fac} instead uses the easier to compute
+\emph{\v{C}ech cohomology groups} $\cechalt{i}{\shf{F}}$ defined below.
+
+A priori, these two cohomology theories may not yield isomorphic
+cohomology groups.
+Fortunately, they are always isomorphic for quasi-coherent sheaves on
+\emph{Noetherian separated schemes} (c.f.
+\cite[Theorem~III.4.5]{hartshorne}) such as $\aff{1}$ and $\proj{1}$.
+In our discussion, we therefore mostly consider sheaf cohomology a la Serre.
+
+\begin{definition}
+  Fix an open cover $\mathcal{U} = \{U_i\}_{i \in I}$ of a
+  topological space $X$ and a well-order on the index set $I$.
+  For ease of notation, we will write the intersection of the subsets
+  corresponding to the ordered $(p + 1)$-tuple $\bm{i} = (i_0, i_1,
+  \ldots, i_p) \in I^{p + 1}$ as
+  \[
+    U_{i_0 i_1 \cdots i_p} = U_{i_0} \cap U_{i_1} \cap \cdots \cap U_{i_p},
+  \]
+  where $i_0 < i_1 < \cdots < i_p$.
+  Then for any sheaf of abelian groups $\shf{F}$ on $X$, one defines
+  the $p$th \emph{\v{C}ech cochains} to be the abelian group
+  \[
+    \cechcochain{p}{\mathcal{U}}{\shf{F}}
+    :=
+    \bigoplus_{\bm{i} \in I^{p + 1}} \sections{U_{i_0 i_1 \cdots i_p}}{\shf{F}}
+  \]
+  for all $p \in \zpos$.
+  We define the $p$th differential map $d:
+  \cechcochain{p}{\mathcal{U}}{\shf{F}} \to \cechcochain{p +
+  1}{\mathcal{U}}{\shf{F}}$ by
+  \begin{align*}
+    d(s_{i_0 i_1 \cdots i_p})_{\bm{i} \in I^{p + 1}}
+    :=
+    \left(\sum_{j = 0}^{p + 1} (-1)^j \setres{s_{i_0 i_1 \cdots
+      \widehat{i_j} \cdots i_{p + 1}}}{U_{i_0 i_1 \cdots \widehat{i_j}
+    \cdots i_{p + 1}}}\right)_{\bm{i} \in I^{p + 2}},
+  \end{align*}
+  where $i_0 i_1 \cdots \widehat{i_j} \cdots i_{p + 1}$ is the list
+  with the index $i_j$ omitted.
+  From this, one obtains the \emph{\v{C}ech cochain complex}
+  $\cechcochain{\bullet}{\mathcal{U}}{\shf{F}}$,
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\cechcochain{0}{\mathcal{U}}{\shf{F}}} &
+      {\cechcochain{1}{\mathcal{U}}{\shf{F}}} &
+      {\cechcochain{2}{\mathcal{U}}{\shf{F}}} & \cdots,
+      \arrow[from=1-1, to=1-2]
+      \arrow["d", from=1-2, to=1-3]
+      \arrow["d", from=1-3, to=1-4]
+      \arrow["d", from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  and its cohomology are the \emph{\v{C}ech cohomology groups}
+  $\cechalt{p}{\shf{F}} = \cech{p}{\mathcal{U}}{\shf{F}}$ for $p \geq 0$.
+\end{definition}
+
+Mercifully, this setup is much more tractable for $\proj{1}$.
+The \v{C}ech cohomology groups are generally dependent on the choice
+of open cover, but not in the aforementioned case of Noetherian
+separated schemes, so we can proceed using our standard affine open
+cover $\mathcal{U} = \{U_x, U_y\}$ with impunity.
+For any quasi-coherent sheaf $\shf{F}$ on $\proj{1}$, we have
+\[
+  \cechcochain{0}{\mathcal{U}}{\shf{F}} = \sections{U_x}{\shf{F}}
+  \biprod \sections{U_y}{\shf{F}}
+  \mathand
+  \cechcochain{1}{\mathcal{U}}{\shf{F}} = \sections{U_{xy}}{\shf{F}},
+\]
+and clearly $\cechcochain{p}{\mathcal{U}}{\shf{F}} = 0$ for all $p \geq 2$.
+The only non-trivial differential in the \v{C}ech complex is the map
+$d: \sections{U_x}{\shf{F}} \biprod \sections{U_y}{\shf{F}} \to
+\sections{U_{xy}}{\shf{F}}$ given by
+\[
+  d(\bm{s}, \bm{t}) = \setres{\bm{s}}{U_{xy}} - \setres{\bm{t}}{U_{xy}},
+\]
+where $\bm{s} = (s, s')$ and $\bm{t} = (t, t')$ in the notation of
+\cref{def_coh_sheaf_sects_and_restr}.
+A technical point that is unique to the particular way we have set up
+quasi-coherent sheaves on $\proj{1}$ is that one may need to use the
+descent datum for $\shf{F}$ first to ensure that these restrictions
+can be subtracted in this manner (i.e. they must be compatible with
+each other first).
+
+It follows that the only non-zero cohomology groups for $\proj{1}$ are
+\[
+  \cechalt{0}{\shf{F}} = \ker(d)
+  \mathand
+  \cechalt{1}{\shf{F}} = \coker(d),
+\]
+and it is not hard to see that $\cechalt{0}{\shf{F}}$ indeed
+corresponds to $\sections{\proj{1}}{\shf{F}}$ by the sheaf property.
+The equivalent statement about the vanishing of the higher derived
+functor cohomology groups is known as \emph{Grothendieck vanishing},
+and is rather non-trivial in comparison (c.f.
+\cite[Proposition~20.20.7]{stacks}).
+With the advanced knowledge that \v{C}ech and derived functor
+cohomology agree in this situation, we will simply write
+$H^0(\shf{F})$ and $H^1(\shf{F})$ for both cohomology theories.
+We will also persist in calling these spaces cohomology \emph{groups}
+even though they are in fact vector spaces over $k$.
+
+The value in introducing \v{C}ech cohomology in general upfront
+rather than giving only the specific setup for $\proj{1}$ is that we
+see that the \v{C}ech cohomology groups are the cohomology of a
+cochain complex, so all of the usual notions of
+\cref{sect_cohomology_homotopy} are available.
+In particular, each $H^p: \QCoh(\proj{1}) \to \Vect{k}$ is an
+additive functor which commutes with direct sums, so as a consequence
+of Grothendieck's splitting theorem, the cohomology groups of any
+coherent sheaf on $\proj{1}$ reduces to a direct sum of the
+cohomology groups of $\twist{n}$ and $\skyscraper{mp}$.
+In this vein, we present two fundamental computations.
+
+\begin{lemma}
+  For any $m \in \zpos$ and $p \in \proj{1}$, $H^1(\skyscraper{mp}) = 0$.
+\end{lemma}
+
+\begin{proof}
+  Put another way, the claim is that the differential map $d$ is surjective.
+  The sections of $\skyscraper{mp}$ are supported only in open
+  neighbourhoods of $p$, so if $p$ is either of the degenerate points
+  $(1 : 0)$ or $(0 : 1)$, then $p \not\in U_{xy}$ and $d = 0$, so the
+  claim is trivial in this case.
+  In the non-degenerate case, we have the isomorphisms of vector spaces
+  \[
+    \sections{U_x}{\skyscraper{mp}}
+    \cong \sections{U_y}{\skyscraper{mp}}
+    \cong \sections{U_{xy}}{\skyscraper{mp}}
+    \cong k^m.
+  \]
+  Since the descent datum of $\skyscraper{mp}$ acts as the identity,
+  the restriction maps to $U_{xy}$ are simply the identity maps on
+  $k^m$, so we see that $d$ is once again surjective.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma_h1_twist}
+  For any $n \in \bb{Z}$, we have
+  \[
+    H^1(\twist{n})
+    % =
+    % \begin{cases}
+    %     \gen{z^{-1}, z^{-2}, \ldots, z^{-(|n| - 1)}} & \text{if } n < -1 \\
+    %     0 & \text{if } n \geq -1.
+    % \end{cases}
+    \cong
+    \begin{cases}
+      k^{|n| - 1} & \text{if } n \leq -2 \\
+      0 & \text{if } n \geq -1.
+    \end{cases}
+  \]
+\end{lemma}
+
+\begin{proof}
+  As should be familiar at this point, we can characterise the
+  sections of $\twist{n}$ over $U_x$ as pairs $(f, g) \in k[z] \times
+  k[z, z^{-1}]$ such that $g = z^{-n} f$.
+  Each section is determined by the choice of $f$, so there is an
+  isomorphism $\sections{U_x}{\twist{n}} \cong k[z]$.
+  By similar arguments, we have $\sections{U_y}{\twist{n}} \cong
+  k[z^{-1}]$, and similarly
+  \[
+    \sections{U_{xy}}{\twist{n}} \cong k[z]_z \cong k[z, z^{-1}]
+    \cong k[z^{-1}]_{z^{-1}}.
+  \]
+  The corresponding restriction maps from $U_x$ and $U_y$ to $U_{xy}$
+  are the canonical inclusions $k[z] \mono k[z]_z$ and $k[z^{-1}]
+  \mono k[z]_{z^{-1}}$ respectively, but to ensure compatibility we
+  shall postcompose the second restriction map by $\vartheta_n^{-1}:
+  k[z^{-1}]_{z^{-1}} \to k[z]_z$, i.e. by multiplying by $z^n$.
+  Thus the \v{C}ech differential is ultimately the map $d(f, g) = f - z^n g$.
+
+  It remains to find $\coker(d)$.
+  We see that $\im(d)$ is a vector subspace of $k[z, z^{-1}]$ over
+  $k$, and clearly it contains the subspace generated by all
+  non-negative powers of $z$.
+  Moreover, $\im(d)$ contains $z^i = z^{n} z^{-(n - i)}$ for a given
+  $i \leq -1$ if and only if $n - i \geq 0$.
+  This is trivially true when $n \geq -1$,
+  % since
+  % \[
+  %     n - i \geq -1 - (-1) = 0,
+  % \]
+  so in this case $\im(d) = k[z, z^{-1}]$ and $H^1(\twist{n}) = 0$.
+  When $n \leq -2$, we have $n - i = -|n| - i < 0$ for all $-(|n| -
+  1) \leq i \leq -1$, so in this case $\im(d)$ is the (set-theoretic)
+  complement of the subspace
+  \[
+    \gen{z^{-1}, z^{-2}, \ldots, z^{-(|n| - 1)}} \cong k^{|n| - 1}.
+  \]
+  It follows that $H^1(\twist{n}) \cong k^{|n| - 1}$.
+\end{proof}
+
+The final pair of cohomological facts we will collect relate to the Ext groups.
+The second of these will rely on an additional result in coherent
+sheaf cohomology that is slightly beyond our reach in this thesis.
+
+\begin{lemma}
+  \label{prop_ext_from_twist}
+  Let $\shf{G}$ be a coherent sheaf on $\proj{1}$.
+  Then for all $n \in \bb{Z}$ and $i \in \zpos$,
+  \[
+    \Extalt{i}(\twist{n}, \shf{G}) \cong H^i(\shf{G} \shftensor \twist{-n}).
+  \]
+  In particular, $\Extalt{i}(\twist{n}, \shf{G}) = 0$ for $i \geq 2$.
+\end{lemma}
+
+\begin{proof}
+  Since the degree $-n$ twist is an autoequivalence, by
+  \cref{lemma_ext_preserved_by_equiv} we have
+  \begin{align*}
+    \Extalt{i}(\twist{n}, \shf{G})
+    &\cong \Extalt{i}(\shf{O}, \shf{G} \shftensor \twist{-n}) \\
+    &\cong H^i(\shf{G} \shftensor \twist{-n})
+  \end{align*}
+  by construction of the derived functor cohomology.
+  These cohomology groups vanish for $i \geq 2$, so the second part
+  of this claim is immediate.
+\end{proof}
+
+\begin{proposition}
+  \label{prop_CohP1_hereditary}
+  The category $\Coh(\proj{1})$ is \emph{hereditary}.
+  That is, $\Extalt{i}(\shf{F}, \shf{G}) = 0$ for all $i \geq 2$ and
+  coherent sheaves $\shf{F}$, $\shf{G}$ on $\proj{1}$.
+\end{proposition}
+
+\begin{proof}
+  Since $\Extalt{i}$ is an additive functor, it is enough to prove
+  the claim when $\shf{F}$ is either a twisting sheaf or a skyscraper
+  sheaf by Grothendieck's splitting theorem.
+  We have treated the former case already in
+  \cref{prop_ext_from_twist}, so suppose that $\shf{F} = \skyscraper{mp}$.
+  Recalling \cref{prop_ideal_sheaf_twist}, we have the ideal sheaf sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{-m}} & {\shf{O}} & {\skyscraper{mp}} & 0,
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  Applying a degree $n$ twist for some $n \in \bb{Z}$ yields a new
+  short exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{n - m}} & {\twist{n}} & {\skyscraper{mp}(n)} & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  First, we note that $\skyscraper{mp}(n) \cong \skyscraper{mp}$.
+  Indeed, the sections are still supported only at the point $p$, and
+  the algebraic effect of the twist on the descent datum in
+  neighbourhoods of $p$ is scaling by some negative power of a unit
+  in $k$, which is an invertible operation.
+  Next, since the contravariant functor $\Hom(-, \shf{I})$ is exact
+  for any injective quasi-coherent sheaf $\shf{I}$, taking an
+  injective resolution $\shf{G} \to \cochaincomp{\shf{I}}$ yields a
+  short exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\Hom(\skyscraper{mp}, \cochaincomp{\shf{I}})} &
+      {\Hom(\twist{n}, \cochaincomp{\shf{I}})} & {\Hom(\twist{n - m},
+      \cochaincomp{\shf{I}})} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  of complexes with the direction reversed.
+  Now, for each $i \geq 2$, we consider the exact portion of the
+  corresponding long exact cohomology sequence
+  \[
+    \begin{tikzcd}[cramped]
+      {\Extalt{i - 1}(\twist{n - m}, \shf{G})} &
+      {\Extalt{i}(\skyscraper{mp}, \shf{G})} & {\Extalt{i}(\twist{n}, \shf{G})}.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+    \end{tikzcd}
+  \]
+  The right term vanishes for all $i \geq 2$ by
+  \cref{prop_ext_from_twist}, and so does the left term when $i > 2$,
+  so we conclude that $\Extalt{i}(\skyscraper{mp}, \shf{G}) = 0$ in this case.
+  Thus it remains to show that
+  \[
+    \Extalt{1}(\twist{n - m}, \shf{G})
+    \cong
+    \Extalt{1}(\shf{O}, \shf{G}(m - n))
+    \cong H^1(\shf{G}(m - n))
+  \]
+  also vanishes.
+  This may not be true a priori for any choice of $n$, but by a
+  vanishing theorem of Serre (c.f.
+  \cite[Theorem~III.5.2(b)]{hartshorne}), the cohomology group
+  $H^1(\shf{G}(m - n))$ is guaranteed to vanish when $m - n$ is
+  sufficiently large, i.e. when $n$ is sufficiently negative.
+  Taking such an $n$ therefore completes the proof of the claim.
+\end{proof}

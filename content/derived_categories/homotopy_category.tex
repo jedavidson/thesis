@@ -1,0 +1,291 @@
+\section{The homotopy category}
+
+Recall that in \cref{sect_complexes}, we introduced $\Ch{\abcat{A}}$,
+the category of cochain complexes with objects in $\abcat{A}$, and
+noted that it itself was abelian.
+In the first phase of constructing the derived category of
+$\abcat{A}$, we wish to alter $\Ch{\abcat{A}}$ to identify cochain
+maps up to homotopy equivalence.
+The justification for this should be clear, as we have already seen
+that homotopy equivalent maps preserve cohomology.
+
+\begin{definition}
+  Let $\cat{C}$ be a category.
+  A \emph{congruence relation} $\sim$ on $\cat{C}$ consists of an
+  equivalence relation $\sim_{A, B}$ on each $\Hom_{\cat{C}}(A, B)$
+  which is compatible with composition, that is, if $f \sim_{A, B}
+  f'$ and $g \sim_{B, C} g'$, then $gf \sim_{A, C} g'f'$.
+  We define the \emph{quotient category} $\quot{\cat{C}}{\sim}$ to
+  have the same objects as $\cat{C}$, but whose hom-sets are
+  equivalence classes of morphisms in hom-sets of $\cat{C}$, i.e.
+  \[
+    \Hom_{\quot{\cat{C}}{\sim}}(A, B) := \quot{\Hom_{\cat{C}}(A, B)}{\sim}
+  \]
+  for each pair of objects $A,\, B \in \cat{C}$.
+  The full \emph{quotient functor} $\pi: \cat{C} \to
+  \quot{\cat{C}}{\sim}$ is the identity on objects and sends
+  morphisms to their equivalence class under $\sim$.
+\end{definition}
+
+\begin{definition}
+  The \emph{homotopy category} of an abelian category $\cat{A}$ is
+  the quotient category $\homcat{\abcat{A}} :=
+  \quot{\Ch{\abcat{A}}}{\sim}$ under homotopy equivalence.
+\end{definition}
+
+Eventually we will consider the \emph{bounded} homotopy categories
+$\homcat[*]{\abcat{A}}$, which are the full subcategories of
+$\homcat{\abcat{A}}$ corresponding to the categories
+$\Ch[*]{\abcat{A}}$ for each $* \in \{b, +, -\}$.
+Under certain hypotheses on $\abcat{A}$, considering the full
+subcategories of $\homcat[*]{\abcat{A}}$ consisting of complexes of
+injectives and projectives is sufficient to describe its bounded
+derived category, which are the particular flavour of derived
+category we will concern ourselves with.
+These details will be made precise at the end of \cref{sect_localising_homcat}.
+
+By construction, the image of any homotopy equivalence in
+$\Ch{\abcat{A}}$ under $\pi$ is an isomorphism in $\homcat{\abcat{A}}$.
+It is possible to formulate a universal property for
+$\homcat{\abcat{A}}$ along these lines, which provides a useful way
+of thinking about the homotopy category.
+
+\begin{proposition}[{\cite[Proposition~10.1.2]{weibel}}]
+  \label{prop_univ_prop_of_homcat}
+  Any functor $F: \Ch{\abcat{A}} \to \cat{D}$ with the property that
+  it sends homotopy equivalences in $\Ch{\abcat{A}}$ to isomorphisms
+  in $\cat{D}$ factors uniquely through $\homcat{\abcat{A}}$.
+  \[
+    \begin{tikzcd}
+      \Ch{\abcat{A}} & {\cat{D}.} \\
+      \homcat{\abcat{A}}
+      \arrow["F", from=1-1, to=1-2]
+      \arrow["\pi"', from=1-1, to=2-1]
+      \arrow["\exists!"', dashed, from=2-1, to=1-2]
+    \end{tikzcd}
+  \]
+\end{proposition}
+
+\begin{proposition}
+  The category $\homcat{\abcat{A}}$ is additive and has additive
+  quotient functor.
+\end{proposition}
+
+After identifying homotopy equivalent maps, we unfortunately lose the
+abelian structure of $\Ch{\abcat{A}}$ in general.
+Derived categories suffer the same fate, and at a glance this seems
+rather damning for any hopes of doing homological algebra, as we no
+longer have access to exact sequences.
+However, the shift functor on complexes gives $\homcat{\abcat{A}}$
+some additional structure beyond being additive, and it turns out
+that there is a principled way to think of certain sequences of maps
+in a way that mimics exact sequences.
+
+\begin{definition}
+  Let $u: \cochaincomp{A} \to \cochaincomp{B}$ be a map of complexes
+  in $\Ch{\abcat{A}}$.
+  The \emph{strict triangle} on $u$ is the ordered triple of maps
+  $(u, v, \delta)$ in $\homcat{\abcat{A}}$, where $v$ and $\delta$
+  are maps in $\Ch{\abcat{A}}$ arising from the short exact sequence
+  \[
+    \begin{tikzcd}
+      \cochaincomp{0} \arrow[r]
+      & \cochaincomp{B} \arrow[r, "v"]
+      & \cone{u} \arrow[r, "\delta"]
+      & \cochaincomp{A}[1] \arrow[r]
+      & \cochaincomp{0}.
+    \end{tikzcd}
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+\begin{definition}
+  \label{def_exact_triang_homcat}
+  Given maps
+  \[
+    \begin{tikzcd}
+      \cochaincomp{A} \arrow[r, "u"]
+      & \cochaincomp{B} \arrow[r, "v"]
+      & \cochaincomp{C} \arrow[r, "w"]
+      & \cochaincomp{A}[1]
+    \end{tikzcd}
+  \]
+  in $\homcat{\abcat{A}}$, the ordered triple $(u, v, w)$ is called
+  an \emph{exact triangle} on $(\cochaincomp{A}, \cochaincomp{B},
+  \cochaincomp{C})$ if there is a strict triangle $(u', v', w')$ and
+  a commutative diagram
+  \[
+    \begin{tikzcd}
+      \cochaincomp{A} & \cochaincomp{B} & \cochaincomp{C} &
+      {\cochaincomp{A}[1]} \\
+      \cochaincomp{(A')} & \cochaincomp{(B')} & \cone{u'} &
+      {\cochaincomp{(A')}[1]}
+      \arrow["u", from=1-1, to=1-2]
+      \arrow["f"', from=1-1, to=2-1]
+      \arrow["v", from=1-2, to=1-3]
+      \arrow["g"', from=1-2, to=2-2]
+      \arrow["w", from=1-3, to=1-4]
+      \arrow["h", from=1-3, to=2-3]
+      \arrow["{f[1]}", from=1-4, to=2-4]
+      \arrow["{u'}"', from=2-1, to=2-2]
+      \arrow["{v'}"', from=2-2, to=2-3]
+      \arrow["{\delta}"', from=2-3, to=2-4]
+    \end{tikzcd}
+  \]
+  in $\homcat{\abcat{A}}$ such that the maps $f$, $g$ and $h$ are isomorphisms.
+\end{definition}
+
+\iffalse
+\begin{remark}
+  Since choosing maps in $\homcat{\abcat{A}}$ is choosing
+  representatives of homotopy equivalence classes from
+  $\Ch{\abcat{A}}$, commutative diagrams in $\homcat{\abcat{A}}$ are
+  commutative diagrams in $\Ch{\abcat{A}}$ up to a choice of homotopy
+  equivalent maps.
+\end{remark}
+\fi
+
+\iffalse
+\begin{example}
+  For any complex $\cochaincomp{A}$, the triangle
+  \[
+    \begin{tikzcd}
+      \cochaincomp{A} \arrow[r, "0"]
+      & \cochaincomp{A} \arrow[r]
+      & \cochaincomp{A} \oplus \cochaincomp{A}[1] \arrow[r]
+      & \cochaincomp{A}[1]
+    \end{tikzcd}
+  \]
+  is strict, since $\cone{0} = \cochaincomp{A} \oplus
+  \cochaincomp{A}[1]$. The triangle
+  \[
+    \begin{tikzcd}
+      \cochaincomp{A} \arrow[r, "\id"]
+      & \cochaincomp{A} \arrow[r]
+      & 0 \arrow[r]
+      & \cochaincomp{A}[1]
+    \end{tikzcd}
+  \]
+  is exact.
+
+  To see why, note that $\cone{\id}$ is split exact, and so the
+  identity map for $\cone{\id}$ is null-homotopic, which in turn
+  implies that $\cone{\id} \to \cochaincomp{0}$ is a chain homotopy equivalence.
+  This is precisely an isomorphism in $\homcat{\abcat{A}}$, and by
+  replacing $\cone{\id}$ by an arbitrary split exact complex
+  $\cochaincomp{B}$, we recover the slightly more general fact that
+  $\cochaincomp{B} \cong \cochaincomp{0}$ in $\homcat{\abcat{A}}$.
+  % since $\cone{\id}$ is a split exact complex and hence isomorphic
+  % to 0 in $\homcat{\abcat{A}}$.
+  % This fact holds more generally: any
+  % and hence isomorphic to 0 in $\homcat{\abcat{A}}$.
+\end{example}
+\fi
+
+One should think of exactness for triangles as saying that there is
+an isomorphism between $(u, v, w)$ and the strict triangle $(u', v', \delta)$.
+The main feature of short exact sequences in $\Ch{\abcat{A}}$ is that
+the cohomology functor induces long exact sequences in $\abcat{A}$.
+When one instead works in $\homcat{\abcat{A}}$, cohomology remains a
+well-defined family of functors since homotopic maps induce the same
+maps on cohomology, and an exact triangle still induces a long exact
+cohomology sequence in $\abcat{A}$.
+
+\begin{proposition}[{\cite[Corollary~10.1.4]{weibel}}]
+  \label{prop_homcat_long_exact_coh_seq}
+  Given an exact triangle $(u, v, w)$ in $\homcat{\abcat{A}}$, there
+  is a long exact sequence
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r]
+      & H^i(\cochaincomp{A}) \arrow[r, "H^i(u)"]
+      & H^i(\cochaincomp{B}) \arrow[r, "H^i(v)"]
+      & H^i(\cochaincomp{C}) \arrow[r, "H^i(w)"]
+      & H^{i + 1}(\cochaincomp{A}) \arrow[r]
+      & \cdots
+    \end{tikzcd}
+  \]
+  in $\abcat{A}$, where we make the identification $H^{i +
+  1}(\cochaincomp{A}) \cong H^i(\cochaincomp{A}[1])$.
+\end{proposition}
+
+\iffalse
+\begin{proof}
+  If $(u, v, w)$ is itself a strict triangle, then this long exact
+  cohomology sequence is precisely the usual one obtained from the
+  underlying short exact sequence.
+  In all other cases, we have a commutative diagram
+  \[
+    \begin{tikzcd}
+      \cochaincomp{A} & \cochaincomp{B} & \cochaincomp{C} &
+      {\cochaincomp{A}[1]} \\
+      \cochaincomp{A'} & \cochaincomp{B'} & \cone{u'} & {\cochaincomp{A'}[1]}
+      \arrow["u", from=1-1, to=1-2]
+      \arrow["f"', from=1-1, to=2-1]
+      \arrow["v", from=1-2, to=1-3]
+      \arrow["g"', from=1-2, to=2-2]
+      \arrow["w", from=1-3, to=1-4]
+      \arrow["h", from=1-3, to=2-3]
+      \arrow["{f[1]}", from=1-4, to=2-4]
+      \arrow["{u'}"', from=2-1, to=2-2]
+      \arrow["{v'}"', from=2-2, to=2-3]
+      \arrow["{\delta}"', from=2-3, to=2-4]
+    \end{tikzcd}
+  \]
+  in $\homcat{\abcat{A}}$ and a long exact cohomology sequence
+  \[
+    \cdots
+    \stackrel{\delta_{i - 1}^*}{\longrightarrow}
+    H^i(\cochaincomp{A})
+    \stackrel{(u_i')^*}{\longrightarrow}
+    H^i(\cochaincomp{B})
+    \stackrel{(v_i')^*}{\longrightarrow}
+    H^i(\cone{u'})
+    \stackrel{\delta_i^*}{\longrightarrow}
+    H^{i + 1}(\cochaincomp{A})
+    \stackrel{(u_{i + 1}')^*}{\longrightarrow}
+    \cdots
+  \]
+  induced by strictness of the bottom row.
+  Since the vertical maps are isomorphisms in $\homcat{\abcat{A}}$,
+  they induce isomorphisms of cohomology. Functors preserve
+  isomorphisms, so commutativity of each square now gives a long
+  exact cohomology sequence for $\cochaincomp{A}$, $\cochaincomp{B}$
+  and $\cochaincomp{C}$. \todo{I want to make this more precise,
+    because it looks like we're not getting exactly a sequence induced
+    by the maps $u$, $v$ and $w$ as the statement suggests. But it's
+  not really a priority right now.}
+\end{proof}
+\fi
+
+\begin{remark}
+  \label{rem_ses_exact_triangs_in_homcat}
+  Exact triangles in $\homcat{\abcat{A}}$ are not a perfect
+  substitute for exact sequences in $\Ch{\abcat{A}}$.
+  To wit, not every short exact sequence
+  \[
+    \begin{tikzcd}
+      \cochaincomp{0} \arrow[r]
+      & \cochaincomp{A} \arrow[r, "u"]
+      & \cochaincomp{B} \arrow[r, "v"]
+      & \cochaincomp{C} \arrow[r]
+      & \cochaincomp{0}
+    \end{tikzcd}
+  \]
+  in $\Ch{\abcat{A}}$ can be completed to an exact triangle $(u, v,
+  w)$ in $\homcat{\abcat{A}}$, in the sense that the last map $w:
+  \cochaincomp{C} \to \cochaincomp{A}[1]$ may not exist.
+  For an example, see \cite[Exercise~10.1.2]{weibel}.
+\end{remark}
+
+\begin{remark}
+  \label{rem_homcat_of_additive_cat}
+  With the exception of \cref{prop_homcat_long_exact_coh_seq} (which
+  requires that mapping cones exist), everything we have discussed in
+  this section only depends on the fact that $\abcat{A}$ is additive.
+  This allows us to make sense of $\homcat{\abcat{C}}$ whenever
+  $\cat{C}$ is a full additive subcategory of $\abcat{A}$, which will
+  have important implications for the derived category later.
+  It is also clear that everything we have discussed works with
+  $\homcat[*]{\abcat{A}}$ in place of $\homcat{\abcat{A}}$.
+\end{remark}

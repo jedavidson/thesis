@@ -1,0 +1,440 @@
+\section{Operations on coherent sheaves}
+
+Since we have explicitly defined quasi-coherent sheaves in terms of
+module data, one should intuitively expect that some of the structure
+and operations on the category of modules will carry over to
+$\QCoh(\proj{1})$ and $\Coh(\proj{1})$.
+This indeed ends up being the case, so the goal of this section is to
+explicitly spell out the most important aspects.
+
+A key technical detail that we will implicitly use throughout this
+discussion is that localisation is exact, so it preserves subobjects,
+quotients, direct sums, kernels and cokernels at the level of modules
+(c.f. \cref{rem_exact_limit_colimit_pres}).
+In particular, we can use this fact to describe the descent data of
+the sheaves in the constructions below in a way that is more suited
+to computations.
+This will also lead to many of the definitions we give in this
+section being quite straightforward, such as the following.
+
+\begin{definition}
+  Let $\shf{F} = (M, M', \vartheta)$ and $\shf{G} = (N, N', \varrho)$
+  be quasi-coherent sheaves on $\proj{1}$.
+  The \emph{direct sum} of $\shf{F}$ and $\shf{G}$ is the quasi-coherent sheaf
+  \[
+    \shf{F} \biprod \shf{G} := (M \biprod N, M' \biprod N', \vartheta
+    \biprod \varrho).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+Here, we have used the fact that $(M \biprod N)_f \cong M_f \biprod
+N_f$ to simplify the descent datum.
+It is easy to see that $\QCoh(\proj{1})$ and $\Coh(\proj{1})$ are
+additive categories, since there is an obvious way to bilinearly add
+morphisms and an even more obvious candidate for the zero object.
+We leave the task of checking these small technical details to the reader.
+
+Next, we treat the abelian structure.
+Retaining the notation of \cref{def_coh_sheaf_morphism}, a
+quasi-coherent sheaf morphism $\Phi: \shf{F} \to \shf{G}$ on
+$\proj{1}$ gives rise to a commutative diagram
+\[
+  \begin{tikzcd}
+    {\ker(\varphi)_z} & {M_z} & {N_z} & {\coker(\varphi)_z} \\
+    {\ker(\varphi')_{z^{-1}}} & {M'_{z^{-1}}} & {N'_{z^{-1}}} &
+    {\coker(\varphi')_{z^{-1}}}.
+    \arrow[hook, from=1-1, to=1-2]
+    \arrow["{\varphi_z}", from=1-2, to=1-3]
+    \arrow["\vartheta"', from=1-2, to=2-2]
+    \arrow[two heads, from=1-3, to=1-4]
+    \arrow["\varrho", from=1-3, to=2-3]
+    \arrow[hook, from=2-1, to=2-2]
+    \arrow["{\varphi'_{z^{-1}}}"', from=2-2, to=2-3]
+    \arrow[two heads, from=2-3, to=2-4]
+  \end{tikzcd}
+\]
+The commutativity of the middle square implies that the composites
+\[
+  \varphi'_{z^{-1}} \circ \vartheta \circ \ker(\varphi)_z = \varrho
+  \circ \varphi_z \circ \ker(\varphi)_z
+\]
+% \[
+%     \varphi'(\vartheta(m/z^i))
+%     = \varrho(\varphi(m/z^i))
+%     % = \varrho(\varphi(m)/z^i)
+%     = 0
+% \]
+% for any $m \in \ker(\varphi)$,
+are zero, so the restriction of $\vartheta$ to $\ker(\varphi)_z$ is a
+map into ${\ker(\varphi')_{z^{-1}}}$.
+
+\begin{definition}
+  The \emph{kernel} of a quasi-coherent sheaf morphism $\Phi: \shf{F}
+  \to \shf{G}$ on $\proj{1}$ is the quasi-coherent subsheaf
+  $\ker(\Phi) := (\ker(\varphi), \ker(\varphi'), \vartheta) \leq \shf{F}$.
+  Here, we introduce a slight abuse of notation by identifying
+  $\vartheta$ with the restriction $\setres{\vartheta}{\ker(\varphi)_z}$.
+  One defines $\coker(\Phi)$ using the above commutative diagram
+  similarly, and hence also $\im(\Phi)$.
+\end{definition}
+
+Since $k[z]$ and $k[z^{-1}]$ are Noetherian rings, we see that
+kernels and cokernels of coherent sheaf morphisms must in turn be coherent.
+As before, we leave it to the reader to check the category-theoretic
+details necessary for the following claim.
+
+\begin{proposition}
+  The categories $\QCoh(\proj{1})$ and $\Coh(\proj{1})$ are abelian.
+\end{proposition}
+
+With this, we may consider all of the usual notions for an abelian category.
+We gave subobjects and quotient objects more palatable, explicit
+definitions in \cref{def_qcoh_sub_and_quot_objs}.
+By \cref{lemma_abelian_category_monos_and_epis}, the monics, epics
+and isomorphisms in $\QCoh(\proj{1})$ are also explicit: we call the
+morphism $\Phi = (\varphi, \varphi)$ \emph{injective} if $\varphi$
+and $\varphi'$ are injective module homomorphisms. \emph{Surjective}
+and \emph{bijective} morphisms are defined similarly.
+To see these tools in action, we consider the following result that
+will be useful in the next section.
+
+\begin{lemma}
+  \label{prop_ideal_sheaf_twist}
+  For any $m \in \zpos$ and $p \in \proj{1}$, we have $\twist{-mp}
+  \cong \twist{-m}$.
+\end{lemma}
+
+\begin{proof}
+  Let $p = (a : b)$, and consider the maps $\varphi: k[z] \to k[z]$
+  and $\varphi': k[z^{-1}] \to k[z^{-1}]$ given by multiplication by
+  $(b - az)^m$ and $(bz^{-1} - a)^m$ respectively.
+  As one easily checks, this determines an injective sheaf morphism
+  $\twist{-m} \to \shf{O}$ whose image is $\twist{-mp}$.
+\end{proof}
+
+Of course, the most significant tool in an abelian category are short
+exact sequences, so we consider two important examples for coherent sheaves.
+
+\begin{example}
+  There is a short exact sequence of coherent sheaves
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{-D}} & {\shf{O}} & {\skyscraper{D}} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  associated to any closed $D \subseteq \proj{1}$, sometimes called
+  the \emph{ideal sheaf sequence}.
+  This is a geometric analogue of the short exact sequence of $R$-modules
+  \[
+    \begin{tikzcd}[cramped]
+      0 & I & R & {R/I} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  associated to any ideal $I \idealof R$.
+\end{example}
+
+\begin{proposition}[Euler sequence for $\proj{1}$]
+  There is a short exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\twist{-2}} & {\twist{-1}^{\biprod 2}} & {\shf{O}} & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  \vspace{-24pt}
+\end{proposition}
+
+\begin{proof}
+  As is easy to check, the pairs $(\times 1, \times z^{-1})$ and
+  $(\times z, \times 1)$ both determine morphisms $\twist{-1} \to \shf{O}$.
+  This induces maps $\varphi: k[z]^{\biprod 2} \to k[z]$ and
+  $\varphi': k[z^{-1}]^{\biprod 2} \to k[z^{-1}]$ given explicitly by
+  $\varphi(f, g) = f + zg$ and $\varphi'(f, g) = z^{-1}f + g$.
+  % \begin{align*}
+  %     \varphi(f, g) &= (1, z) \cdot (f, g) & \varphi'(f, g) &=
+  % (z^{-1}, 1) \cdot (f, g) \\
+  %     &= f + zg, & &= z^{-1}f + g.
+  % \end{align*}
+  These assemble to determine a morphism $\Phi: \twist{-1}^{\biprod
+  2} \to \shf{O}$, since the diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {k[z, z^{-1}]^{\biprod2}} & {k[z, z^{-1}]} \\
+      {k[z, z^{-1}]^{\biprod2}} & {k[z, z^{-1}]}
+      \arrow["{\varphi_z}", from=1-1, to=1-2]
+      \arrow["{\times z}"', from=1-1, to=2-1]
+      \arrow[Rightarrow, no head, from=1-2, to=2-2]
+      \arrow["{\varphi'_{z^{-1}}}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  commutes.
+  Both $\varphi$ and $\varphi'$ are surjective module homomorphisms,
+  and it follows that $\Phi$ is surjective.
+  To obtain the Euler exact sequence, it therefore suffices to show
+  that $\twist{-2} \cong \ker(\Phi)$.
+  The map $\psi: 1 \mapsto (-z, 1)$ induces a $k[z]$-module isomorphism
+  \[
+    k[z] \cong \{(-zg, g): g \in k[z]\} = \ker(\varphi),
+  \]
+  and similarly the map $\psi': 1 \mapsto -(1, -z^{-1})$ induces a
+  $k[z^{-1}]$-module isomorphism
+  \[
+    k[z^{-1}] \cong \{(f, -z^{-1}f): f \in k[z^{-1}]\} = \ker(\varphi').
+  \]
+  The introduction of the sign in $\psi'$ ensures that the diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {k[z, z^{-1}]} & {\ker(\varphi)[z^{-1}]} \\
+      {k[z, z^{-1}]} & {\ker(\varphi')[z]}
+      \arrow["{\psi_z}", tail reversed, from=1-1, to=1-2]
+      \arrow["{\times z^2}"', from=1-1, to=2-1]
+      \arrow["{\times z}", from=1-2, to=2-2]
+      \arrow["{\psi'_{z^{-1}}}"', tail reversed, from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  commutes both ways, and so the pair $(\psi, \psi')$ is the desired
+  sheaf isomorphism.
+\end{proof}
+
+Since the tensor product of two modules produces another module over
+commutative rings, we can also reasonably expect to have an
+equivalent notion for quasi-coherent sheaves on $\proj{1}$.
+We once again base our definition on the $R_f$-module isomorphism $(M
+\tensor_R N)_f \cong M_f \tensor_{R_f} N_f$.
+
+\begin{definition}
+  Given quasi-coherent sheaves $\shf{F} = (M, M', \vartheta)$ and
+  $\shf{G} = (N, N', \varrho)$ on $\proj{1}$, the \emph{tensor
+  product} of $\shf{F}$ and $\shf{G}$ is the quasi-coherent sheaf
+  \[
+    \shf{F} \shftensor \shf{G}
+    :=
+    (M \tensor_{k[z]} N, M' \tensor_{k[z^{-1}]} N', \vartheta
+    \tensor_{k[z, z^{-1}]} \varrho).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+Just as it does for modules, $\shftensor$ defines a bifunctor on
+$\QCoh(\proj{1})$ which is right exact in both arguments, though we
+will not explicitly verify this claim.
+As is a recurring theme at this point, tensor products involving
+twisting sheaves are easy to describe.
+
+\begin{proposition}
+  \label{prop_shftensor_of_twists}
+  For $m, n \in \bb{Z}$ we have $\twist{m} \shftensor \twist{n} \cong
+  \twist{m + n}$.
+\end{proposition}
+
+\begin{proof}
+  The most crucial step is to understand why the sheaf $\twist{m +
+  n}$ appears in this isomorphism.
+  But this is just an easy consequence of the algebra of tensors, since
+  \[
+    z^{-m} f \tensor_{k[z, z^{-1}]} z^{-n} g = f \tensor_{k[z,
+    z^{-1}]} z^{-(m + n)} g
+  \]
+  for any $f, g \in k[z, z^{-1}]$, i.e. the descent datum of
+  $\twist{m} \shftensor \twist{n}$ and the map $1 \tensor
+  \vartheta_{m + n}$ are the same.
+  The proof is now clear, as one simply lifts the $R$-module
+  isomorphism $R \tensor_R R \cong R$ given by $r \tensor s \mapsto
+  rs$ to an appropriate coherent sheaf isomorphism.
+\end{proof}
+
+\iffalse
+\begin{corollary}
+  When $n \geq 0$, we have $\twist{n} = \twist{1}^{\tensor n}$ and
+  $\twist{-n} = \twist{-1}^{\tensor n}$.
+\end{corollary}
+\fi
+
+Our interest in the interaction between $\shftensor$ and these
+twisting sheaves stems from the following important class of
+quasi-coherent sheaves motivated by module theory.
+
+\begin{definition}
+  A quasi-coherent sheaf $\shf{F} = (M, M', \vartheta)$ on $\proj{1}$
+  is called \emph{flat} if $M$ and $M'$ are flat modules over $k[z]$
+  and $k[z^{-1}]$ respectively.
+\end{definition}
+
+The flat modules are equivalently those for which the tensor product
+of modules is an exact functor, and we can check that the analogous
+statement naturally holds for a flat quasi-coherent sheaf on
+$\proj{1}$ in our setup.
+
+\begin{proposition}
+  If $\shf{G} = (N, N', \varrho)$ is a flat quasi-coherent sheaf on
+  $\proj{1}$, then the functor $- \shftensor \shf{G}: \QCoh(\proj{1})
+  \to \QCoh(\proj{1})$ is exact.
+\end{proposition}
+
+\begin{proof}
+  Consider a short sequence of sheaves
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {\shf{F}_1} & {\shf{F}_2} & {\shf{F}_3} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow["{\Phi_1}", from=1-2, to=1-3]
+      \arrow["{\Phi_2}", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  with $\Phi_1 = (\varphi_1, \varphi_1')$ and $\Phi_2 = (\varphi_2,
+  \varphi_2')$.
+  It is matter of checking definitions to see that this sequence is
+  exact if and only if the short sequences of modules
+  \[
+    \begin{tikzcd}[cramped]
+      0 & {M_1} & {M_2} & {M_3} & 0, \\
+      0 & {M_1'} & {M_2'} & {M_3'} & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow["{\varphi_1}", from=1-2, to=1-3]
+      \arrow["{\varphi_2}", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+      \arrow[from=2-1, to=2-2]
+      \arrow["{\varphi_1'}"', from=2-2, to=2-3]
+      \arrow["{\varphi_1'}"', from=2-3, to=2-4]
+      \arrow[from=2-4, to=2-5]
+    \end{tikzcd}
+  \]
+  are exact over $k[z]$ and $k[z^{-1}]$ respectively.
+  Since $N$ and $N'$ are flat modules, the claim is now immediate
+  upon tensoring the above short exact sequence of sheaves by $\shf{G}$.
+\end{proof}
+
+The most basic class of flat sheaves are the twisting sheaves, and in
+light of this, we define a new operation on quasi-coherent sheaves.
+
+\begin{definition}
+  Let $n \in \bb{Z}$ and define
+  \[
+    \shf{F}(n) := \shf{F} \shftensor \twist{n}
+  \]
+  for any quasi-coherent sheaf $\shf{F}$ on $\proj{1}$.
+  We call $\shf{F}(n)$ the \emph{degree $n$ twist} of $\shf{F}$, and
+  it induces an exact \emph{twisting functor} $(n): \QCoh(\proj{1})
+  \to \QCoh(\proj{1})$.
+\end{definition}
+
+\begin{proposition}
+  \label{prop_twist_is_autoequiv}
+  Twisting is an autoequivalence of $\QCoh(\proj{1})$.
+\end{proposition}
+
+\begin{proof}
+  Let $n \in \bb{Z}$.
+  The key observation is that by \cref{prop_shftensor_of_twists}, we have
+  \begin{align*}
+    \shf{F}(-n)(n)
+    = (\shf{F} \shftensor \twist{-n}) \shftensor \twist{n}
+    \cong \shf{F} \shftensor \shf{O}
+    = \shf{F}(0),
+  \end{align*}
+  and there is an obvious isomorphism $\shf{F}(0) \cong \shf{F}$.
+  Similarly, $\shf{F}(n)(-n) \cong \shf{F}$.
+  From these facts, it is not difficult to see that the functors
+  $(n)$ and $(-n)$ must be naturally inverse to each other, so the
+  degree $n$ twist is an equivalence of categories.
+\end{proof}
+
+% \begin{lemma}
+%     Let $m \in \zpos$ and $p \in \proj{1}$.
+%     Then for any $n \in \bb{Z}$, we have $\skyscraper{mp}(n) \cong
+% \skyscraper{mp}$.
+% \end{lemma}
+
+% \begin{proof}
+
+% \end{proof}
+
+\iffalse
+Defining a sheaf version of the Hom of two quasi-coherent sheaves on
+$\proj{1}$ is more complicated, since the natural injective map of $R_f$-modules
+\[
+  \Hom_R(M, N)_f \mono \Hom_{R_f}(M_f, N_f)
+\]
+need not be surjective.
+This is an isomorphism whenever $M$ is finitely presented, and over
+Noetherian rings this is equivalent to $M$ being finitely generated.
+To avoid these technical concerns, we will therefore only define the
+sheaf $\shfhom(\shf{F}, \shf{G})$ in the case where $\shf{F}$ is
+coherent, even though this assumption is a bit stronger than needed.
+
+\begin{definition}
+  Given quasi-coherent sheaves $\shf{F} = (M, M', \vartheta)$ and
+  $\shf{G} = (N, N', \varrho)$ on $\proj{1}$, the \emph{sheaf Hom} of
+  $\shf{F}$ and $\shf{G}$ is the quasi-coherent sheaf
+  \[
+    \shfhom(\shf{F}, \shf{G})
+    :=
+    (\Hom_{k[z]}(M, N), \Hom_{k[z^{-1}]}(M', N'), [\vartheta, \varrho]),
+  \]
+  where $[\vartheta, \varrho]$ is the isomorphism sending $f: M_z \to
+  N_z$ to $\varrho \circ f \circ \vartheta^{-1}: M'_{z^{-1}} \to N'_{z^{-1}}$.
+\end{definition}
+
+Once again, we note without proof that this is a bifunctor on
+$\QCoh(\proj{1})$ which is contravariant left exact in its first
+argument and covariant left exact in the other.
+By construction, the global sections of sheaf Hom also recover the
+usual Hom, i.e.
+\[
+  \sections{\proj{1}}{\shfhom(\shf{F}, \shf{G})} = \Hom(\shf{F}, \shf{G}).
+\]
+A convenient use for the sheaf Hom is in giving a notion of duality.
+
+\begin{definition}
+  For any quasi-coherent sheaf $\shf{F}$ on $\proj{1}$, we define the
+  \emph{dual sheaf} of $\shf{F}$ to be $\dual{\shf{F}} :=
+  \shfhom(\shf{F}, \shf{O})$.
+\end{definition}
+
+This is a sheaf-theoretic incarnation of the dual of an $R$-module
+$\dual{M} = \Hom_R(M, R)$, and indeed it is not difficult to see that
+the $R$-module isomorphism
+\[
+  \dual{M} \tensor_R M \cong R, \qquad f \tensor m \mapsto f(m)
+\]
+lifts to a quasi-coherent sheaf isomorphism $\dual{\shf{F}}
+\shftensor \shf{F} \cong \shf{O}$.
+
+\iffalse
+The sheaf Hom and tensor product give additional structure to $\Pic$,
+the set of isomorphism classes of line bundles on $\proj{1}$, and is
+of relevance to the theory of \emph{divisors} on a variety.
+It is clear that the tensor product of line bundles is a line bundle,
+and also that $\shf{L} \shftensor \shf{O} \cong \shf{L}$ for any line
+bundle $\shf{L}$.
+We define the \emph{dual bundle} of $\shf{L}$ by $\dual{\shf{L}} :=
+\shfhom(\shf{L}, \shf{O})$, and one can check that the $R$-module isomorphism
+\[
+  \Hom_R(M, R) \tensor_R M \cong R, \qquad f \tensor m \mapsto f(m)
+\]
+lifts to an isomorphism $\dual{\shf{L}} \shftensor \shf{L} \cong \shf{O}$.
+Thus $\Pic$ is an abelian group under $\shftensor$ with identity
+element $\shf{O}$, called the \emph{Picard group} of $\proj{1}$.
+The dual of a line bundle is by construction its inverse in this
+group, which is why line bundles are also called invertible sheaves.
+By \cref{prop_shftensor_of_twists}, we have $\dual{\twist{n}} =
+\twist{-n}$, and it turns out that $\Pic$ is generated by the line
+bundle $\twist{1}$, i.e. $\Pic \cong \bb{Z}$.
+This is a non-trivial statement, and is proven in a more formal
+setting in \cite[Proposition~II.6.17]{hartshorne}.
+\fi
+
+\fi

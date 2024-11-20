@@ -1,0 +1,495 @@
+\section{Total derived functors}
+\label{sect_derfunc}
+
+Aside from allowing one to identify an object with all of its
+resolutions, another tangible sense in which derived categories are
+`better' for homological algebra is their relationship with the
+classical derived functors introduced in \cref{sect_classical_derfunc}.
+In this section, we will explore this and show that, in certain
+cases, we may consolidate these functors into one \emph{total derived
+functor} between derived categories.
+\iffalse
+For our purposes, it will be sufficient only to go far enough to see
+what happens for Ext and Tor.
+\fi
+
+To begin, we shall consider the obstructions to an additive functor
+$F: \abcat{A} \to \abcat{B}$ between abelian categories inducing a
+functor between derived categories.
+Any such $F$ extends to an additive functor $\Ch{F}: \Ch{\abcat{A}}
+\to \Ch{\abcat{B}}$, and thanks to
+\cref{lemma_add_func_preserves_homotopy_and_cones}, it follows that
+$\Ch{F}$ extends further to an additive, exact triangulated functor
+$\homcat{F}: \homcat{\abcat{A}} \to \homcat{\abcat{B}}$ in the obvious way.
+As before, we will commit a slight abuse of notation by conflating
+this functor with $F$.
+The difficulties begin when we try to extend $F$ to a functor
+$\dercat{\abcat{A}} \to \dercat{\abcat{B}}$, that is, to find a
+functor $G$ which fits into a commutative diagram
+\[
+  \begin{tikzcd}
+    \homcat{\abcat{A}} & \homcat{\abcat{B}} \\
+    \dercat{\abcat{A}} & \dercat{\abcat{B}}.
+    \arrow["{\homcat{F}}", from=1-1, to=1-2]
+    \arrow["{Q_{\abcat{A}}}"', from=1-1, to=2-1]
+    \arrow["{Q_{\abcat{B}}}", from=1-2, to=2-2]
+    \arrow["{G}"', dashed, from=2-1, to=2-2]
+  \end{tikzcd}
+\]
+If we are fortunate enough that $F$ preserves quasi-isomorphisms,
+then this is possible:
+the composite functor $Q_{\abcat{B}} \circ F: \homcat{\abcat{A}} \to
+\dercat{\abcat{B}}$ also preserves quasi-isomorphisms, so the
+universal property of $Q_{\abcat{A}}$ ensures that such a functor $G$ exists.
+By \cref{cor_quasi_isom_has_acyclic_cone} and
+\cref{lemma_add_func_preserves_homotopy_and_cones}, we indeed find
+ourselves in this situation when $F$ is exact, and moreover it turns
+out that $G$ will be an exact triangulated functor.
+Under more practical assumptions, we cannot expect that this
+na\"{i}ve construction will go through, nor that such a simple
+commutative diagram will characterise the resulting functor.
+
+In light of our partial progress, we may as well assume we are given
+an exact triangulated functor $F: \homcat{\abcat{A}} \to
+\homcat{\abcat{B}}$ as a starting point, which subsumes the typical
+case of a left and right exact functor defined at the level of
+abelian categories.
+Going forward, we will also always need to impose some kind of
+boundedness condition on input complexes.
+
+\begin{definition}
+  \label{def_total_derfunc}
+  Let $F: \homcat[*]{\abcat{A}} \to \homcat{\abcat{B}}$ be an exact
+  triangulated functor.
+  A \emph{total right derived functor} is an exact triangulated
+  functor $\rightderfunc{F}: \dercat[*]{\abcat{A}} \to
+  \dercat{\abcat{B}}$ equipped with a natural transformation $\xi:
+  Q_{\mathcal{B}} \circ F \Rightarrow \rightderfunc{F} \circ
+  Q_{\mathcal{A}}^*$ satisfying the following universal property:
+  if $G: \dercat[*]{\abcat{A}} \to \dercat{\abcat{B}}$ is another
+  exact triangulated functor, then any natural transformation $\zeta:
+  Q_{\mathcal{B}} \circ F \Rightarrow G \circ Q_{\mathcal{A}}^*$
+  factors uniquely through $\xi$.
+  Explicitly, this means that there is a unique natural
+  transformation $\eta: \rightderfunc{F} \Rightarrow G$ such that
+  \[
+    \zeta_{\cochaincomp{A}}
+    = (\eta \circ Q_{\abcat{A}}^*)_{\cochaincomp{A}} \circ \xi_{\cochaincomp{A}}
+  \]
+  for each $\cochaincomp{A} \in \homcat[*]{\abcat{A}}$, or
+  equivalently that the functor diagram
+  \[
+    \begin{tikzcd}
+      {Q_{\abcat{B}} \circ F} & {G \circ Q_{\abcat{A}}^*}. \\
+      {\rightderfunc{F} \circ Q_{\abcat{A}}^*} & {}
+      \arrow["\zeta", Rightarrow, from=1-1, to=1-2]
+      \arrow["\xi"', Rightarrow, from=1-1, to=2-1]
+      \arrow["{\eta \, \circ \, Q_{\abcat{A}}^*}"', Rightarrow,
+      from=2-1, to=1-2]
+    \end{tikzcd}
+  \]
+  commutes.
+  Dually, a \emph{total left derived functor} of $F$ is an exact
+  triangulated functor $\leftderfunc{F}: \dercat[*]{\abcat{A}} \to
+  \dercat{\abcat{B}}$ and a natural transformation $\xi:
+  \leftderfunc{F} \circ Q_{\mathcal{A}}^* \nattrans Q_{\mathcal{B}}
+  \circ F$ satisfying the universal property that for any exact
+  triangulated functor $G: \dercat[*]{\abcat{A}} \to
+  \dercat{\abcat{B}}$, any natural transformation $\zeta: G \circ
+  Q_{\mathcal{A}}^* \nattrans Q_{\mathcal{B}} \circ F$ factors through $\xi$.
+\end{definition}
+
+In the case where we are initially only given an additive functor $F:
+\abcat{A} \to \abcat{B}$, we will also write $\rightderfunc{F}$ and
+$\leftderfunc{F}$ for the total derived functors of its induced exact
+triangulated functor $\homcat[*]{F}: \homcat[*]{\abcat{A}} \to
+\homcat{\abcat{B}}$ as above.
+
+Once again, this is a non-constructive definition.
+At the very least, the universal property implies that if a total
+left or right derived functor of $F$ exists, it is unique up to
+natural isomorphism.
+In the presence of stronger assumptions, it turns out that there is a
+principled way to go about actually constructing these functors.
+
+\begin{proposition}
+  \label{prop_exists_total_derfunc}
+  Let $F: \homcat[+]{\abcat{A}} \to \homcat{\abcat{B}}$ be an exact
+  triangulated functor, and suppose that $\abcat{A}$ has enough injectives.
+  Fix a quasi-inverse $U^+$ of the equivalence $T^+$ in
+  \cref{prop_bounded_below_dercat_equiv}.
+  Then the composite functor
+  \[
+    \begin{tikzcd}
+      {\rightderfunc[+]{F}: {\dercat[+]{\abcat{A}}}} &
+      {\homcat[+]{\abcat{I}_{\abcat{A}}}} & {\homcat[+]{\abcat{B}}} &
+      {\dercat[+]{\abcat{B}}}
+      \arrow["U^+", from=1-1, to=1-2]
+      \arrow["F", from=1-2, to=1-3]
+      \arrow["{\dercatlocln[+]{\abcat{B}}}", from=1-3, to=1-4]
+    \end{tikzcd}
+  \]
+  is a total right derived functor of $F$ on ${\dercat[+]{\abcat{A}}}$.
+  \iffalse
+  Dually, given an exact triangulated functor $F:
+  \homcat[-]{\abcat{A}} \to \homcat{\abcat{B}}$ and enough
+  projectives in $\abcat{A}$, the composite functor
+  \[
+    \begin{tikzcd}
+      {\leftderfunc[-]{F}: {\dercat[-]{\abcat{A}}}} &
+      {\homcat[-]{\abcat{P}_{\abcat{A}}}} & {\homcat[-]{\abcat{B}}} &
+      {\dercat[-]{\abcat{B}}}
+      \arrow["\equiv", from=1-1, to=1-2]
+      \arrow["F", from=1-2, to=1-3]
+      \arrow["{\dercatlocln[-]{\abcat{B}}}", from=1-3, to=1-4]
+    \end{tikzcd}
+  \]
+  is a total left derived functor of $F$.
+  \fi
+\end{proposition}
+
+\begin{proof}
+  The most important data for our purposes is the functor
+  $\rightderfunc[+]{F}$ itself, but it technically remains to specify
+  a natural transformation $\xi: \dercatlocln[+]{\abcat{A}} \circ F
+  \nattrans (\dercatlocln[+]{\abcat{B}} \circ F \circ U^+) \circ
+  \dercatlocln[+]{\abcat{A}}$.
+  We defer the details of this to \cite[Theorem~10.5.6]{weibel}.
+\end{proof}
+
+\begin{corollary}
+  \label{cor_derfunc_applied_to_proj_inj_complexes}
+  Retain the hypotheses of \cref{prop_exists_total_derfunc}.
+  If $\cochaincomp{I}$ is a bounded below complex of injectives, then
+  $\rightderfunc[+]{F}(\cochaincomp{I}) \cong
+  (\dercatlocln[+]{\abcat{B}} \circ F)(\cochaincomp{I})$.
+\end{corollary}
+
+The dual statements for total left derived functors naturally hold.
+This construction provides two great technical advantages over the
+classical approach to derived functors.
+The first that we have already mentioned is that in the right
+circumstances, the total derived functors capture the ensemble of
+classical derived functors from \cref{sect_classical_derfunc}.
+In fact, some authors (e.g. \cite{huybrechts}) take the following as
+definitions.
+
+\begin{proposition}
+  \label{prop_cohomology_of_totderfunc}
+  Suppose that $F: \abcat{A} \to \abcat{B}$ is additive.
+  Then under suitable conditions on $F$ and $\abcat{A}$ ensuring that
+  $\rightderfunc[+]{F}$ or $\leftderfunc[-]{F}$ exist, the $i$th
+  classical derived functors of $F$ at an object $A \in \abcat{A}$
+  can be recovered as the cohomology
+  \[
+    R^iF(A) \cong H^i \rightderfunc[+]{F}(A)
+    \mathand
+    L_iF(A) \cong H^{-i} \leftderfunc[-]{F}(A)
+  \]
+  when $F$ is left or right exact respectively.
+  Naturally, one first embeds objects from $\abcat{A}$ into the
+  derived category using the fully faithful functor described in
+  \cref{sect_localising_homcat}.
+\end{proposition}
+
+\begin{proof}
+  Given an injective resolution $A \to \cochaincomp{I}$, we have $A
+  \cong \cochaincomp{I}$ as objects in ${\dercat[+]{\abcat{A}}}$.
+  Then by \cref{cor_derfunc_applied_to_proj_inj_complexes} and the
+  fact that $\dercatlocln[+]{\abcat{B}}$ is the identity on objects, one has
+  \[
+    H^i \rightderfunc[+]{F}(A)
+    \cong H^i \rightderfunc[+]{F}(\cochaincomp{I})
+    \cong H^i (F(\cochaincomp{I}))
+    = R^i F(A).
+  \]
+  One argues similarly for the claim in the left derived functor case.
+\end{proof}
+
+The other technical advantage is that in suitable situations, derived
+functors at the level of derived categories may be composed in a far
+simpler manner than derived functors at the level of abelian
+categories, which normally requires the use of \emph{spectral sequences}.
+The following result shows the necessary hypotheses for composing
+total right derived functors, but the dual assertion for total left
+derived functors naturally holds.
+
+\begin{proposition}
+  \label{prop_total_derfunc_comp}
+  Suppose that $F: \homcat[+]{\abcat{A}} \to \homcat[+]{\abcat{B}}$
+  and $G: \homcat[+]{\abcat{B}} \to \homcat[+]{\abcat{C}}$ are exact
+  triangulated functors for abelian categories $\abcat{A}$,
+  $\abcat{B}$ and $\abcat{C}$.
+  Let $\cat{I}_{\abcat{A}}$ and $\cat{I}_{\abcat{B}}$ be the
+  subcategories of injective objects in $\abcat{A}$ and $\abcat{B}$.
+  Then if $\abcat{A}$ and $\abcat{B}$ have enough injectives and $F$
+  sends $\abcat{I}_{\abcat{A}}$ into $\cat{I}_{\abcat{B}}$, there is
+  a natural isomorphism $\rightderfunc[+](G \circ F) \nattrans
+  \rightderfunc[+]{G} \circ \rightderfunc[+]{F}$.
+\end{proposition}
+
+\begin{proof}
+  Let $\xi_F$, $\xi_G$ and $\xi_{G \circ F}$ be the natural
+  transformations associated to the derived functors
+  $\rightderfunc[+]{F}$, $\rightderfunc[+]{G}$ and
+  $\rightderfunc[+]{(G \circ F)}$ respectively.
+  The commutative functor diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {Q_{\abcat{C}}^+ \circ G \circ F} && {\rightderfunc[+]{G} \circ
+      Q_{\abcat{B}}^+ \circ F} \\
+      \\
+      {\rightderfunc[+]{(G \circ F)} \circ Q_{\abcat{A}}^+} &&
+      {(\rightderfunc[+]{G}) \circ (\rightderfunc[+]{F}) \circ Q_{\abcat{A}}^+},
+      \arrow["{\xi_G \, \circ \, F}", Rightarrow, from=1-1, to=1-3]
+      \arrow["{\xi_{G \circ F}}"', Rightarrow, from=1-1, to=3-1]
+      \arrow["{\rightderfunc[+]{G} \, \circ \, \xi_F}", Rightarrow,
+      from=1-3, to=3-3]
+      \arrow["{\eta \, \circ \, Q_{\abcat{A}}^+}"', Rightarrow,
+      dashed, from=3-1, to=3-3]
+    \end{tikzcd}
+  \]
+  is completed by a natural transformation $\eta: \rightderfunc[+]{(G
+  \circ F)} \nattrans (\rightderfunc[+]{G}) \circ
+  (\rightderfunc[+]{F})$ thanks to the universal property of
+  $\rightderfunc[+]{(G \circ F)}$.
+  Now, take any $\cochaincomp{A} \in \dercat[+]{\abcat{A}}$ and use
+  \cref{prop_bounded_below_dercat_equiv} to find a complex of
+  injectives $\cochaincomp{I} \in \homcat[+]{\cat{I}_{\abcat{A}}}$
+  isomorphic to $\cochaincomp{A}$ in $\dercat[+]{\abcat{A}}$.
+  That the component $(\eta \circ Q_{\abcat{A}}^+)_{\cochaincomp{I}}$
+  is an isomorphism follows from the calculation
+  \begin{align*}
+    \rightderfunc[+]{(G \circ F)(\dercatlocln[+]{\abcat{A}}(\cochaincomp{I}))}
+    &= (\dercatlocln[+]{\abcat{C}} \circ G \circ F)(\cochaincomp{I}) \\
+    &\cong (\rightderfunc[+]{G} \circ \dercatlocln[+]{\abcat{B}}
+    \circ F)(\cochaincomp{I}) \\
+    &\cong (\rightderfunc[+]{G} \circ
+    \rightderfunc[+]{F})(\dercatlocln[+]{\abcat{A}}(\cochaincomp{I}))
+  \end{align*}
+  by \cref{cor_derfunc_applied_to_proj_inj_complexes}.
+  The component $\eta_{\cochaincomp{A}}$ factors through the
+  isomorphisms $\cochaincomp{A} \cong \cochaincomp{I}$ and $(\eta
+  \circ Q_{\abcat{A}}^+)_{\cochaincomp{I}}$, so we conclude that
+  $\eta_{\cochaincomp{A}}$ is also an isomorphism.
+\end{proof}
+
+\begin{remark}
+  \label{rem_total_derfunc_computing_acyclics}
+  Similar to \cref{rem_computing_with_F_acyclics}, the total derived
+  functor of an exact triangulated functor $F$ can also be
+  constructed instead using complexes of $F$-acyclic objects
+  $\cochaincomp{X}$, i.e. such that $H^i(F(\cochaincomp{X})) = 0$ for all $i$.
+  As usual, complexes of projectives or injectives are $F$-acyclic
+  for every choice of $F$.
+  Assuming that every object of $\homcat[*]{\abcat{A}}$ is
+  quasi-isomorphic to some $F$-acyclic complex, one can modify the
+  proofs of the preceding results so that injective assumptions can
+  be suitably replaced with $F$-acyclic assumptions.
+  In the statement of \cref{prop_total_derfunc_comp} in particular,
+  it is sufficient that $F$ sends complexes of $F$-acyclics to $G$-acyclics.
+\end{remark}
+
+We now turn our attention to upgrading Ext and Tor to total derived functors.
+It is perfectly valid to take derived functors of the usual Hom and
+tensor product functors directly, but it would be most sensible to
+work with a more general variant of these functors.
+To see why, recall that $\Hom_{\abcat{A}}$ is a covariant bifunctor
+\[
+  \Hom_{\abcat{A}}(-, -): \op{\abcat{A}} \times \abcat{A} \to \Ab
+\]
+and notice that we may think of the induced triangulated exact
+functor of $\Hom_{\abcat{A}}(A, -)$ on the homotopy category
+$\homcat[+]{\abcat{A}}$ also as a covariant bifunctor
+\[
+  \Hom_{\abcat{A}}(-, -): \op{\abcat{A}} \times \homcat[+]{\abcat{A}}
+  \to \homcat{\Ab}.
+\]
+A similar observation holds for the tensor product functor.
+We are thus compelled us to define variants of these functors that
+instead take complexes in \emph{both} arguments, and which of course
+also induces a triangulated exact functor on $\homcat[*]{\abcat{A}}$.
+We will do this by means of constructing an appropriate double
+complex and then totalising it.
+
+\begin{definition}
+  Let $\cochaincomp{A}$ and $\cochaincomp{B}$ be cochain complexes in
+  $\abcat{A}$.
+  Consider the double complex $\cochainbicomp{C}$ of abelian groups defined by
+  \[
+    C^{p, q} = \Hom_{\abcat{A}}(A^{-p}, B^q),
+  \]
+  with horizontal and vertical differentials defined for each $f:
+  A^{-p} \to B^q$ by
+  \[
+    d_h^{p, q}(f) = d_B \circ f
+    \mathand
+    d_v^{p, q}(f) = (-1)^{p + q + 1} f \circ d_A.
+  \]
+  The totalisation $\Hom^{\bullet}_{\abcat{A}}(\cochaincomp{A},
+  \cochaincomp{B}) = \totprodcomp{\cochainbicomp{C}}$ is the
+  \emph{internal Hom} of $\cochaincomp{A}$ and $\cochaincomp{B}$.
+\end{definition}
+
+The sign in $d_v$ is convenient, because with it the cohomology of
+internal Hom classifies cochain maps up to homotopy equivalence and shifts.
+That is,
+\[
+  H^n(\Hom^{\bullet}_{\abcat{A}}(\cochaincomp{A}, \cochaincomp{B}))
+  \cong
+  \Hom_{\dercat{\abcat{A}}}(\cochaincomp{A}, \cochaincomp{B}[n]).
+\]
+This is explained in more detail in \cite[Section~10.7]{weibel}.
+Moreover, since the functor $\Hom_{\abcat{A}}(-, B)$ is contravariant,
+% and commutes with products of $\abcat{A}$, <-- wtf does this mean?
+it makes sense for the internal Hom to mimic the same contravariance
+in first argument, which here will turn a cochain complex into a chain complex.
+As a consequence, one must invert the degree of $\cochaincomp{A}$.
+In any case, we obtain a functor which induces an exact triangulated
+functor on the homotopy category, so we may take the total derived functor.
+
+\begin{definition}
+  Suppose that $\abcat{A}$ has enough injectives, and fix a complex
+  $\cochaincomp{A}$ in $\abcat{A}$.
+  The \emph{derived Hom functor} is the total right derived functor
+  \[
+    \derhom_{\abcat{A}}(\cochaincomp{A}, \cochaincomp{B})
+    := \rightderfunc[+]{\Hom^{\bullet}_{\abcat{A}}(\cochaincomp{A},
+    -)}(\cochaincomp{B}).
+  \]
+  \vspace{-24pt}
+\end{definition}
+
+We now repeat the above for the tensor product functor.
+
+\begin{definition}
+  Let $\cochaincomp{M}$ and $\cochaincomp{N}$ be cochain complexes of
+  right and left $R$-modules respectively.
+  Consider the double complex $\cochainbicomp{C}$ of abelian groups defined by
+  \[
+    C^{p, q} = M^{p} \tensor_R N^{q},
+  \]
+  with horizontal and vertical differentials defined for each $m
+  \tensor n \in M^{p} \tensor_R N^{q}$ by
+  \[
+    d_h^{p, q}(m \tensor n) = d_M(m) \tensor n
+    \mathand
+    d_v^{p, q}(m \tensor n) = (-1)^p m \tensor d_N(n).
+  \]
+  The totalisation $\cochaincomp{M} \tensor_R \cochaincomp{N} =
+  \totsumcomp{\cochainbicomp{C}}$ is the \emph{internal tensor
+  product} of $\cochaincomp{M}$ and $\cochaincomp{N}$.
+\end{definition}
+
+\begin{definition}
+  Let $\cochaincomp{M}$ be a complex of right $R$-modules.
+  The \emph{derived tensor product functor} is the total left derived
+  functor $\dertensor{R}{\cochaincomp{M}}{\cochaincomp{N}} :=
+  \leftderfunc[-]{(\cochaincomp{M} \tensor_R -)}(\cochaincomp{N})$.
+\end{definition}
+
+\begin{remark}
+  The cohomology of the derived Hom and tensor product functors as we
+  have now defined them obviously do not recover the usual Ext and
+  Tor groups, but rather the \emph{hyperext} and \emph{hypertor}
+  groups of the \emph{hyper-derived functors} of $\Hom_{\abcat{A}}$
+  and $\tensor_R$.
+  These are a notion that sits between classical and total derived
+  functors that are unnecessary for our purposes, so we defer further
+  discussion to \cite[Chapter~5]{weibel}.
+\end{remark}
+
+To close out this chapter, we show that the usual tensor-hom
+adjunction has a generalisation to the derived category, which is key
+to giving the derived equivalence we seek.
+As always, we will assume a commutative ring $R$, in which case both
+$\Hom_R(M, N)$ and $M \otimes_R N$ have the structure of an $R$-module.
+It follows that $\derhom$ and $\dertensorsymb_R$ map into $\dercat{\Mod{R}}$.
+For simplicity, we will write $\dercat[*]{R} = \dercat[*]{\Mod{R}}$.
+
+\begin{theorem}[Derived tensor-hom adjunction]
+  Fix a complex $\cochaincomp{B} \in \dercat[-]{R}$.
+  Then for any $\cochaincomp{A} \in \dercat[-]{R}$ and
+  $\cochaincomp{C} \in \dercat[+]{R}$, there is a natural isomorphism
+  \[
+    \Hom_{\dercat{R}}(\cochaincomp{A}, \derhom(\cochaincomp{B},
+    \cochaincomp{C}))
+    \cong
+    \Hom_{\dercat{R}}(\dertensor{R}{\cochaincomp{A}}{\cochaincomp{B}},
+    \cochaincomp{C}).
+  \]
+  \vspace{-24pt}
+\end{theorem}
+
+\begin{proof}
+  We claim instead that there is a natural isomorphism
+  \[
+    \derhom(\cochaincomp{A}, \derhom(\cochaincomp{B}, \cochaincomp{C}))
+    \cong
+    \derhom(\dertensor{R}{\cochaincomp{A}}{\cochaincomp{B}}, \cochaincomp{C}),
+    \tag{$\dagger$}
+  \]
+  as this yields the original claim upon taking $H^0$.
+  For complexes concentrated in degree 0 (i.e. for $R$-modules $L$,
+  $M$ and $N$), one can check after unfolding the definitions of
+  $\derhom$ and $\dertensorsymb_R$ that this degenerates to the usual
+  tensor-hom adjoint isomorphism
+  \[
+    \Hom(L, \Hom_{R}(M, N)) \cong \Hom(L \tensor_R M, N), \tag{$\star$}
+  \]
+  so we now seek to use \cref{prop_total_derfunc_comp} to upgrade
+  this to the derived category.
+  Since we are working in the derived category, it suffices to assume
+  that $\cochaincomp{A}$ and $\cochaincomp{C}$ are complexes of
+  projectives and injectives respectively.
+  Consider the functors
+  \[
+    \InnerHom(\cochaincomp{A}, \InnerHom(\cochaincomp{B}, \cochaincomp{C}))
+    \mathand
+    \InnerHom(\cochaincomp{A} \tensor_R \cochaincomp{B}, \cochaincomp{C})
+  \]
+  in $\cochaincomp{B}$ in the homotopy category.
+  The left-hand side is the composite of the functors
+  \[
+    F_1(\cochaincomp{B}) = \InnerHom(\cochaincomp{B}, \cochaincomp{C})
+    \mathand
+    G_1(\cochaincomp{X}) = \InnerHom(\cochaincomp{A}, \cochaincomp{X})
+  \]
+  while the right-hand side is the composite of
+  \[
+    F_2(\cochaincomp{B}) = \cochaincomp{A} \tensor_R \cochaincomp{B}
+    \mathand
+    G_2(\cochaincomp{X}) = \InnerHom(\cochaincomp{X}, \cochaincomp{C}).
+  \]
+  Since each cochain of $\cochaincomp{A}$ is projective, one can
+  check that $F_1$ sends complexes of projectives (i.e. $F_1$-acyclic
+  complexes) to complexes of injectives (i.e. $G_1$-acyclic complexes).
+  Considering \cref{rem_total_derfunc_computing_acyclics}, we may
+  apply \cref{prop_total_derfunc_comp} to obtain the natural
+  isomorphism $(\rightderfunc{G_1} \circ
+  \rightderfunc{F_1})(\cochaincomp{B}) \cong \rightderfunc{(G_1 \circ
+  F_1)}(\cochaincomp{B})$, which is to say that
+  \[
+    \derhom(\cochaincomp{A}, \derhom(\cochaincomp{B}, \cochaincomp{C}))
+    \cong
+    \rightderfunc{(\InnerHom(\cochaincomp{A}, \InnerHom(-,
+    \cochaincomp{C})))}(\cochaincomp{B}).
+  \]
+  Similarly, one can check that $F_2$ sends complexes of projectives
+  (i.e. $F_2$-acyclic complexes) to complexes of projectives (i.e.
+  $G_2$-acyclic complexes).
+  Examining the proof of \cref{rem_total_derfunc_computing_acyclics}
+  more closely, we see that the conclusion still holds even for the
+  mixed total derived functors $(\rightderfunc{G_2} \circ
+  \leftderfunc{F_2})(\cochaincomp{B}) \cong \rightderfunc{(G_2 \circ
+  F_2)}(\cochaincomp{B})$, which is to say that
+  \[
+    \derhom(\dertensor{R}{\cochaincomp{A}}{\cochaincomp{B}}, \cochaincomp{C})
+    \cong
+    \rightderfunc{(\InnerHom(\cochaincomp{A} \tensor_R -,
+    \cochaincomp{C}))}(\cochaincomp{B}).
+  \]
+  By taking appropriate injective and projective resolutions,
+  ($\star$) therefore shows that both sides of ($\dagger$) are
+  naturally isomorphic to the same total right derived functor.
+\end{proof}

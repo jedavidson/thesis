@@ -1,0 +1,298 @@
+\section{Additive structures on categories}
+
+Using $\Mod{R}$ as our prototype, we will identify and develop some
+suitable analogues of these aforementioned essential properties.
+We begin with an observation about its morphisms.
+For any pair of $R$-modules $M$ and $N$, the set $\Hom_R(M, N)$ is
+not only a set but also an abelian group, since we are able to add
+module homomorphisms together pointwise.
+This addition also interacts bilinearly with composition, i.e. we have
+\[
+  f(g + h) = fg + fh
+  \mathand
+  (f + g)h = fh + gh
+\]
+for any compatible module homomorphisms $f$, $g$ and $h$.
+If $R$ is commutative, then each hom-set has even more structure,
+becoming itself an $R$-module with the usual action.
+Since similar structure is found on the hom-sets of other, more
+exotic categories and makes manipulating morphisms far more pleasant,
+this is a reasonable starting point.
+
+\begin{definition}
+  A category $\cat{A}$ is said to be \emph{preadditive} if every
+  hom-set of $\cat{A}$ is an abelian group and the composition of
+  morphisms is bilinear with respect to addition.
+  A preadditive category is \emph{$R$-linear} if every hom-set is
+  also a module over some ring $R$.
+\end{definition}
+
+It may also be possible to multiply and add objects themselves, which
+for $R$-modules is achieved by taking direct products and sums.
+Moreover, these two notions coincide if one only considers finite
+collections of modules.
+There is also a zero module $0$ which, among other things, satisfies
+$M \oplus 0 \cong M$ for any $R$-module $M$.
+Phrased in the language of category theory, the direct product and
+sum constructions are the product and coproduct of the category
+$\Mod{R}$ respectively, and the zero module is its zero object.
+
+\begin{definition}
+  \label{def_additive_cat}
+  A preadditive category $\cat{A}$ is said to be \emph{additive} if
+  has a zero object $0 \in \cat{A}$ and every pair of objects in
+  $\cat{A}$ has a product in $\cat{A}$.
+\end{definition}
+
+\begin{proposition}[{\cite[Theorem~VIII.2.2]{category_theory_for_the_working_mathematician}}]
+  In an additive category, the product of two objects is also a
+  coproduct of those objects, and hence a biproduct.
+\end{proposition}
+
+If a category has all binary biproducts, then it must also have all
+finite biproducts, and the existence of a zero object allows one to
+make sense of empty biproducts in $\abcat{A}$ too.
+This gives a slightly more precise working definition of additive categories.
+We shall refer to finite biproducts in $\abcat{A}$ as direct sums and
+use the same notation as for modules.
+
+Many common functors one works with in practice interact with this
+additive structure nicely.
+The most important examples in module theory, the Hom and tensor
+product functors, are group homomorphisms on hom-sets and preserve direct sums.
+This motivates the following class of functors which appear
+throughout \cref{chap_homological} and \cref{chap_derived_categories}.
+
+\begin{definition}
+  A functor $F: \cat{A} \to \cat{B}$ between additive categories is
+  said to be \emph{additive} if it is a group homomorphism on hom-sets.
+\end{definition}
+
+\begin{lemma}[{\cite[Proposition~VIII.2.4]{category_theory_for_the_working_mathematician}}]
+  \label{lemma_additive_func_commutes_with_dirsum}
+  A functor $F: \abcat{A} \to \abcat{B}$ is additive if and only if
+  it commutes with direct sums, i.e. $F(A \biprod B) \cong F(A)
+  \biprod F(B)$ for any $A, \, B \in \cat{A}$.
+\end{lemma}
+
+The final properties left to look at are those which enable exact
+sequences to be defined.
+Recall that any module homomorphism $f: M \to N$ has a kernel and
+image, as well as a cokernel and coimage defined by the quotient modules
+\[
+  \coker(f) := \quot{N}{\im(f)}
+  \mathand
+  \coim(f) := \quot{M}{\ker(f)}.
+\]
+By the first isomorphism theorem, there is a canonical isomorphism
+$\coim(f) \cong \im(f)$, and hence a commutative diagram
+\begin{equation*}
+  \label{eq_factoring_of_module_hom}
+  \begin{tikzcd}[cramped]
+    {\ker(f)} & M & N & {\coker(f)}. \\
+    & {\coim(f)} & {\im(f)}
+    \arrow[hook, from=1-1, to=1-2]
+    \arrow["f", from=1-2, to=1-3]
+    \arrow[two heads, from=1-2, to=2-2]
+    \arrow[two heads, from=1-3, to=1-4]
+    \arrow["\cong", from=2-2, to=2-3]
+    \arrow[hook, from=2-3, to=1-3]
+  \end{tikzcd}
+\end{equation*}
+In particular, we observe that $f$ factors through its image and coimage.
+We generalise this by way of the following pair of definitions.
+
+\begin{definition}
+  An additive category $\abcat{A}$ is said to be \emph{preabelian} if
+  any morphism in $\abcat{A}$ has a kernel and a cokernel in $\abcat{A}$.
+  We say that $\abcat{A}$ is \emph{abelian} if every monic in
+  $\abcat{A}$ (resp. epic) is \emph{normal}, i.e. is the kernel
+  (resp. cokernel) of a morphism in $\abcat{A}$.
+\end{definition}
+
+Using the universal properties of kernels and cokernels, the abelian
+category condition may be refined to the more precise statement that
+any monic is the kernel of its cokernel, and dually any epic is the
+cokernel of its kernel.
+Applying the categorical definitions rather than the usual
+module-theoretic ones, one may verify that these statements are true
+in $\Mod{R}$, which provides some a posteriori justification for
+defining abelian categories in this way.
+
+\iffalse
+We can refine (AB2) to a more precise statement.
+Given a monic $m$ in $\abcat{A}$, we have $m = \ker(f)$ for some morphism $f$.
+Since $f m = 0$, $f$ factors through $\coker(m)$ by the universal
+property of cokernels.
+By definition $\coker(m) \circ m = 0$, and for any other morphism
+$g$ satisfying $\coker(m) \circ g = 0$ it follows that $fg = 0$,
+% \[
+%     f g = f' \circ \coker(m) \circ g = 0,
+% \]
+so $g$ factors through $m$ by the universal property of kernels.
+This shows that in fact $m = \ker(\coker(m))$, and by duality $e =
+\coker(\ker(e))$ for any epic $e$ in $\abcat{A}$.
+\fi
+
+\iffalse
+Given a monic $k: K \to A$ in $\abcat{A}$, let $(C, c)$ be a
+cokernel of $k$ and suppose that $(K, k)$ is a kernel of the
+morphism $f: A \to B$.
+Then $fk = 0$ by construction, so $f$ factors through a unique
+morphism $f': C \to B$ by the universal property of $(C, c)$.
+We also have by construction that $ck = 0$, and for any other
+morphism $g: D \to A$ satisfying $cg = 0$ it follows that $fg =
+f'cg = 0$, so $g$ factors through a unique morphism $g': D \to K$
+by the universal property of $(K, k)$.
+Thus $(K, k)$ is also a kernel of $(C, c)$, i.e. any monic in
+$\abcat{A}$ is a kernel of its cokernel.
+This argument dualises to show also that any epic in $\abcat{A}$ is
+a cokernel of its kernel.
+
+As similar kernels and cokernels appear in relation to any morphism
+in a (pre)abelian category, we give them familiar names.
+\fi
+
+Let us work towards developing a more convincing intuition.
+In studying morphisms of preabelian categories, kernels of cokernels
+and cokernels of kernels appear already, making for good analogues of
+the image and coimage.
+Once again, we leave it to the reader to check that these agree with
+the module-theoretic concepts defined above.
+
+\begin{definition}
+  Let $f$ be a morphism in a preabelian category $\abcat{A}$.
+  Then
+  \[
+    \im(f) := \ker(\coker(f))
+    \mathand
+    \coim(f) := \coker(\ker(f))
+  \]
+  are the categorical \emph{image} and \emph{coimage} of $f$ respectively.
+\end{definition}
+
+The upshot of this definition is that similar to the above diagram in
+$\Mod{R}$, any morphism in a preabelian category canonically factors
+through its image and coimage.
+
+\begin{lemma}
+  \label{lemma_exists_canonical_coim_to_im}
+  Let $f$ be a morphism in a preabelian category $\abcat{A}$.
+  Then there is a canonical morphism $\coim(f) \to \im(f)$ fitting
+  into a commutative diagram
+  \[
+    \begin{tikzcd}[cramped]
+      {\ker(f)} & A & B & {\coker(f)}. \\
+      & {\coim(f)} & {\im(f)}
+      \arrow[hook, from=1-1, to=1-2]
+      \arrow["f", from=1-2, to=1-3]
+      \arrow[two heads, from=1-2, to=2-2]
+      \arrow[two heads, from=1-3, to=1-4]
+      \arrow[dashed, from=2-2, to=2-3]
+      \arrow[hook, from=2-3, to=1-3]
+    \end{tikzcd}
+  \]
+  \vspace{-12pt}
+\end{lemma}
+
+\begin{proof}
+  By the universal property of cokernels, $f$ must factor uniquely
+  through a morphism $i: \coim(f) \to B$, so
+  \[
+    \coker(f) \circ i \circ \coim(f) = \coker(f) \circ f = 0.
+  \]
+  Recalling that all cokernels are epic, it follows that $i$ factors
+  uniquely through a morphism $u: \coim(f) \to \im(f)$.
+  Arguing dually, $f$ factors uniquely through a morphism $p: A \to
+  \im(f)$ that in turn factors uniquely through a morphism $v:
+  \coim(f) \to \im(f)$.
+  By this uniqueness, $u$ and $v$ must coincide, so the morphism is
+  indeed canonical.
+  % Because $f \circ \ker(f) = 0$, the universal property of
+  % cokernels implies that $f$ factors through a unique morphism $i:
+  % \coim(f) \to B$, and
+  % \[
+  %     \coker(f) \circ i \circ \coim(f) = \coker(f) \circ f = 0.
+  % \]
+  % Since any cokernel is an epic, we must have $\coker(f) \circ i =
+  % 0$, and by the universal property of kernels we conclude that $i$
+  % (and thus $f$) factors through a unique morphism $u: \coim(f) \to \im(f)$.
+  % This says that
+  % \[
+  %     f
+  %     = i \circ \coim(f)
+  %     = \im(f) \circ u \circ \coim(f).
+  % \]
+  % Arguing by duality starting from the fact that $\coker(f) \circ f
+  % = 0$ shows that $f$ factors uniquely through a morphism $p: A \to
+  % \im(f)$ that in turn factors through a unique morphism $v:
+  % \coim(f) \to \im(f)$, so
+  % \[
+  %     f
+  %     = \im(f) \circ p
+  %     = \im(f) \circ v \circ \coim(f).
+  % \]
+  % The morphisms $u$ and $v$ coincide by uniqueness, so this
+  % morphism is canonical.
+\end{proof}
+
+% Good resource:
+% https://people.clas.ufl.edu/rcrew/files/homology-lect2.pdf
+
+% Also, Freyd:
+% http://www.tac.mta.ca/tac/reprints/articles/3/tr3.pdf
+
+If $\abcat{A}$ is abelian, a tighter analogy with $\Mod{R}$ may be
+drawn: they are preabelian categories where the first isomorphism theorem holds.
+In many treatments, such as the original \cite{tohoku}, this
+observation is actually taken as the definition.
+It is instructive to show that these definitions are equivalent,
+since doing so requires the following lemmas which give familiar
+characterisations of morphisms.
+
+\begin{lemma}[{\cite[Theorem~2.12]{freyd_abelian_categories}}]
+  \label{lemma_abelian_category_isos}
+  In an abelian category, any monic which is also an epic is an isomorphism.
+\end{lemma}
+
+\begin{lemma}[{\cite[Theorems~2.17 and 2.17*]{freyd_abelian_categories}}]
+  \label{lemma_abelian_category_monos_and_epis}
+  Let $f: A \to B$ be a morphism in an abelian category.
+  Then $f$ is monic if and only if $\ker(f) = 0$ as an object, i.e.
+  $\coim(f) = A$.
+  Dually, $f$ is epic if and only if $\coker(f) = 0$, i.e. $\im(f) = B$.
+\end{lemma}
+
+\begin{proposition}
+  Let $\abcat{A}$ be a preabelian category.
+  Then $\abcat{A}$ is abelian if and only if the morphism $\coim(f)
+  \to \im(f)$ of \cref{lemma_exists_canonical_coim_to_im} is an
+  isomorphism for any $f \in \abcat{A}$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+  For the forward direction, one uses the abelian category condition
+  and the universal properties of kernels and cokernels to show that
+  in \cref{lemma_exists_canonical_coim_to_im}, $i$ is monic. By
+  dualising this argument, we may also conclude that $p$ is an epic.
+  This shows that $\coim(f) \to \im(f)$ is monic and epic, and hence
+  an isomorphism by \cref{lemma_abelian_category_isos}.
+  For the reverse direction, it is enough to prove that any monic $f:
+  A \to B$ in $\abcat{A}$ is a kernel.
+  To this end, one uses \cref{lemma_abelian_category_monos_and_epis}
+  and the assumption to rewrite the commutative diagram in
+  \cref{lemma_exists_canonical_coim_to_im} as
+  \[
+    \begin{tikzcd}[cramped]
+      0 & A & B & {\coker(f)}, \\
+      & A & {\im(f)}
+      \arrow["0", hook, from=1-1, to=1-2]
+      \arrow["f", hook, from=1-2, to=1-3]
+      \arrow["\id"', two heads, from=1-2, to=2-2]
+      \arrow[two heads, from=1-3, to=1-4]
+      \arrow["\cong", from=2-2, to=2-3]
+      \arrow[hook, from=2-3, to=1-3]
+    \end{tikzcd}
+  \]
+  and then argues by universal properties that $f = \ker(\coker(f))$.
+\end{proof}

@@ -1,0 +1,196 @@
+\chapter{Introduction}
+{
+  \setlength{\epigraphwidth}{0.5 \textwidth}
+  % \setlength{\epigraphrule}{0pt}
+  \epigraph{
+    \itshape
+    Algebra is the offer made by the devil to the mathematician.
+    The devil says: `I will give you this powerful machine, it will
+    answer any question you like.
+    All you need to do is give me your soul: give up geometry and you
+    will have this marvelous machine.'
+  }{-- Michael F. Atiyah \cite{atiyah_algebra_quote}}
+}
+
+\section{Motivation and outline}
+
+The \emph{coherent sheaves} on an algebraic variety $X$ are of
+central significance in algebraic geometry, being closely linked to
+many geometric properties of $X$ itself.
+In a manner of speaking, these are a better behaved generalisation of
+\emph{vector bundles}.
+Originally the preserve of analytic geometry, the genesis of coherent
+sheaves and \emph{coherent sheaf cohomology} in the algebro-geometric
+setting was Serre's revolutionary paper \cite{fac}.
+
+It had already been deduced by Serre that the cohomology of
+\emph{algebraic} vector bundles on a smooth projective variety
+enjoyed a certain duality property, appropriately named \emph{Serre duality}.
+Grothendieck sought to generalise this duality to coherent sheaves
+and for a wider class of algebraic spaces, ultimately using the
+nascent theory of \emph{schemes} introduced by Grothendieck himself
+in \cite{ega1}.
+In so doing, he realised that whereas the \emph{canonical line
+bundle} sufficed to give the usual Serre duality, what was needed in
+the general case was instead a \emph{dualising complex} of sheaves to
+fulfil the same purpose.
+As a response to the shortcomings of homological algebra in
+accommodating this shift in viewpoint, Grothendieck and his student
+Verdier developed the notion of \emph{derived categories} and a more
+unified approach to \emph{derived functors}.
+
+In the years since their development, derived categories have become
+a tool of vital importance in algebraic geometry, but are also of
+relevance further afield in the study of partial differential
+equations (e.g. \emph{$D$-modules}) and string theory (e.g. the
+\emph{homological mirror symmetry} program of Kontsevich).
+The fusion between derived categories and coherent sheaves in
+particular has led to some powerful results.
+For example, the (bounded) derived category $\dercat[b]{\Coh(X)}$ of
+coherent sheaves on a variety $X$ sometimes captures all there is to
+know about said variety:
+Bondal and Orlov showed in \cite{bondal_orlov} that under certain
+algebro-geometric hypotheses, the data of the category
+$\dercat[b]{\Coh(X)}$ is enough to uniquely reconstruct $X$.
+This makes it a useful category to try and understand.
+
+An early example of work in this direction is due to Beilinson, who
+studied the coherent sheaves of $\proj{n}$ over an algebraically
+closed field $k$ in \cite{beilinson}.
+The main result, hereafter referred to as \emph{Beilinson's theorem},
+is that there is an equivalence of derived categories between
+$\dercat[b]{\Coh(\proj{n})}$ and $\dercat[b]{\mod{\op{\Lambda}}}$,
+where $\Lambda$ is a certain non-commutative finite dimensional $k$-algebra.
+Since one may identify $\Lambda$ with the \emph{path algebra} of a
+certain \emph{quiver}, this theorem provides not only a link from
+algebraic geometry to the representation theory of finite dimensional
+algebras, but also to that of quivers.
+
+There are two well-known proofs of Beilinson's theorem.
+The original method of proof in \cite{beilinson} is by constructing a
+\emph{resolution of the diagonal} of $\proj{n}$, a technique
+belonging to algebraic geometry.
+Eventually, the techniques of \emph{tilting theory} emerged as giving
+a more satisfying proof instead using the methods of representation theory.
+An outcome of the seminal work of Brenner and Butler in 1979, tilting
+theory is a systematic means of constructing equivalences between the
+module categories of two finite dimensional algebras.
+The language of derived categories, which also proved to be useful in
+this context, was infused into tilting theory by Happel and Rickard
+in the 1980s.
+
+The goal of this thesis is to give an accessible exposition of how
+one may prove Beilinson's theorem using tilting theory.
+To make this more tractable, we will restrict our attention to the
+case of $\proj{1}$ only.
+Actually understanding the statement of the theorem even in this
+simpler case is already a non-trivial task, so a necessary secondary
+goal, and one which occupies the majority of this thesis, is to give
+a solid and gentle introduction to all of the required background.
+Though this topic fits within the intersection of algebraic geometry,
+homological algebra and representation theory, the dominant themes of
+this thesis are the former two.
+
+A brief synopsis of the flow of the material per chapter is as follows.
+We start with \cref{chap_abelian_categories}, which is a discussion
+of abelian categories.
+This turns out to be just the right level of categorical abstraction
+for many areas of modern mathematics due to it unlocking the
+machinery of homological algebra, which is in turn the focus of
+\cref{chap_homological}.
+The most fundamental tool in this subject is cohomology, and in
+considering its utility as a rich and very general method of
+producing algebraic invariants, we will see that an `improvement' to
+the notion of abelian categories that is more inclined to the study
+of cohomology is in order.
+Derived categories end up fulfilling this purpose, so we discuss them
+at length in \cref{chap_derived_categories}.
+Following this, we change course completely in
+\cref{chap_coh_sheaf_theory_of_p1} to study the theory of coherent
+sheaves on $\proj{1}$ and various aspects of its sheaf cohomology.
+The fact that we are working only in this simple case allows us to
+present this in a quite hands-on way than the more generic treatment
+one finds in the literature.
+The preceding chapters clear the path finally for
+\cref{chap_beilinsons_theorem}, in which we set up the notion of a
+\emph{tilting bundle} which yields Beilinson's equivalence.
+For the reader's convenience, \cref{conventions} records all of the
+explicit conventions and various pieces of notation we use throughout
+the thesis.
+
+There is a substantial amount of technical background that we must
+cover to set the appropriate scene in the first three chapters.
+We will emphasise breadth rather than depth when it comes to these
+topics, so we will be unapologetically light at times on details,
+deferring extensively to the relevant literature.
+The material in these chapters is to be treated principally as a tool
+for what is to come, and it is often the case that for many stated
+results, their proofs are not particularly insightful and are little
+more than \emph{abstract nonsense} (i.e. category-theoretic formalities).
+
+\section{Assumed knowledge}
+
+The most serious prerequisite is a moderate background in category theory.
+In addition to being well-acquainted with its core ideas (categories,
+functors and natural transformations), we assume the reader is
+familiar with basic categorical relationships (duality, equivalences
+of categories and adjoint functors) and universal constructions
+(products, coproducts, kernels and cokernels).
+The standard reference for this material is
+\cite{category_theory_for_the_working_mathematician}.
+Some exposure to limits and colimits, which provide a unifying
+language for these universal constructions, is nice to have but will
+not be explicitly used.
+
+A background in ring and module theory at the level of
+\cite[Chapters~8~and~10]{dummit_and_foote} will also be assumed.
+We will bundle this with a single fairly light assumption from
+commutative algebra that one may encounter in the course of studying
+the aforementioned topics: a working knowledge of localisations of
+rings and modules.
+For details of this process, one may consult
+\cite[Chapter~3]{atiyah_macdonald} or \cite[Section~15.4]{dummit_and_foote}.
+
+Finally, we assume familiarity with the basics of classical algebraic geometry.
+It is enough to be aware of the main aims of the subject, the
+definitions and main results concerning (quasi-)affine and
+(quasi-)projective varieties, and the basic study of regular
+functions and regular maps of varieties.
+For a reference, see \cite[Sections~I.1--4]{hartshorne}.
+A very basic acquaintance with affine schemes would be nice to have
+but not essential.
+
+\section{Author's note}
+
+When I embarked on this project, my intended goal was to give a
+comprehensive treatment of Beilinson's theorem in the simplest case
+of $\proj{1}$, including the full details of its proof.
+This is a result which has received much attention among algebraic
+geometers and representation theorists alike, but as far as I can
+tell, there has been no formal literature aimed at a wider audience.
+A story like this, to me, is too good not to be told, and as is the
+hope of any honours student, I wanted my work to bridge that gap.
+This was certainly an ambitious goal, but as is my nature, I threw
+myself at it anyway.
+
+There are at least two reasons why this thesis does not strictly meet this goal.
+It brings me no joy to admit this whatsoever, but the first is that I
+was simply not able to completely bridge that gap for myself this year.
+There is a tremendous amount of abstract background material that one
+has to learn to even begin to make sense of such a result, and the
+scale of this only becomes apparent once one starts to pour over the details.
+This ultimately consumed my attention for the entire year.
+This being the case, I also realise separately there is still immense
+value in having all of the necessary details leading up to some
+greater result being explicitly spelled out in one place.
+That is a worthwhile goal in and of itself, and the length of this
+document is a firm testament to the fact that one can make a whole
+thesis project out of it.
+
+I therefore present this work as a complete coverage and background
+in the abstract machinery one needs \emph{before} approaching this
+theorem, and an exposition of the mathematical beauty present within
+these background details themselves.
+After reading this work, one would be well prepared to venture into
+the more professional literature to see the finer details that I
+unfortunately cannot give you.

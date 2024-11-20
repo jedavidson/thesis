@@ -1,0 +1,1 @@
+$clean_ext = "bbl run.xml aux synctex.gz nav snm thm soc loc glg acn out.ps dvi";

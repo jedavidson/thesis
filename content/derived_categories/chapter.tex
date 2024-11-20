@@ -1,0 +1,37 @@
+\chapter{Derived categories}
+\label{chap_derived_categories}
+
+We are now sufficiently prepared to establish the notion of the
+\emph{derived category}, following the texts \cite{weibel,
+huybrechts, gelfand_and_manin}.
+At its core, this technical apparatus provides a more natural
+computational setting for the study of homological algebra than the
+category of cochain complexes.
+In comparison to the level of abstractions we have encountered thus
+far, the material in this chapter will at times become rather
+technical, so it will be beneficial to first outline the main
+motivations for derived categories and collect some desiderata to hold onto.
+
+The central conceit is that from a computational standpoint, it is
+convenient to be able to treat complexes that have the same
+cohomology (i.e.\ those which are quasi-isomorphic, homotopy
+equivalent or both) as if they are isomorphic.
+Indeed, we have seen a concrete instance of this already in
+\cref{sect_classical_derfunc}, which suggests that we should be able
+to freely interchange the objects of an abelian category with any of
+its resolutions when computing derived functors.
+At the same time, a complex is more than just its cohomology, and so
+on the face of it, associating complexes to a mathematical object of
+interest rather than just its cohomology leads to a more fruitful
+source of algebraic invariants.
+In much the same way, the historical viewpoint of Grothendieck was
+that the suite of classical derived functors should be the
+information extracted from a single derived functor existing at the
+level of complexes in the derived category.
+
+In all that follows, $\abcat{A}$ will be an abelian category.
+
+\input{content/derived_categories/homotopy_category}
+\input{content/derived_categories/triangulated_categories}
+\input{content/derived_categories/localising_the_homotopy_category}
+\input{content/derived_categories/total_derived_functors}

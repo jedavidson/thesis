@@ -1,0 +1,263 @@
+\section{Modules as sheaves on $\aff{1}$}
+
+As an important precursor to coherent sheaves, we show in this
+section that any module over $\shf{O}(\aff{1}) \cong k[x]$ can be
+suitably interpreted as a sheaf on $\aff{1}$.
+This also gives an explicit algebro-geometric interpretation of
+modules and localisation.
+
+We start with some preliminary results concerning open sets in $\aff{1}$.
+Recall that a \emph{principal open subset} of an affine variety $X$
+is an open subset of the form
+\[
+  D(f) := X \setminus V(f) = \{x \in X: f(x) \neq 0\}
+\]
+for some $f \in k[X]$.
+The collection of all principal opens forms a base for the Zariski
+topology on $X$, but even stronger statements can be made about the
+topology on $\aff{1}$.
+
+\begin{lemma}
+  \label{lemma_opens_of_aff_line_are_principal}
+  Every open subset of $\aff{1}$ is principal.
+\end{lemma}
+
+\begin{proof}
+  If $U$ is open, then $U = \aff{1} \setminus V(I)$ for some ideal $I
+  \idealof k[x]$.
+  But $k[x]$ is a principal ideal domain, so $I = \gen{f}$ for some
+  $f \in k[x]$ and hence $U = D(f)$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma_principal_open_inclusions_of_aff_line}
+  Let $f \in k[x]$, and consider the principal open set $D(f)$ in $\aff{1}$.
+  Then every principal open set within $D(f)$ is of the form $D(fg)$
+  for some $g \in k[x]$.
+  Moreover, the intersection of principal opens $D(f)$ and $D(g)$ is $D(fg)$.
+\end{lemma}
+
+\begin{proof}
+  If $D(h) \subseteq D(f)$, then $V(f) \subseteq V(h)$ and hence
+  $\gen{h} \subseteq \gen{f}$ by standard properties of affine
+  varieties, which implies that $f$ divides $h$.
+  The second claim is equivalent to the fact that $V(f) \cup V(g) = V(fg)$.
+\end{proof}
+
+The moral of these results is that to specify a sheaf on $\aff{1}$,
+it is entirely sufficient to consider only principal open sets
+determined by some polynomial.
+Intuitively, the same conclusions ought to hold mutatis mutandis for
+any open $U \subseteq \aff{1}$.
+To make this idea more formal, if $U = D(f)$ for some $f \in k[x]$,
+then by \cite[Proposition~6.3.5]{fulton} we can take the definition
+of the ring of regular functions for $U$ to be the localisation
+\[
+  \shf{O}(U) := \shf{O}(\aff{1})_f \cong k[x, f^{-1}],
+\]
+and it is not hard to see now that
+\cref{lemma_principal_open_inclusions_of_aff_line} holds with
+$\aff{1}$ replaced by $U$ and $k[x]$ replaced by $\shf{O}(U)$.
+For reasons that will become clear in due course, we will broaden the
+scope of the following definition to any open subset of $\aff{1}$
+rather than just $\aff{1}$ itself.
+% Next, recall that a \emph{quasi-affine} variety $Y$ is an open
+% subset of an affine variety $X$.
+% Naturally, we will exclusively consider the case $X = \aff{1}$.
+% By \cref{lemma_opens_of_aff_line_are_principal}, any quasi-affine
+% variety $Y$ in $\aff{1}$ is principal in $\aff{1}$, so $Y = D(f)$
+% for some $f \in k[x]$.
+% Moreover, by \cite[Proposition~6.3.5]{fulton}, we can define a ring
+% of regular functions for any such $Y$ as
+% \[
+%     \shf{O}(U) := \shf{O}(\aff{1})[f^{-1}] \cong k[x, f^{-1}].
+% \]
+% Finally, it is clear that the conclusions of
+% \cref{lemma_principal_open_inclusions_of_aff_line} hold mutatis
+% mutandis for $Y$.
+% The need to broaden our scope to quasi-affine varieties rather than
+% solely $\aff{1}$ is so that we may directly verify that the
+% following construction gives a sheaf of modules.
+
+\begin{definition}
+  \label{def_assmod}
+  Let $U$ be an open subset of $\aff{1}$ and $M$ a module over the
+  ring $\shf{O}(U)$.
+  We define a presheaf of abelian groups $\assmod{M}$ on $U$, called
+  the \emph{sheaf associated to $M$}, by declaring that the sections
+  over each principal open $D(f) \subseteq U$ are
+  $\sections{D(f)}{\assmod{M}} = M_f$, and equipping $\assmod{M}$
+  with restriction maps
+  \[
+    \res{f}{fg}: M_f \to M_{fg},
+    \qquad \frac{m}{f^r} \mapsto \frac{mg^r}{(fg)^r}.
+  \]
+\end{definition}
+
+Some a posteriori justification for this definition is as follows.
+Algebraically, $D(f) \subseteq U$ is the region in which $f$ is
+non-zero and hence invertible in $\shf{O}(U)$, so to specify local
+sections it is natural to consider the \emph{extension of scalars}
+\[
+  \shf{O}(U)_f \tensor_{\shf{O}(U)} M \cong M_f.
+\]
+Also, while the sheaf $\assmod{M}$ only considers this space of
+sections as an abelian group, each $M_f$ has by definition the
+structure of an $\shf{O}(U)_f$-module.
+
+\begin{example}
+  The structure sheaf $\strshf{\aff{1}}$ is the associated sheaf of
+  the $k[x]$-module $k[x]$.
+  By our remarks above, it follows that every associated sheaf
+  $\assmod{M}$ on $\aff{1}$ is also an example of an $\strshf{\aff{1}}$-module.
+\end{example}
+
+\begin{example}
+  \label{exmp_skyscraper_shf}
+  Let $a \in k$, and consider the $k[x]$-module $M = \quot{k[x]}{\gen{x - a}}$.
+  If $U = D(f)$ is an open set in $\aff{1}$, then it follows from
+  polynomial division that $f = f(a)$ in $M$.
+  If $a \in U$, then $f(a)$ is non-zero in $k$ and hence invertible
+  in $M$, so we have $M_f \cong M \cong k$ as $k[x]$-modules.
+  If instead $a \not\in U$, then $f(a) = 0$ in $k$, and so $M_f$ must
+  be the zero module.
+  We say that the sheaf $\assmod{M}$ is \emph{supported} at the point
+  $x = a$ in the sense that one only obtains non-zero sections over
+  open neighbourhoods of $a$.
+  For this reason, we call $\assmod{M}$ a \emph{skyscraper sheaf} on $\aff{1}$.
+\end{example}
+
+Let us now check that the presheaf $\assmod{M}$ is deserving of being
+called a sheaf.
+We will adapt the proofs of a related result for affine schemes in
+\cite[Proposition~I.18]{eisenbud_and_harris} and
+\cite[Theorem~4.1.2]{vakil}, originally due to Serre.
+By virtue of the fact that we are working within $\aff{1}$, we will
+be allowed to sidestep some sheaf-theoretic technicalities that one
+encounters in this more general setting.
+The following lemma is key.
+
+\begin{lemma}
+  \label{lemma_quasiaff_is_quasicompact}
+  Every open cover of an open subset of $\aff{1}$ has a finite subcover.
+\end{lemma}
+
+\begin{proof}
+  In light of our observations above, it suffices to consider a cover
+  by principal opens $U = \bigcup_i D(f_i)$, with $f_i \in \shf{O}(U)$.
+  It is immediate that the zero locus of the ideal $\ideal{a}$
+  generated by the $f_i$ must be empty, i.e. $\mathfrak{a} = \shf{O}(U)$.
+  Each element of $\ideal{a}$ is by definition a finite linear
+  combination of the $f_i$, so in particular there is a
+  \emph{partition of unity} $\sum_{i \in I} a_i f_i = 1$ where all
+  but finitely many of the $a_i \in \shf{O}(U)$ are non-zero.
+  We may thus take as a finite subcover the sets $D(f_i)$ such that
+  $a_i \neq 0$.
+\end{proof}
+
+% \begin{remark}
+%     In more algebro-geometric language,
+% \cref{lemma_quasiaff_is_quasicompact} says that $U$ is \emph{quasicompact}.
+%     This is terminologically distinguished from compactness by not
+% insisting that the space is also Hausdorff, which is rarely ever
+% true of the Zariski topology (and never when $k$ is infinite, i.e.
+% when $k$ is algebraically closed).
+% \end{remark}
+
+\begin{proposition}
+  \label{prop_shf_assoc_to_mod}
+  The presheaf $\assmod{M}$ in \cref{def_assmod} is a sheaf on any
+  open $U \subseteq \aff{1}$.
+\end{proposition}
+
+\begin{proof}
+  Let $V \subseteq U$ be open.
+  Again, in light of the previous observations, we may write $V =
+  D(f)$ for some $f \in \shf{O}(U)$ and consider an arbitrary open
+  cover $V = \bigcup_{i \in I} D(f_i)$ for some $f_i \in \shf{O}(U)$.
+  We claim that is that it is in fact enough to show that the sheaf
+  property holds for global sections, i.e. in the case $V = U$.
+  To see why, note that $V$ is open in $\aff{1}$, so by
+  \cref{lemma_principal_open_inclusions_of_aff_line} we have
+  \[
+    V
+    = \bigcup_{i \in I} D(f_i)
+    = \bigcup_{i \in I} V \cap D(f_i)
+    = \bigcup_{i \in I} D(ff_i).
+  \]
+  Via the inclusion of rings $\shf{O}(U) \mono \shf{O}(V)$, each
+  function $f f_i$ may be regarded as a function in $\shf{O}(V)$.
+  That is, the open cover of $V$ above can be surreptitiously
+  rewritten as an open cover $V = \bigcup_{i \in I} D(f_i')$ for some
+  $f_i' \in \shf{O}(V)$, which shows that the general case can indeed
+  be reduced to this special case.
+  Thus for the remainder of the proof, we may assume that $V = U$ so
+  that $\assmod{M}(V) \cong M$.
+  Before we begin the proof proper, we will also fix a finite
+  subcover $U = \bigcup_{\alpha \in A} D(f_\alpha)$ by
+  \cref{lemma_quasiaff_is_quasicompact}.
+
+  To start, let us check that the identity property holds.
+  Suppose that the global section $s \in M$ vanishes upon restriction
+  in $M_{f_i}$ for all $i \in I$.
+  Then $s$ is annihilated in $M$ by some power of each $f_\alpha$ on
+  the finite subcover.
+  By finiteness, we may choose a sufficiently large power $N$ such
+  that every $f_\alpha^N$ annihilates $s$.
+  It follows that the ideal $\ideal{b}$ generated by the $f_\alpha^N$
+  annihilates $s$.
+  But via the proof of \cref{lemma_quasiaff_is_quasicompact}, the
+  ideal $\ideal{a}$ generated by the $f_\alpha$ is $\shf{O}(U)$, and
+  it is not hard to see that $\shf{O}(U) = \ideal{a}^{2N} \subseteq
+  \ideal{b}$, so we conclude that $s$ is annihilated by the entire
+  ring $\shf{O}(U)$.
+  Hence $s = 0$ in $M$.
+
+  Next, we check gluability.
+  Suppose we are given sections $s_i \in M_{f_i}$ such that $s_i =
+  s_j$ in $M_{f_i f_j}$ for all $i, j \in I$.
+  As before, this certainly descends to our finite subcover, so let
+  us first prove it on that.
+  We can write each section as $s_\alpha =
+  m_\alpha/f_\alpha^{r_\alpha}$ for some $m_\alpha \in M$ and integer
+  $r_{\alpha}$.
+  Since $D(f_\alpha) = D(f_\alpha^{r_\alpha})$, for ease of notation
+  we will let $g_\alpha = f_\alpha^{r_\alpha}$ such that each
+  $s_\alpha$ is naturally an element of $M_{g_{\alpha}}$.
+  By clearing denominators in $M_{g_\alpha g_\beta}$, we may appeal
+  once more to finiteness to choose a sufficiently large power $N$ such that
+  \[
+    (g_\alpha g_\beta)^N(g_\beta m_\alpha - g_\alpha m_\beta) = 0
+  \]
+  in $M$ for every $\alpha, \beta \in A$.
+  For further ease of notation, write $n_\alpha = g_\alpha^N
+  m_\alpha$ and $h_\alpha = g_\alpha^{N + 1}$ so that the above
+  condition reads $h_\beta n_\alpha = h_\alpha n_\beta$.
+  Moreover, since $D(h_\alpha) = D(g_\alpha)$, it follows as in
+  \cref{lemma_quasiaff_is_quasicompact} that there is a partition of
+  unity $\sum_{\alpha \in A} a_\alpha h_\alpha = 1$ for some
+  $a_\alpha \in \shf{O}(U)$.
+  Now, considering the global section $s = \sum_{\alpha \in A}
+  a_\alpha n_\alpha$, we see that
+  \[
+    s h_\alpha
+    = \sum_{\beta \in A} a_\beta h_\alpha n_\beta
+    = \sum_{\beta \in A} a_\beta h_\beta n_\alpha
+    = n_\alpha
+  \]
+  in $M$ for each $\alpha \in A$.
+  It is not difficult to see that $M_{h_\alpha} \cong M_{f_\alpha}$,
+  and by construction $n_\alpha/h_\alpha = s_\alpha$ in
+  $M_{h_\alpha}$, so we conclude from this that $s = s_\alpha$ in
+  $M_{f_\alpha}$ as needed.
+  It remains to upgrade gluability to infinite open covers.
+  The previous argument holds generically for any finite open cover
+  of $U$, so for any choice of $i \in I \setminus A$, we may
+  similarly construct a global section $s' \in M$ such that $s' =
+  s_\alpha$ in each $M_{f_\alpha}$ and $s' = s_i$ in $M_{f_i}$.
+  But by the identity property, we must have $s = s'$, and so we are done.
+\end{proof}
+
+We now see that the passage to open subsets of $\aff{1}$ in
+\cref{def_assmod} was necessary to ensure that we may reduce the
+claim to something easier to prove.

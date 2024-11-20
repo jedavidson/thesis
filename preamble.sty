@@ -1,0 +1,166 @@
+% More control for enumerate environments
+\usepackage{enumitem}
+
+% Math symbols and such
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{ wasysym }
+\usepackage{bm}
+
+% Page geometry and figures
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage[nodisplayskipstretch]{setspace}
+\setstretch{1.25}
+\usepackage[
+  left=3.25cm,
+  right=3.25cm,
+  bottom=4cm,
+  top=4cm,
+]{geometry}
+
+% Header setup
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Colours
+\usepackage[svgnames]{xcolor}
+\colorlet{themecolour}{MidnightBlue}
+
+% Quotations
+\usepackage{epigraph}
+
+% Commutative diagrams, via the WYSIWYG editor q.uiver.app
+\usepackage{quiver}
+
+% Blocks
+\usepackage{framed}
+
+% Disable paragraph indents
+\newlength\normalparindent
+\setlength\normalparindent{\parindent}
+\usepackage{parskip}
+\usepackage{etoolbox}
+\newlength\normalparskip
+\setlength\normalparskip{\parskip}
+
+% The proof environment needs to be patched so that the space isn't so large,
+% however, and we want to suppress parskip inside it for longer proofs
+\AtBeginEnvironment{proof}{\vspace*{-0.5\normalparskip}}
+\pretocmd{\proof}{
+  \vspace*{\parskip}
+  \setlength\parindent{\normalparindent}
+  \setlength\parskip{0pt}
+}{\typeout{Patched proof OK.}}{\typeout{Patching proof failed.}}
+\AtEndEnvironment{proof}{\vspace*{-0.5\normalparskip}}
+
+% There are some long examples too, so we will suppress that as well
+\let\svpar\par
+\edef\svparskip{\the\parskip}
+\def\revertpar{\svpar\setlength\parskip{\svparskip}\let\par\svpar}
+\def\noparskip{\leavevmode\setlength\parskip{0pt}%
+  \setlength\parindent{\normalparindent}%
+  \def\par{\svpar\let\par\revertpar}
+}
+
+% Disable footnote indents
+\usepackage[
+  hang,
+  flushmargin,
+  bottom
+]{footmisc}
+
+% Bibliography setup
+\usepackage[
+  backend=biber,
+  style=alphabetic
+]{biblatex}
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[colorlinks]{hyperref}
+\hypersetup{
+  allcolors=themecolour,
+  % citecolor=blue!70!black,
+  % linkcolor=,
+}
+\usepackage[
+  capitalize,
+  nameinlink
+]{cleveref}
+
+% We need the bookmark package to ensure that the bibliography links
+% work in the PDF
+\usepackage{bookmark}
+
+% Setup for amsthm environments
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+\theoremstyle{remark}
+\newtheorem{note}{Note}[section]
+
+% Label equations by the sections they are in
+\numberwithin{equation}{section}
+
+\iffalse
+% Change all part, chapter, section titles to normal text
+\usepackage{sectsty}
+\allsectionsfont{\normalfont}
+
+% Chapter head style, taken from the unswthesis template
+% This must be done after we use sectsty
+\newlength{\chaprule}
+\newlength{\ATchapskip}
+\setlength{\chaprule}{0.4\p@}
+\setlength{\ATchapskip}{10\p@}
+\advance \ATchapskip by -1\chaprule
+\renewcommand{\@makechapterhead}[1]{%
+  \ifdim\chaprule>6\p@ \setlength{\chaprule}{6\p@}\fi
+  \vspace*{\ATchapskip}%
+  \noindent\rule{\textwidth}{\chaprule}\par%
+  \vskip 10\p@
+  {\parindent \z@ \centering \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+    {\Large\scshape \@chapapp\space \thechapter}
+    \par\nobreak
+    \vskip 8\p@
+    \fi
+    \interlinepenalty\@M
+    {\Large\normalfont #1}
+    \par\nobreak
+    \noindent\rule{\textwidth}{\chaprule}\par%
+    \vskip\ATchapskip
+}}
+\renewcommand{\@makeschapterhead}[1]{%
+  \ifdim\chaprule>6\p@ \setlength{\chaprule}{6\p@}\fi
+  \vspace*{\ATchapskip}%
+  \noindent\rule{\textwidth}{\chaprule}\par%
+  \vskip 10\p@
+  {\parindent \z@ \centering
+    \normalfont
+    \interlinepenalty\@M
+    {\Large\normalfont #1}
+    \par\nobreak
+    \noindent\rule{\textwidth}{\chaprule}\par%
+    \vskip\ATchapskip
+}}
+
+% A much simpler and different alternative with centered chapter titles
+% \usepackage[center]{titlesec}
+\fi

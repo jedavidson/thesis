@@ -1,0 +1,307 @@
+\section{Working with abelian categories}
+
+With the definition at hand, we now look at how an abelian category
+can be reasoned about, once again with $\Mod{R}$ serving as inspiration.
+Though several concepts that we will introduce here can be defined
+just as well for less strictly defined categories, it is often the
+case that they are most potent in the abelian setting.
+As a first example, we may consider analogues of submodules and
+quotient modules in any abelian category, which will be important for
+defining \emph{(co)homology} in \cref{sect_complexes}.
+
+\begin{definition}
+  Let $\abcat{A}$ be an abelian category and fix an object $A \in \abcat{A}$.
+  A \emph{subobject} of $A$ is the data of a monic $s: S \mono A$
+  identified up to equivalence with all monics $t: T \mono A$ such
+  that $s = t u$ for some isomorphism $u: S \cong T$.
+  We use the suggestive notation $S \leq A$.
+  \iffalse
+  % We may define a partial order on the monics $* \mono A$ as
+  % follows: given $s: S \mono A$ and $t: T \mono A$, we say that $s
+  % \leq t$ if $s = t \phi$ for some monic $\phi: S \mono T$.
+  % This induces an equivalence relation $s \sim t$ by $s \leq t$ and
+  % $t \leq s$, and its equivalence classes are called \emph{subobjects} of $A$.
+  \fi
+  Moreover, we define $A/S := \coker(s)$ to be the \emph{quotient
+  object} of $A$ by its subobject $S$.
+\end{definition}
+
+Exactly as promised at the beginning of this chapter, the language of
+exact sequences can also be directly imported from $\Mod{R}$ to
+abelian categories.
+
+\begin{definition}
+  An \emph{exact sequence} in an abelian category $\abcat{A}$ is a sequence
+  \[
+    \begin{tikzcd}[cramped]
+      \cdots & {A_{i - 1}} & {A_{i}} & {A_{i + 1}} & \cdots
+      \arrow[from=1-1, to=1-2]
+      \arrow["{f_{i - 1}}", from=1-2, to=1-3]
+      \arrow["{f_i}", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  such that $\im(f_{i - 1}) = \ker(f_i)$ for each $i$, and a
+  \emph{short exact sequence} is one of the form
+  \[
+    \begin{tikzcd}[cramped]
+      0 & A & B & C & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow["f", from=1-2, to=1-3]
+      \arrow["g", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  In particular, $f$ is monic and $g$ is epic.
+  \iffalse
+  We say a short exact sequence \emph{splits} (or is \emph{split}) if
+  there is a commutative diagram
+  \[
+    \begin{tikzcd}[cramped]
+      0 & A & B & C & 0 \\
+      0 & A & {A \oplus C} & C & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow["f", from=1-2, to=1-3]
+      \arrow["\id"', from=1-2, to=2-2]
+      \arrow["g", from=1-3, to=1-4]
+      \arrow["\cong"', from=1-3, to=2-3]
+      \arrow[from=1-4, to=1-5]
+      \arrow["\id"', from=1-4, to=2-4]
+      \arrow[from=2-1, to=2-2]
+      \arrow[hook, from=2-2, to=2-3]
+      \arrow[two heads, from=2-3, to=2-4]
+      \arrow[from=2-4, to=2-5]
+    \end{tikzcd}
+  \]
+  in $\abcat{A}$ with exact rows.
+  \fi
+\end{definition}
+
+\begin{definition}
+  \label{def_exact_functors}
+  An additive functor $F: \abcat{A} \to \abcat{B}$ between abelian
+  categories is \emph{left exact} if it sends any short exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & A & B & C & 0
+      \arrow[from=1-1, to=1-2]
+      \arrow["f", from=1-2, to=1-3]
+      \arrow["g", from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  in $\abcat{A}$ to the left exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      0 & F(A) & F(B) & F(C)
+      \arrow[from=1-1, to=1-2]
+      \arrow["F(f)", from=1-2, to=1-3]
+      \arrow["F(g)", from=1-3, to=1-4]
+    \end{tikzcd}
+  \]
+  in $\abcat{B}$.
+  Similarly, $F$ is \emph{right exact} if it instead turns it into a
+  right exact sequence
+  \[
+    \begin{tikzcd}[cramped]
+      F(A) & F(B) & F(C) & 0.
+      \arrow["F(f)", from=1-1, to=1-2]
+      \arrow["F(g)", from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+    \end{tikzcd}
+  \]
+  We say that $F$ is \emph{exact} if it is both left and right exact.
+\end{definition}
+
+\begin{example}
+  \label{exmp_hom_is_left_exact}
+  Module theory provides examples of each type of exactness.
+  The functors $\Hom_R(M, -)$ and $- \tensor_R M$ are left exact and
+  right exact respectively, which in the case where $R$ is
+  commutative follows from the tensor-hom adjunction (since left
+  adjoint functors are right exact and vice versa).
+  Given a multiplicatively closed subset $S \subseteq R$, the
+  localisation functor $\locln{(-)}{S}: \Mod{R} \to
+  \Mod{\locln{R}{S}}$ is exact.
+\end{example}
+
+\begin{remark}
+  \label{rem_exact_limit_colimit_pres}
+  An equivalent way to define left and right exact functors (as in
+    \cite[Section~VIII.3]{category_theory_for_the_working_mathematician},
+  say) are as those which preserve all finite \emph{limits} and
+  \emph{colimits} respectively.
+  We will not define these categorical concepts here, so instead we
+  simply note some important consequences.
+  Since products and kernels are finite limits, these constructions
+  are preserved by any left exact functor.
+  Similarly, coproducts and cokernels are finite colimits, and so are
+  preserved by right exact functors.
+\end{remark}
+
+Next, we introduce analogues of projective and injective modules.
+Just as they are powerful in the study of modules, such objects are
+indispensable in the study of abelian categories, as will be made
+abundantly clear in the two following chapters.
+
+\begin{definition}
+  An object $P \in \abcat{A}$ is said to be \emph{projective} if for
+  every epic $f: A \epi B$, any morphism $g: P \to B$ factors through $f$:
+  \[
+    \begin{tikzcd}[cramped]
+      & P \\
+      A & B.
+      \arrow[dashed, from=1-2, to=2-1]
+      \arrow["g", from=1-2, to=2-2]
+      \arrow["f"', two heads, from=2-1, to=2-2]
+    \end{tikzcd}
+  \]
+  Dually, an object $I \in \abcat{A}$ is said to be \emph{injective}
+  if for every monic $f: A \mono B$, any morphism $g: A \to I$
+  factors through $f$:
+  \[
+    \begin{tikzcd}[cramped]
+      A & B \\
+      I.
+      \arrow["f", hook, from=1-1, to=1-2]
+      \arrow["g"', from=1-1, to=2-1]
+      \arrow[dashed, from=1-2, to=2-1]
+    \end{tikzcd}
+  \]
+\end{definition}
+
+The category $\abcat{A}$ clearly need not be abelian for the
+preceding definitions to work, but if it is, the following familiar
+characterisations become available.
+The proof is similar (though more pedantic) to the argument one gives
+for $\Mod{R}$, so we omit it.
+
+\begin{proposition}
+  Let $\abcat{A}$ be an abelian category.
+  Then $P \in \abcat{A}$ is projective if and only if the functor
+  $\Hom_{\abcat{A}}(P, -)$ is exact.
+  Dually, $I \in \abcat{A}$ is injective if and only if the functor
+  $\Hom_{\abcat{A}}(-, I)$ is exact.
+\end{proposition}
+
+\iffalse
+\begin{lemma}[Splitting lemma]
+  \label{lemma_splitting}
+  In an abelian category, the following are equivalent:
+  \begin{enumerate}
+    \item
+      The short exact sequence $0 \to A \stackrel{f}{\to} B
+      \stackrel{g}{\to} C \to 0$ splits.
+
+    \item
+      There is a morphism $s: B \to A$ such that $sf = \id_{A}$.
+
+    \item
+      There is a morphism $t: C \to B$ such that $gu = \id_{C}$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proposition}
+  \label{prop_proj_inj_iff_ses_splits}
+  If $\abcat{A}$ is abelian, then $P \in \abcat{A}$ is projective
+  if and only if any short exact sequence ending at $P$ splits:
+  \[
+    \begin{tikzcd}[cramped]
+      0 & A & B & P & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+  Dually, $I \in \abcat{A}$ is injective if and only if any short
+  exact sequence starting at $I$ splits:
+  \[
+    \begin{tikzcd}[cramped]
+      0 & I & B & C & 0.
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=1-4]
+      \arrow[from=1-4, to=1-5]
+    \end{tikzcd}
+  \]
+\end{proposition}
+\fi
+
+Recall that in $\Mod{R}$, any $R$-module $M$ admits a surjection $F
+\epi M$ with $F$ free (a fortiori, projective) and an injection $M
+\mono I$ with $I$ injective (a so-called \emph{injective envelope} of $M$).
+These properties end up being quite special in the broader context of
+abelian categories.
+
+\begin{definition}
+  An abelian category $\abcat{A}$ has \emph{enough projectives} if
+  for any object $A \in \abcat{A}$, there exists an epic $P \epi A$
+  with $P$ projective.
+  Dually, $\abcat{A}$ has \emph{enough injectives} if for any $A$
+  there exists a monic $A \mono I$ with $I$ injective.
+\end{definition}
+
+We do not even have to leave the realm of module theory to find
+abelian categories which fail one or both of these conditions.
+This serves also as a preliminary warning that abelian categories can
+stray far from the categories of modules we originally used to
+motivate their definition, only guaranteeing we have similar
+exactness machinery.
+
+\begin{example}
+  \label{ex_finab}
+  There are no non-zero finite abelian groups which are injective or
+  projective, so the category $\FinAb$ certainly has neither enough
+  projectives or injectives.
+  Broadening our scope to finitely generated abelian groups (i.e. to
+  $\mod{\bb{Z}}$) allows us to recover enough projectives, but the
+  lack of any injectives persists.
+\end{example}
+
+To conclude this chapter, we discuss common ways of proving
+statements about an abelian category $\abcat{A}$.
+With exact sequences, one is also able to recover an ensemble of
+lemmas discussed in
+\cite[Section~VIII.4]{category_theory_for_the_working_mathematician},
+such as the \emph{five lemma} and the \emph{snake lemma}.
+These lemmas go hand in hand with the proof technique of
+\emph{diagram chasing} (c.f.
+\cite[Section~1.6]{category_theory_in_context}), which is exploited
+to maximum effect in homological algebra.
+
+Done purely at the level of categorical abstractions, many of these
+proofs, especially those involving diagram chases, are an obsessively
+technical sport.
+If $\abcat{A}$ is \emph{concrete} (i.e. there is a faithful,
+forgetful functor $\abcat{A} \to \Set$), many of these categorical
+abstractions can be sidestepped in favour of working directly with
+elements of objects.
+Since $\Mod{R}$ is concrete, this is often the way one proves things
+in the module case.
+A deep theorem of abelian categories shows that this method of proof
+can still be valid in some instances, since morally such categories
+`are' just a category of certain modules.
+The proof of this theorem is non-trivial, and we defer the details to
+its coverage in \cite[Section~1.6]{weibel}.
+
+\begin{definition}
+  A category $\cat{C}$ is said to be \emph{small} if its class of
+  objects is a set, and \emph{locally small} if every hom-set of
+  $\cat{C}$ is a set.
+\end{definition}
+
+\begin{theorem}[Freyd-Mitchell embedding theorem]
+  If $\abcat{A}$ is a small abelian category, then there exists a
+  ring $R$ and a fully faithful, exact functor $\abcat{A} \to \Mod{R}$.
+  In particular, $\abcat{A}$ is equivalent to a full subcategory of $\Mod{R}$.
+\end{theorem}
+
+The most interesting abelian categories are rarely small, but some
+things one wishes to prove are `local' in the sense that it is enough
+to consider a small abelian subcategory amenable to this theorem
+(e.g. one that contains all of the objects in some diagram).
+One case where this strategy potentially fails is when proving
+statements about projectives and injectives, since it may not be true
+that the projectives and injectives in a subcategory of $\Mod{R}$ are
+the usual projective and injective $R$-modules.
